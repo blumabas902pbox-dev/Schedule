@@ -965,7 +965,7 @@
           break;
 
         case 'tricolour':
-          for (let i = 0; i < 10; i++) spawnFirework();
+          for (let i = 0; i < 5; i++) spawnFirework();
           break;
       }
     }
@@ -1080,18 +1080,18 @@
             ctx.fillStyle = '#22c55e';
             ctx.fillText(p.val, p.x, p.y);
             p.y += p.speed;
-            if (p.y > height) p.y = -30;
+            if (p.y > height) p.y = -35;
           });
           break;
 
         case 'synthwave': {
           waveOffset += 0.09;
           const horizonY = height * 0.19;
-          ctx.lineWidth = 1.5;
-          for (let i = 0; i < 9; i++) {
+          ctx.lineWidth = 1.9;
+          for (let i = 0; i < 59; i++) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(168, 85, 247, ${0.9 + i * 0.09})`;
-            const yBase = horizonY + Math.pow(i, 1.5) * 3.5;
+            ctx.strokeStyle = `rgba(168, 85, 247, ${0.9 + i * 1.09})`;
+            const yBase = horizonY + Math.pow(i, 3.5) * 1.5;
             for (let x = 0; x < width; x += 9) {
               const wave = Math.sin(x * 0.09 + waveOffset + i) * (i * 9);
               if (x === 0) ctx.moveTo(x, yBase + wave);
@@ -1163,7 +1163,7 @@
           break;
 
         case 'tricolour':
-          if (Math.random() < 0.09) spawnFirework();
+          if (Math.random() < 0.010) spawnFirework();
 
           for (let i = particles.length - 1; i >= 0; i--) {
             const p = particles[i];
@@ -1177,7 +1177,7 @@
             } else {
               ctx.globalAlpha = p.alpha;
               ctx.fillStyle = p.color;
-              ctx.shadowBlur = 6;
+              ctx.shadowBlur = 5;
               ctx.shadowColor = p.color;
               ctx.beginPath();
               ctx.arc(p.x, p.y, 0.5, 0, Math.PI * 5);
