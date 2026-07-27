@@ -910,8 +910,8 @@
               particles.push({
                 x: i * 16,
                 y: Math.random() * height,
-                speed: Math.random() * 1.5 + 0.8,
-                val: Math.random() > 0.5 ? '1' : '0'
+                speed: Math.random() * 1.2 + 0.5,
+                val: Math.random() > 0.2 ? '1' : '0'
               });
             }
           }
@@ -965,7 +965,7 @@
           break;
 
         case 'tricolour':
-          for (let i = 0; i < 6; i++) spawnFirework();
+          for (let i = 0; i < 10; i++) spawnFirework();
           break;
       }
     }
@@ -1395,7 +1395,7 @@
       lockAllEdits();
       const element = document.getElementById('scheduleCanvas');
       const opt = {
-        margin:       [0.3, 0.4, 0.3, 0.4],
+        margin:       [0.2, 0.3, 0.2, 0.3],
         filename:     'BSIT_Schedule_Bryan_Jay_Lumabas.pdf',
         image:        { type: 'jpeg', quality: 0.98 },
         html2canvas:  { scale: 2, useCORS: true },
