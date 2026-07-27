@@ -1085,24 +1085,24 @@
           break;
 
         case 'synthwave': {
-         waveOffset += 0.03;
-         const horizonY = height * 0.25; 
-           ctx.lineWidth = 1.5;
+          waveOffset += 0.05; // slower, smoother motion
+          const horizonY = height * 0.85; // push waves near footer
+            ctx.lineWidth = 2;
 
-           for (let i = 0; i < 40; i++) {
-             ctx.beginPath();
-             ctx.strokeStyle = `rgba(168, 85, 247, ${0.1 + i * 0.02})`;
+          for (let i = 0; i < 9; i++) { // only 9 waves visible
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(168, 85, 247, ${0.3 + i * 0.07})`; // softer opacity
+          const yBase = horizonY + i * 12; // stagger waves slightly
 
-         const yBase = horizonY + Math.pow(i, 2.2) * 2;
+          for (let x = 0; x < width; x += 6) { // smoother curve with smaller step
+            const wave = Math.sin(x * 0.02 + waveOffset + i) * (20 + i * 5); // gentle amplitude
+            if (x === 0) ctx.moveTo(x, yBase + wave);
+            else ctx.lineTo(x, yBase + wave);
+          }
 
-           for (let x = 0; x <= width; x += 6) {
-             const wave = Math.sin(x * 0.02 + waveOffset + i) * (i * 2.5);
-             if (x === 0) ctx.moveTo(x, yBase + wave);
-             else ctx.lineTo(x, yBase + wave);
-           }
-             ctx.stroke();
-         }
-         break;
+        ctx.stroke();
+      }
+        break;
         }
 
         case 'nordic':
