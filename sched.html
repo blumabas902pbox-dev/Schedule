@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BSIT Schedule Canvas — Interactive Studio</title>
+
+  <!-- Fonts & FontAwesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- html2pdf.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <style>
+    /* ===================================================
+       THEME PALETTES
+       =================================================== */
+
+    /* 1. LIGHT */
+    :root[data-theme="light"] {
+      --bg: #ffffff;
+      --grid-line: rgba(30, 58, 138, 0.08);
+      --card-bg: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #1e3a8a;
+      --border-color: #cbd5e1;
+      --primary: #1d4ed8;
+      --secondary: #1e3a8a;
+      --glow-color: rgba(29, 78, 216, 0.45);
+      --btn-save-bg: #1d4ed8;
+      --btn-save-text: #ffffff;
+    }
+
+    /* 2. DARK */
+    :root[data-theme="dark"] {
+      --bg: #000000;
+      --grid-line: rgba(255, 255, 255, 0.06);
+      --card-bg: #111111;
+      --text-main: #f8fafc;
+      --text-muted: #e2e8f0;
+      --border-color: #333333;
+      --primary: #9ca3af;
+      --secondary: #ffffff;
+      --glow-color: rgba(255, 255, 255, 0.35);
+      --btn-save-bg: #e2e8f0;
+      --btn-save-text: #000000;
+    }
+
+    /* 3. PARTY */
+    :root[data-theme="party"] {
+      --bg: #0f0d1a;
+      --grid-line: rgba(168, 85, 247, 0.12);
+      --card-bg: #181528;
+      --text-main: #f43f5e;
+      --text-muted: #38bdf8;
+      --border-color: #a855f7;
+      --primary: #facc15;
+      --secondary: #4ade80;
+      --glow-color: rgba(168, 85, 247, 0.6);
+      --btn-save-bg: #4ade80;
+      --btn-save-text: #0f0d1a;
+    }
+
+    /* 4. EARTHLINGS */
+    :root[data-theme="earthlings"] {
+      --bg: #1c140d;
+      --grid-line: rgba(202, 178, 102, 0.08);
+      --card-bg: #2a1f16;
+      --text-main: #CAB266;
+      --text-muted: #a19266;
+      --border-color: #4a4036;
+      --primary: #CAB266;
+      --secondary: #6b705c;
+      --glow-color: rgba(202, 178, 102, 0.4);
+      --btn-save-bg: #CAB266;
+      --btn-save-text: #1c140d;
+    }
+
+    /* 5. MATRIX */
+    :root[data-theme="matrix"] {
+      --bg: #020b04;
+      --grid-line: rgba(34, 197, 94, 0.08);
+      --card-bg: #08160a;
+      --text-main: #22c55e;
+      --text-muted: #4ade80;
+      --border-color: #15803d;
+      --primary: #16a34a;
+      --secondary: #14532d;
+      --glow-color: rgba(34, 197, 94, 0.6);
+      --btn-save-bg: #22c55e;
+      --btn-save-text: #020b04;
+    }
+
+    /* 6. SYNTHWAVE */
+    :root[data-theme="synthwave"] {
+      --bg: #1a0b1c; 
+      --grid-line: rgba(168, 85, 247, 0.1);
+      --card-bg: #2c122e;
+      --text-main: #d8b4fe; 
+      --text-muted: #e879f9;
+      --border-color: #7e22ce;
+      --primary: #a855f7;
+      --secondary: #9333ea;
+      --glow-color: rgba(168, 85, 247, 0.6);
+      --btn-save-bg: #a855f7;
+      --btn-save-text: #ffffff;
+    }
+
+    /* 7. NORDIC */
+    :root[data-theme="nordic"] {
+      --bg: #0b1329;
+      --grid-line: rgba(96, 165, 250, 0.08);
+      --card-bg: #132247;
+      --text-main: #e2e8f0;
+      --text-muted: #60a5fa;
+      --border-color: #1d4ed8;
+      --primary: #3b82f6;
+      --secondary: #2563eb;
+      --glow-color: rgba(96, 165, 250, 0.55);
+      --btn-save-bg: #3b82f6;
+      --btn-save-text: #ffffff;
+    }
+
+    /* 8. LOVE */
+    :root[data-theme="love"] {
+      --bg: #1a0307;
+      --grid-line: rgba(239, 68, 68, 0.1);
+      --card-bg: #2a060c;
+      --text-main: #fca5a5;
+      --text-muted: #f87171;
+      --border-color: #991b1b;
+      --primary: #ef4444;
+      --secondary: #dc2626;
+      --glow-color: rgba(239, 68, 68, 0.6);
+      --btn-save-bg: #ef4444;
+      --btn-save-text: #ffffff;
+    }
+
+    /* 9. BUBBLY */
+    :root[data-theme="bubbly"] {
+      --bg: #240a17;
+      --grid-line: rgba(236, 72, 153, 0.1);
+      --card-bg: #381024;
+      --text-main: #fbcfe8;
+      --text-muted: #f472b6;
+      --border-color: #db2777;
+      --primary: #ec4899;
+      --secondary: #be185d;
+      --glow-color: rgba(236, 72, 153, 0.6);
+      --btn-save-bg: #ec4899;
+      --btn-save-text: #ffffff;
+    }
+
+    /* 10. TRICOLOUR */
+    :root[data-theme="tricolour"] {
+      --bg: #180e08;
+      --grid-line: rgba(205, 127, 50, 0.12);
+      --card-bg: #26170d;
+      --text-main: #cd7f32;
+      --text-muted: #e2e8f0;
+      --border-color: #8c4a19;
+      --primary: #cd7f32;
+      --secondary: #cbd5e1;
+      --glow-color: rgba(205, 127, 50, 0.6);
+      --btn-save-bg: #cd7f32;
+      --btn-save-text: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg);
+      background-image:
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+      background-size: 28px 28px;
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 1.25rem;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    #nodeCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: auto;
+    }
+
+    .container {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 1650px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      padding: 1.25rem;
+      background-color: var(--card-bg);
+      border-radius: 16px;
+      border: 2px solid var(--border-color);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .brand {
+      flex: 1 1 300px;
+    }
+
+    .brand h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .brand p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: 4px;
+      word-break: break-word;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.6rem;
+      flex: 1 1 auto;
+      justify-content: flex-end;
+    }
+
+    .btn, select {
+      padding: 0.6rem 1rem;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      border: 2px solid var(--border-color);
+      background: var(--card-bg);
+      color: var(--text-main);
+      font-family: inherit;
+    }
+
+    .btn:hover, select:hover, .btn:focus-visible, select:focus-visible {
+      border-color: var(--primary);
+      box-shadow: 0 0 12px var(--glow-color);
+      outline: none;
+    }
+
+    .btn-save {
+      background-color: var(--btn-save-bg) !important;
+      color: var(--btn-save-text) !important;
+      border-color: var(--btn-save-bg) !important;
+      font-weight: 800;
+      box-shadow: 0 2px 10px var(--glow-color);
+    }
+
+    .btn-save:hover {
+      opacity: 0.9;
+      box-shadow: 0 0 15px var(--glow-color);
+    }
+
+    .btn-add-sched {
+      background: var(--card-bg);
+      color: var(--text-main);
+      border-color: var(--border-color);
+    }
+
+    .btn-pdf {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      box-shadow: 0 4px 15px var(--glow-color);
+    }
+
+    .filter-bar {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+      overflow-x: auto;
+      padding-bottom: 0.4rem;
+      -webkit-overflow-scrolling: touch;
+      align-items: center;
+    }
+
+    .filter-chip {
+      background: var(--card-bg);
+      border: 2px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .filter-chip.active, .filter-chip:hover, .filter-chip:focus-visible {
+      border-color: var(--primary);
+      color: var(--primary);
+      box-shadow: 0 0 10px var(--glow-color);
+      outline: none;
+    }
+
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 0.85rem;
+      width: 100%;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 2px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.25rem;
+      position: relative;
+      cursor: pointer;
+      transform: scale(1);
+      transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                  box-shadow 0.25s ease,
+                  border-color 0.25s ease;
+      user-select: none;
+    }
+
+    .card:hover {
+      transform: scale(1.02) translateY(-3px);
+      border-color: var(--primary);
+      box-shadow: 0 0 18px var(--glow-color);
+      z-index: 25;
+    }
+
+    .card.pressed {
+      transform: scale(1.04) translateY(-4px);
+      border-color: var(--primary);
+      box-shadow: 0 0 28px var(--glow-color), 0 0 10px var(--secondary);
+      z-index: 30;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 0.25rem 0.6rem;
+      border-radius: 8px;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .icon-btn {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      border-radius: 8px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.82rem;
+    }
+
+    .icon-btn:hover, .icon-btn:focus-visible, .icon-btn.active-edit {
+      color: var(--primary);
+      border-color: var(--primary);
+      box-shadow: 0 0 8px var(--glow-color);
+      outline: none;
+    }
+
+    .icon-btn-delete:hover, .icon-btn-delete:focus-visible {
+      color: #ef4444 !important;
+      border-color: #ef4444 !important;
+      box-shadow: 0 0 8px rgba(239, 68, 68, 0.6) !important;
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+      color: var(--text-main);
+      line-height: 1.3;
+    }
+
+    .slots-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 2px dashed var(--border-color);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .slot-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .slot-row a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .slot-row i {
+      color: var(--primary);
+      width: 16px;
+      text-align: center;
+    }
+
+    .card-details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, opacity 0.35s ease;
+      opacity: 0;
+      margin-top: 0;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      background: rgba(0, 0, 0, 0.04);
+      border-radius: 8px;
+    }
+
+    .card.pressed .card-details {
+      max-height: 200px;
+      opacity: 1;
+      margin-top: 0.75rem;
+      padding: 0.6rem 0.8rem;
+      border: 1px dashed var(--primary);
+    }
+
+    [contenteditable="true"] {
+      outline: 2px dashed var(--primary) !important;
+      background: rgba(255, 255, 255, 0.08) !important;
+      border-radius: 4px;
+      padding: 2px 4px;
+      cursor: text;
+    }
+
+    .add-slot-btn {
+      display: none;
+      width: 100%;
+      margin-top: 5px;
+      border: 1px dashed var(--primary);
+      height: 28px;
+    }
+
+    .is-editing .add-slot-btn {
+      display: flex;
+    }
+
+    footer.app-footer {
+      text-align: center;
+      margin-top: 2rem;
+      padding: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-top: 1px dashed var(--border-color);
+    }
+
+    #saveToast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--card-bg);
+      color: var(--text-main);
+      border: 2px solid var(--primary);
+      box-shadow: 0 0 20px var(--glow-color);
+      padding: 0.8rem 1.4rem;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      z-index: 1000;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+    }
+
+    #saveToast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+      body { padding: 0.75rem; }
+      header { flex-direction: column; align-items: stretch; }
+      .toolbar { justify-content: stretch; }
+      .btn, select { flex: 1 1 auto; }
+      .schedule-grid { grid-template-columns: 1fr; }
+      #saveToast { bottom: 1rem; right: 1rem; left: 1rem; text-align: center; justify-content: center; }
+    }
+
+    @media print {
+      #nodeCanvas, .toolbar, .filter-bar, #saveToast, .icon-btn { display: none !important; }
+      body { background: #fff !important; color: #000 !important; }
+      .card { border: 1px solid #000 !important; box-shadow: none !important; transform: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <canvas id="nodeCanvas"></canvas>
+
+  <div class="container" id="scheduleCanvas">
+    <header>
+      <div class="brand">
+        <h1 class="editable-group">
+          <span class="editable-field" contenteditable="false">Bryan Jay Madrideo Lumabas</span>
+          <button class="icon-btn" onclick="editSpecificCard(this, event)" title="Edit Name"><i class="fa-solid fa-pen"></i></button>
+        </h1>
+        <p class="editable-field" contenteditable="false">PARTIDO STATE UNIVERSITY • BSIT 3D • FIRST SEMESTER AY 2026–2027 (21.0 UNITS)</p>
+      </div>
+
+      <div class="toolbar">
+        <select id="themeSelect" onchange="changeTheme(this.value)">
+          <option value="light" selected>Light</option>
+          <option value="dark">Dark</option>
+          <option value="party">Party</option>
+          <option value="earthlings">Earthlings</option>
+          <option value="matrix">Matrix</option>
+          <option value="synthwave">Synthwave</option>
+          <option value="nordic">Nordic</option>
+          <option value="love">Love</option>
+          <option value="bubbly">Bubbly</option>
+          <option value="tricolour">Tricolour</option>
+        </select>
+
+        <button class="btn btn-save" onclick="saveScheduleState(true)">
+          <i class="fa-solid fa-floppy-disk"></i> Save
+        </button>
+
+        <button class="btn btn-add-sched" id="addSchedBtn" onclick="addSchedule()">
+          <i class="fa-solid fa-plus"></i> ADD SCHED
+        </button>
+
+        <button class="btn btn-pdf" onclick="downloadLongPDF()">
+          <i class="fa-solid fa-file-pdf"></i> Export PDF
+        </button>
+      </div>
+    </header>
+
+    <div class="filter-bar">
+      <button class="filter-chip active" onclick="filterDay('all', this)">All Days</button>
+      <button class="filter-chip" onclick="filterDay('Monday', this)">Monday</button>
+      <button class="filter-chip" onclick="filterDay('Tuesday', this)">Tuesday</button>
+      <button class="filter-chip" onclick="filterDay('Wednesday', this)">Wednesday</button>
+      <button class="filter-chip" onclick="filterDay('Thursday', this)">Thursday</button>
+      <button class="filter-chip" onclick="filterDay('Friday', this)">Friday</button>
+      <button class="filter-chip add-day-btn" onclick="addDay()">+ ADD DAY</button>
+    </div>
+
+    <div class="schedule-grid" id="gridContainer">
+
+      <!-- Subject 1: C216 -->
+      <div class="card" data-days="Monday Wednesday Friday" onclick="toggleCardPress(this, event)">
+        <div class="card-header">
+          <span class="badge editable-field" contenteditable="false">C216 • IM1</span>
+          <div class="card-actions">
+            <button class="icon-btn" onclick="editSpecificCard(this, event)" title="Edit Subject"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="icon-btn icon-btn-delete" onclick="deleteScheduleCard(this, event)" title="Delete Card"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+        <h2 class="card-title editable-field" contenteditable="false">Advanced Database Systems</h2>
+        <div class="slots-list">
+          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Mon 3:00–4:00 PM (IITRM5)</span></div>
+          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Wed 8:00–10:00 AM (IITONLINE3)</span></div>
+          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Fri 1:00–3:00 PM (IITRM5)</span></div>
+          <div class="slot-row"><i class="fa-solid fa-user-tie"></i> <span class="editable-field" contenteditable="false">Instructor: J. Capucao</span></div>
+          <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
+        </div>
+        <div class="card-details">
+          <p><i class="fa-solid fa-circle-info"></i> <strong>Units:</strong> 3.0 (Lab 1.0)</p>
+          <p><i class="fa-solid fa-location-dot"></i> <strong>Status:</strong> Active Enrolled Class</p>
+        </div>
+      </div>
+
+      <!-- Subject 2: C217 -->
+      <div class="card" data-days="Monday Tuesday Thursday" onclick="toggleCardPress(this, event)">
+        <div class="card-header">
+          <span class="badge editable-field" contenteditable="false">C217 • NET2</span>
+          <div class="card-actions">
+            <button class="icon-btn" onclick="editSpecificCard(this, event)" title="Edit Subject"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="icon-btn icon-btn-delete" onclick="deleteScheduleCard(this, event)" title="Delete Card"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+        <h2 class="card-title editable-field" contenteditable="false">Networking 2</h2>
+        <div class="slots-list">
+          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Mon 11:00 AM–12:00 PM (IITRM6)</span></div>
+          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Tue 10:00 AM–12:00 PM (IITRM6)</span></div>
+          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Thu 10:00 AM–12:00 PM (IITRM12)</span></div>
+          <div class="slot-row"><i class="fa-solid fa-user-tie"></i> <span class="editable-field" contenteditable="false">Instructor: M. Indico</span></div>
+          <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
+        </div>
+        <div class="card-details">
+          <p><i class="fa-solid fa-circle-info"></i> <strong>Units:</strong> 3.0 (Lab 1.0)</p>
+          <p><i class="fa-solid fa-location-dot"></i> <strong>Status:</strong> Active Enrolled Class</p>
+        </div>
+      </div>
+
+      <!-- Subject 3: C218 -->
+      <div class="card" data-days="Wednesday Thursday Friday" onclick="toggleCardPress(this, event)">
+        <div class="card-header">
+          <span class="badge editable-field" contenteditable="false">C218 • IAS1</span>
+          <div class="card-actions">
+            <button class="icon-btn" onclick="editSpecificCard(this, event)" title="Edit Subject"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="icon-btn icon-btn-delete" onclick="deleteScheduleCard(this, event)" title="Delete Card"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+        <h2 class="card-title editable-field" contenteditable="false">Information Assurance & Security 1</h2>
+        <div class="slots-list">
+          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Wed 3:00–4:00 PM (IITRM6)</span></div>
+          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Thu 8:00–10:00 AM (IITRM6)</span></div>
+          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Fri 8:00–10:00 AM (IITONLINE1)</span></div>
+          <div class="slot-row"><i class="fa-solid fa-user-tie"></i> <span class="editable-field" contenteditable="false">Instructor: D. Peñas</span></div>
+          <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
+        </div>
+        <div class="card-details">
+          <p><i class="fa-solid fa-circle-info"></i> <strong>Units:</strong> 3.0 (Lab 1.0)</p>
+          <p><i class="fa-solid fa-location-dot"></i> <strong>Status:</strong> Active Enrolled Class</p>
+        </div>
+      </div>
+
+      <!-- Subject 4: C219 -->
+      <div class="card" data-days="Tuesday Thursday Friday" onclick="toggleCardPress(this, event)">
+        <div class="card-header">
+          <span class="badge editable-field" contenteditable="false">C219 • WS1</span>
+          <div class="card-actions">
+            <button class="icon-btn" onclick="editSpecificCard(this, event)" title="Edit Subject"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="icon-btn icon-btn-delete" onclick="deleteScheduleCard(this, event)" title="Delete Card"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+        <h2 class="card-title editable-field" contenteditable="false">Web Systems and Technologies</h2>
+        <div class="slots-list">
+          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Tue 8:00–10:00 AM (ITBLENDED3)</span></div>
+          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Thu 3:00–4:00 PM (IITRM7)</span></div>
+          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Fri 3:00–5:00 PM (IITRM7)</span></div>
+          <div class="slot-row"><i class="fa-solid fa-user-tie"></i> <span class="editable-field" contenteditable="false">Instructor: Sa. Briones</span></div>
+          <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
+        </div>
+        <div class="card-details">
+          <p><i class="fa-solid fa-circle-info"></i> <strong>Units:</strong> 3.0 (Lab 1.0)</p>
+          <p><i class="fa-solid fa-location-dot"></i> <strong>Status:</strong> Active Enrolled Class</p>
+        </div>
+      </div>
+
+      <!-- Subject 5: C220 -->
+      <div class="card" data-days="Monday Tuesday" onclick="toggleCardPress(this, event)">
+        <div class="card-header">
+          <span class="badge editable-field" contenteditable="false">C220 • ITP2</span>
+          <div class="card-actions">
+            <button class="icon-btn" onclick="editSpecificCard(this, event)" title="Edit Subject"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="icon-btn icon-btn-delete" onclick="deleteScheduleCard(this, event)" title="Delete Card"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+        <h2 class="card-title editable-field" contenteditable="false">Digital Illustration</h2>
+        <div class="slots-list">
+          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Mon 8:00–11:00 AM (IITRM5)</span></div>
+          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Tue 1:00–3:00 PM (IITRM22)</span></div>
+          <div class="slot-row"><i class="fa-solid fa-user-tie"></i> <span class="editable-field" contenteditable="false">Instructor: NP. Serrano</span></div>
+          <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
+        </div>
+        <div class="card-details">
+          <p><i class="fa-solid fa-circle-info"></i> <strong>Units:</strong> 3.0 (Lab 1.0)</p>
+          <p><i class="fa-solid fa-location-dot"></i> <strong>Status:</strong> Active Enrolled Class</p>
+        </div>
+      </div>
+
+      <!-- Subject 6: C221 -->
+      <div class="card" data-days="Tuesday Wednesday" onclick="toggleCardPress(this, event)">
+        <div class="card-header">
+          <span class="badge editable-field" contenteditable="false">C221 • ITP3</span>
+          <div class="card-actions">
+            <button class="icon-btn" onclick="editSpecificCard(this, event)" title="Edit Subject"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="icon-btn icon-btn-delete" onclick="deleteScheduleCard(this, event)" title="Delete Card"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+        <h2 class="card-title editable-field" contenteditable="false">Service Management</h2>
+        <div class="slots-list">
+          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Tue 3:00–5:00 PM (IITRM13)</span></div>
+          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Wed 2:00–3:00 PM (IITRM13)</span></div>
+          <div class="slot-row"><i class="fa-solid fa-user-tie"></i> <span class="editable-field" contenteditable="false">Instructor: A. Cayao</span></div>
+          <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
+        </div>
+        <div class="card-details">
+          <p><i class="fa-solid fa-circle-info"></i> <strong>Units:</strong> 3.0 (Lab 0.0)</p>
+          <p><i class="fa-solid fa-location-dot"></i> <strong>Status:</strong> Active Enrolled Class</p>
+        </div>
+      </div>
+
+      <!-- Subject 7: C222 -->
+      <div class="card" data-days="Wednesday Friday" onclick="toggleCardPress(this, event)">
+        <div class="card-header">
+          <span class="badge editable-field" contenteditable="false">C222 • GE9</span>
+          <div class="card-actions">
+            <button class="icon-btn" onclick="editSpecificCard(this, event)" title="Edit Subject"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="icon-btn icon-btn-delete" onclick="deleteScheduleCard(this, event)" title="Delete Card"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+        <h2 class="card-title editable-field" contenteditable="false">Life and Works of Rizal</h2>
+        <div class="slots-list">
+          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Wed 10:00 AM–12:00 PM (F2F, RM3101)</span></div>
+          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Fri 10:00 AM–12:00 PM (ITLAB102)</span></div>
+          <div class="slot-row"><i class="fa-solid fa-user-tie"></i> <span class="editable-field" contenteditable="false">Instructor: M. Cielos</span></div>
+          <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
+        </div>
+        <div class="card-details">
+          <p><i class="fa-solid fa-circle-info"></i> <strong>Units:</strong> 3.0 (Lab 0.0)</p>
+          <p><i class="fa-solid fa-location-dot"></i> <strong>Status:</strong> Active Enrolled Class</p>
+        </div>
+      </div>
+
+      <!-- Second Semester Card -->
+      <div class="card" data-days="Monday Tuesday Wednesday Thursday Friday" onclick="toggleCardPress(this, event)">
+        <div class="card-header">
+          <span class="badge editable-field" contenteditable="false">[CLASS•CODE]</span>
+          <div class="card-actions">
+            <button class="icon-btn" onclick="editSpecificCard(this, event)" title="Edit Subject"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="icon-btn icon-btn-delete" onclick="deleteScheduleCard(this, event)" title="Delete Card"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+        <h2 class="card-title editable-field" contenteditable="false">Second Semester</h2>
+        <div class="slots-list">
+          <div class="slot-row">
+            <i class="fa-regular fa-clock"></i>
+            <a href="https://m.youtube.com" target="_blank" class="editable-field" contenteditable="false">To Be Scheduled</a>
+          </div>
+          <div class="slot-row">
+            <i class="fa-regular fa-clock"></i>
+            <span class="editable-field" contenteditable="false">"Our punctuality doesn't arrive on time."</span>
+          </div>
+          <div class="slot-row">
+            <i class="fa-solid fa-user-tie"></i> 
+            <span class="editable-field" contenteditable="false">Instructor: Unknown</span>
+          </div>
+          <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
+        </div>
+        <div class="card-details">
+          <p><i class="fa-solid fa-circle-info"></i> <strong>Units:</strong> <span class="editable-field" contenteditable="false">0.0</span></p>
+          <p><i class="fa-solid fa-location-dot"></i> <strong>Status:</strong> <span class="editable-field" contenteditable="false">Upcoming</span></p>
+        </div>
+      </div>
+
+    </div>
+
+    <footer class="app-footer">
+      ©BJML2026.
+    </footer>
+  </div>
+
+  <div id="saveToast"><i class="fa-solid fa-circle-check"></i> Schedule saved successfully!</div>
+
+<script>
+    /* ===================================================
+       1. ANIMATION CANVAS ENGINE 
+       =================================================== */
+    const canvas = document.getElementById('nodeCanvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
+    let currentTheme = 'light';
+    let waveOffset = 0;
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      initThemeAnimation();
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    function changeTheme(themeName) {
+      currentTheme = themeName;
+      document.documentElement.setAttribute('data-theme', themeName);
+      localStorage.setItem('bsit_schedule_theme', themeName);
+      initThemeAnimation();
+    }
+
+    function spawnFirework() {
+      const targetX = Math.random() * width;
+      const targetY = Math.random() * (height * 0.45) + 60;
+      const count = 40;
+      const bronzeColors = ['#cd7f32', '#e2e8f0', '#8c4a19', '#ffd700', '#c0c0c0'];
+
+      for (let i = 0; i < count; i++) {
+        const angle = (Math.PI * 2 / count) * i;
+        const speed = Math.random() * 5 + 2;
+        particles.push({
+          x: targetX,
+          y: targetY,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          alpha: 1,
+          decay: 0.015 + Math.random() * 0.01,
+          color: bronzeColors[Math.floor(Math.random() * bronzeColors.length)]
+        });
+      }
+    }
+
+    function initThemeAnimation() {
+      particles = [];
+      const density = Math.floor((width * height) / 14000);
+
+      switch (currentTheme) {
+        case 'light':
+          for (let i = 0; i < density; i++) {
+            particles.push({
+              x: Math.random() * width,
+              y: Math.random() * height,
+              vx: (Math.random() - 0.5) * 1.2,
+              vy: (Math.random() - 0.5) * 1.2,
+              radius: Math.random() * 2 + 2
+            });
+          }
+          break;
+
+        case 'dark':
+          for (let i = 0; i < density; i++) {
+            particles.push({
+              x: Math.random() * width,
+              y: Math.random() * height,
+              size: Math.random() * 2.5 + 1,
+              pulseSpeed: 0.02 + Math.random() * 0.03,
+              phase: Math.random() * Math.PI * 2
+            });
+          }
+          break;
+
+        case 'party':
+          for (let i = 0; i < density * 1.2; i++) {
+            particles.push({
+              x: Math.random() * width,
+              y: height + Math.random() * 100,
+              vx: (Math.random() - 0.5) * 2,
+              vy: -(Math.random() * 6 + 3),
+              size: Math.random() * 5 + 3,
+              color: `hsl(${Math.random() * 360}, 100%, 65%)`,
+              spin: Math.random() * Math.PI * 2
+            });
+          }
+          break;
+
+        case 'earthlings': {
+          const treeHeight = height * 0.65;
+          const earthlingColors = ['#CAB266', '#6b705c'];
+          for(let i = 0; i < density * 1.8; i++) {
+            let h = Math.random(); 
+            let y = height - h * treeHeight;
+            let w = (1 - h) * (width * 0.22); 
+            let x = width/2 + (Math.random() - 0.5) * w * 2;
+            particles.push({ 
+              x, y, baseX: x, baseY: y, 
+              vx: 0, vy: 0, 
+              phase: Math.random() * 10,
+              size: Math.random() * 3 + 1.2,
+              color: earthlingColors[Math.floor(Math.random() * earthlingColors.length)]
+            });
+          }
+          break;
+        }
+
+        case 'matrix': {
+          const cols = Math.floor(width / 16);
+          for (let i = 0; i < cols; i++) {
+            for(let j=0; j<2; j++) {
+              particles.push({
+                x: i * 16,
+                y: Math.random() * height,
+                speed: Math.random() * 1.5 + 0.8,
+                val: Math.random() > 0.5 ? '1' : '0'
+              });
+            }
+          }
+          break;
+        }
+
+        case 'synthwave':
+          break;
+
+        case 'nordic':
+          for (let i = 0; i < density * 2; i++) {
+            particles.push({
+              x: Math.random() * width,
+              y: Math.random() * height,
+              vy: Math.random() * 3 + 1.5,
+              vx: (Math.random() - 0.5) * 2,
+              radius: Math.random() * 3 + 1,
+              windFactor: Math.random() * 1.5 + 0.5
+            });
+          }
+          break;
+
+        case 'love':
+          for (let i = 0; i < Math.floor(density / 1.5); i++) {
+            particles.push({
+              x: Math.random() * width,
+              y: height + Math.random() * 50,
+              vy: -(Math.random() * 1.8 + 0.8),
+              vx: (Math.random() - 0.5) * 1.2,
+              size: Math.random() * 28 + 14,
+              alpha: Math.random() * 0.4 + 0.3,
+              wobbleSpeed: Math.random() * 0.04 + 0.01,
+              wobbleDist: Math.random() * 25 + 10,
+              phase: Math.random() * Math.PI * 2
+            });
+          }
+          break;
+
+        case 'bubbly':
+          for (let i = 0; i < density; i++) {
+            particles.push({
+              x: Math.random() * width,
+              y: Math.random() * height,
+              vx: (Math.random() - 0.5) * 1.5,
+              vy: (Math.random() - 0.5) * 1.5,
+              radius: Math.random() * 5 + 2,
+              maxRadius: Math.random() * 25 + 10,
+              alpha: Math.random() * 0.4 + 0.2
+            });
+          }
+          break;
+
+        case 'tricolour':
+          for (let i = 0; i < 6; i++) spawnFirework();
+          break;
+      }
+    }
+    
+    function renderCanvasAnimation() {
+      if(currentTheme === 'matrix') {
+        ctx.fillStyle = 'rgba(2, 11, 4, 0.2)';
+        ctx.fillRect(0, 0, width, height);
+      } else {
+        ctx.clearRect(0, 0, width, height);
+      }
+
+      const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
+
+      switch (currentTheme) {
+        case 'light':
+          particles.forEach((p, i) => {
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x < 0 || p.x > width) p.vx *= -1;
+            if (p.y < 0 || p.y > height) p.vy *= -1;
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fillStyle = primaryColor;
+            ctx.fill();
+
+            for (let j = i + 1; j < particles.length; j++) {
+              let dx = p.x - particles[j].x;
+              let dy = p.y - particles[j].y;
+              let dist = Math.sqrt(dx * dx + dy * dy);
+              if (dist < 110) {
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(particles[j].x, particles[j].y);
+                ctx.strokeStyle = primaryColor;
+                ctx.globalAlpha = (1 - dist / 110) * 0.25;
+                ctx.stroke();
+                ctx.globalAlpha = 1;
+              }
+            }
+          });
+          break;
+
+        case 'dark':
+          particles.forEach((p, idx) => {
+            p.phase += p.pulseSpeed;
+            const opacity = ((Math.sin(p.phase) + 1) / 2) * 0.75 + 0.2;
+
+            ctx.fillStyle = `rgba(248, 250, 252, ${opacity})`;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+
+            for (let j = idx + 1; j < particles.length; j++) {
+              const p2 = particles[j];
+              const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+              if (dist < 110) {
+                ctx.strokeStyle = `rgba(248, 250, 252, ${(1 - dist / 110) * opacity * 0.25})`;
+                ctx.lineWidth = 0.6;
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.stroke();
+              }
+            }
+          });
+          break;
+
+        case 'party':
+          particles.forEach((p) => {
+            p.y += p.vy;
+            p.x += Math.sin(p.spin) * 1.2;
+            p.spin += 0.05;
+            
+            if (p.y < -20) {
+              p.y = height + 20;
+              p.x = Math.random() * width;
+              p.vy = -(Math.random() * 6 + 3);
+            }
+
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.spin);
+            ctx.fillStyle = p.color;
+            ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
+            ctx.restore();
+          });
+          break;
+
+        case 'earthlings':
+          particles.forEach(p => {
+            p.phase += 0.03;
+            p.x = p.baseX + Math.sin(p.phase) * 12;
+            p.y = p.baseY + Math.cos(p.phase * 0.7) * 12;
+
+            const opacity = (Math.sin(p.phase * 2) + 1) / 2;
+            ctx.fillStyle = p.color;
+            ctx.shadowBlur = 8 * opacity;
+            ctx.shadowColor = p.color;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+          });
+          ctx.shadowBlur = 0;
+          break;
+
+        case 'matrix':
+          ctx.font = '13px monospace';
+          particles.forEach(p => {
+            if (Math.random() < 0.15) p.val = Math.random() > 0.5 ? '1' : '0';
+            ctx.fillStyle = '#22c55e';
+            ctx.fillText(p.val, p.x, p.y);
+            p.y += p.speed;
+            if (p.y > height) p.y = -20;
+          });
+          break;
+
+        case 'synthwave': {
+          waveOffset += 0.03;
+          const horizonY = height * 0.45;
+          ctx.lineWidth = 1.5;
+          for (let i = 0; i < 9; i++) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(168, 85, 247, ${0.12 + i * 0.06})`;
+            const yBase = horizonY + Math.pow(i, 2.1) * 5.5;
+            for (let x = 0; x < width; x += 12) {
+              const wave = Math.sin(x * 0.01 + waveOffset + i) * (i * 2);
+              if (x === 0) ctx.moveTo(x, yBase + wave);
+              else ctx.lineTo(x, yBase + wave);
+            }
+            ctx.stroke();
+          }
+          break;
+        }
+
+        case 'nordic':
+          waveOffset += 0.015;
+          particles.forEach(p => {
+            let wind = Math.sin(p.y * 0.008 + waveOffset) * 2.5;
+            p.x += p.vx + wind * p.windFactor;
+            p.y += p.vy;
+
+            if (p.y > height + 10) {
+              p.y = -10;
+              p.x = Math.random() * width;
+            }
+            if (p.x > width + 10) p.x = -10;
+            if (p.x < -10) p.x = width + 10;
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(226, 232, 240, 0.85)';
+            ctx.fill();
+          });
+          break;
+
+        case 'love':
+          particles.forEach(p => {
+            p.phase += p.wobbleSpeed;
+            p.y += p.vy;
+            p.x += Math.sin(p.phase) * 0.8;
+
+            if (p.y < -50) {
+              p.y = height + 50;
+              p.x = Math.random() * width;
+            }
+
+            ctx.font = `${p.size}px sans-serif`;
+            ctx.fillStyle = `rgba(239, 68, 68, ${p.alpha})`;
+            ctx.fillText('♥', p.x, p.y);
+          });
+          break;
+
+        case 'bubbly':
+          particles.forEach(p => {
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x < 0 || p.x > width) p.vx *= -1;
+            if (p.y < 0 || p.y > height) p.vy *= -1;
+            
+            p.radius += 0.08;
+            if(p.radius > p.maxRadius) {
+               p.radius = Math.random() * 3 + 1;
+            }
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.strokeStyle = '#ec4899';
+            ctx.lineWidth = 1.5;
+            ctx.globalAlpha = p.alpha;
+            ctx.stroke();
+            ctx.globalAlpha = 1;
+          });
+          break;
+
+        case 'tricolour':
+          if (Math.random() < 0.08) spawnFirework();
+
+          for (let i = particles.length - 1; i >= 0; i--) {
+            const p = particles[i];
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.04;
+            p.alpha -= p.decay;
+
+            if (p.alpha <= 0) {
+              particles.splice(i, 1);
+            } else {
+              ctx.globalAlpha = p.alpha;
+              ctx.fillStyle = p.color;
+              ctx.shadowBlur = 6;
+              ctx.shadowColor = p.color;
+              ctx.beginPath();
+              ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
+              ctx.fill();
+            }
+          }
+          ctx.globalAlpha = 1;
+          ctx.shadowBlur = 0;
+          break;
+      }
+
+      requestAnimationFrame(renderCanvasAnimation);
+    }
+
+    resizeCanvas();
+    renderCanvasAnimation();
+
+    /* ===================================================
+       2. PERSISTENCE & LOCAL STORAGE LOGIC
+       =================================================== */
+    function saveScheduleState(showToast = false) {
+      lockAllEdits();
+
+      const scheduleContainer = document.getElementById('gridContainer').innerHTML;
+      const headerTitle = document.querySelector('.brand h1 .editable-field').innerText;
+      const headerSubtitle = document.querySelector('.brand p.editable-field').innerText;
+
+      const dataToSave = {
+        grid: scheduleContainer,
+        title: headerTitle,
+        subtitle: headerSubtitle
+      };
+
+      localStorage.setItem('bsit_schedule_data', JSON.stringify(dataToSave));
+
+      if (showToast) {
+        showNotificationToast();
+      }
+    }
+
+    function loadScheduleState() {
+      const savedTheme = localStorage.getItem('bsit_schedule_theme');
+      if (savedTheme) {
+        currentTheme = savedTheme;
+        document.getElementById('themeSelect').value = savedTheme;
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      }
+
+      const savedData = localStorage.getItem('bsit_schedule_data');
+      if (savedData) {
+        try {
+          const parsed = JSON.parse(savedData);
+          if (parsed.grid) document.getElementById('gridContainer').innerHTML = parsed.grid;
+          if (parsed.title) document.querySelector('.brand h1 .editable-field').innerText = parsed.title;
+          if (parsed.subtitle) document.querySelector('.brand p.editable-field').innerText = parsed.subtitle;
+        } catch (e) {
+          console.error("Could not parse saved schedule data", e);
+        }
+      }
+    }
+
+    function showNotificationToast() {
+      const toast = document.getElementById('saveToast');
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+
+    window.addEventListener('DOMContentLoaded', loadScheduleState);
+
+    /* ===================================================
+       3. INTERACTIVE CARD GLOW & ZOOM
+       =================================================== */
+    function toggleCardPress(card, event) {
+      if (event.target.isContentEditable || event.target.closest('.icon-btn') || event.target.tagName === 'A') return;
+
+      const isPressed = card.classList.contains('pressed');
+      document.querySelectorAll('.card.pressed').forEach(c => c.classList.remove('pressed'));
+
+      if (!isPressed) {
+        card.classList.add('pressed');
+      }
+    }
+
+    /* ===================================================
+       4. EDIT MODE STRICT INDIVIDUAL ICONS & ADD SCHED
+       =================================================== */
+    function editSpecificCard(btn, event) {
+      event.stopPropagation();
+      const card = btn.closest('.card, .brand');
+      const fields = card.querySelectorAll('.editable-field');
+      const isCurrentlyEditable = fields[0].getAttribute('contenteditable') === 'true';
+
+      if (isCurrentlyEditable) {
+        fields.forEach(f => f.setAttribute('contenteditable', 'false'));
+        btn.classList.remove('active-edit');
+        btn.innerHTML = btn.closest('.brand') ? '<i class="fa-solid fa-pen"></i>' : '<i class="fa-solid fa-pen-to-square"></i>';
+        card.classList.remove('is-editing');
+      } else {
+        fields.forEach(f => f.setAttribute('contenteditable', 'true'));
+        btn.classList.add('active-edit');
+        btn.innerHTML = '<i class="fa-solid fa-check"></i>';
+        fields[0].focus();
+        card.classList.add('is-editing');
+      }
+    }
+
+    function deleteScheduleCard(btn, event) {
+      event.stopPropagation();
+      const card = btn.closest('.card');
+      const titleEl = card.querySelector('.card-title');
+      const cardTitle = titleEl ? titleEl.innerText.trim() : 'this schedule card';
+      
+      if (confirm(`Are you sure you want to delete "${cardTitle}"?`)) {
+        card.remove();
+        saveScheduleState(false);
+      }
+    }
+
+    function lockAllEdits() {
+      document.querySelectorAll('.editable-field').forEach(f => f.setAttribute('contenteditable', 'false'));
+      document.querySelectorAll('.icon-btn.active-edit').forEach(btn => {
+        btn.classList.remove('active-edit');
+        btn.innerHTML = btn.closest('.brand') ? '<i class="fa-solid fa-pen"></i>' : '<i class="fa-solid fa-pen-to-square"></i>';
+      });
+      document.querySelectorAll('.is-editing').forEach(c => c.classList.remove('is-editing'));
+    }
+
+    function addSlot(btn, event) {
+      event.stopPropagation();
+      const list = btn.parentElement;
+      const newSlot = document.createElement('div');
+      newSlot.className = 'slot-row';
+      newSlot.innerHTML = `<i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="true">New Schedule Slot (+)</span>`;
+      list.insertBefore(newSlot, btn);
+    }
+
+    function addSchedule() {
+      const grid = document.getElementById('gridContainer');
+      const newCard = document.createElement('div');
+      newCard.className = 'card';
+      newCard.setAttribute('data-days', 'Monday Tuesday Wednesday Thursday Friday');
+      newCard.setAttribute('onclick', 'toggleCardPress(this, event)');
+      
+      newCard.innerHTML = `
+        <div class="card-header">
+          <span class="badge editable-field" contenteditable="false">[CLASS•CODE]</span>
+          <div class="card-actions">
+            <button class="icon-btn" onclick="editSpecificCard(this, event)" title="Edit Subject"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="icon-btn icon-btn-delete" onclick="deleteScheduleCard(this, event)" title="Delete Card"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+        <h2 class="card-title editable-field" contenteditable="false">New Subject Title</h2>
+        <div class="slots-list">
+          <div class="slot-row">
+            <i class="fa-regular fa-clock"></i>
+            <span class="editable-field" contenteditable="false">New Day/Time/Room</span>
+          </div>
+          <div class="slot-row">
+            <i class="fa-solid fa-user-tie"></i> 
+            <span class="editable-field" contenteditable="false">Instructor: Unknown</span>
+          </div>
+          <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
+        </div>
+        <div class="card-details">
+          <p><i class="fa-solid fa-circle-info"></i> <strong>Units:</strong> <span class="editable-field" contenteditable="false">0.0</span></p>
+          <p><i class="fa-solid fa-location-dot"></i> <strong>Status:</strong> <span class="editable-field" contenteditable="false">Upcoming</span></p>
+        </div>
+      `;
+      grid.appendChild(newCard);
+
+      const activeFilter = document.querySelector('.filter-chip.active');
+      if (activeFilter && activeFilter.innerText !== 'All Days') {
+        const currentFilterDay = activeFilter.innerText.trim();
+        if (!newCard.getAttribute('data-days').includes(currentFilterDay)) {
+           newCard.setAttribute('data-days', newCard.getAttribute('data-days') + ' ' + currentFilterDay);
+        }
+      }
+    }
+    
+    /* ===================================================
+       5. DAY FILTERING & ADD DAY
+       =================================================== */
+    function filterDay(day, btn) {
+      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+
+      document.querySelectorAll('.card').forEach(card => {
+        const days = card.getAttribute('data-days');
+        if (day === 'all' || (days && days.includes(day))) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function addDay() {
+      const filterBar = document.querySelector('.filter-bar');
+      const newDay = prompt("Enter new day name (e.g. Saturday):");
+      if(newDay && newDay.trim() !== '') {
+        const btn = document.createElement('button');
+        btn.className = 'filter-chip';
+        btn.onclick = function() { filterDay(newDay.trim(), this); };
+        btn.textContent = newDay.trim();
+        filterBar.insertBefore(btn, document.querySelector('.add-day-btn'));
+      }
+    }
+
+    /* ===================================================
+       6. EXPORT PDF
+       =================================================== */
+    function downloadLongPDF() {
+      lockAllEdits();
+      const element = document.getElementById('scheduleCanvas');
+      const opt = {
+        margin:       [0.3, 0.4, 0.3, 0.4],
+        filename:     'BSIT_Schedule_Bryan_Jay_Lumabas.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true },
+        jsPDF:        { unit: 'in', format: [13, 8.5], orientation: 'landscape' }
+      };
+      html2pdf().set(opt).from(element).save();
+    }
+  </script>
+</body>
+</html>
