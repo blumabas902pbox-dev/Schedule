@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BSIT Schedule Canvas — Interactive Studio</title>
+  <title>Class Schedule</title>
 
   <!-- Fonts & FontAwesome -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet" />
@@ -885,12 +885,12 @@
           break;
 
         case 'earthlings': {
-          const treeHeight = height * 0.65;
+          const treeHeight = height * 1.65;
           const earthlingColors = ['#CAB266', '#6b705c'];
-          for(let i = 0; i < density * 1.8; i++) {
+          for(let i = 0; i < density * 1.56; i++) {
             let h = Math.random(); 
             let y = height - h * treeHeight;
-            let w = (1 - h) * (width * 0.22); 
+            let w = (1 - h) * (width * 0.82); 
             let x = width/2 + (Math.random() - 0.5) * w * 2;
             particles.push({ 
               x, y, baseX: x, baseY: y, 
@@ -1404,5 +1404,6 @@
       html2pdf().set(opt).from(element).save();
     }
   </script>
+  
 </body>
 </html>
