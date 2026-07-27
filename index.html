@@ -1076,24 +1076,24 @@
         case 'matrix':
           ctx.font = '13px monospace';
           particles.forEach(p => {
-            if (Math.random() < 0.15) p.val = Math.random() > 0.5 ? '1' : '0';
+            if (Math.random() < 0.25) p.val = Math.random() > 0.5 ? '1' : '0';
             ctx.fillStyle = '#22c55e';
             ctx.fillText(p.val, p.x, p.y);
             p.y += p.speed;
-            if (p.y > height) p.y = -20;
+            if (p.y > height) p.y = -30;
           });
           break;
 
         case 'synthwave': {
-          waveOffset += 0.03;
-          const horizonY = height * 0.45;
+          waveOffset += 0.09;
+          const horizonY = height * 0.95;
           ctx.lineWidth = 1.5;
           for (let i = 0; i < 9; i++) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(168, 85, 247, ${0.12 + i * 0.06})`;
-            const yBase = horizonY + Math.pow(i, 2.1) * 5.5;
+            ctx.strokeStyle = `rgba(168, 85, 247, ${0.12 + i * 0.09})`;
+            const yBase = horizonY + Math.pow(i, 2.5) * 5.5;
             for (let x = 0; x < width; x += 12) {
-              const wave = Math.sin(x * 0.01 + waveOffset + i) * (i * 2);
+              const wave = Math.sin(x * 0.05 + waveOffset + i) * (i * 3);
               if (x === 0) ctx.moveTo(x, yBase + wave);
               else ctx.lineTo(x, yBase + wave);
             }
@@ -1163,7 +1163,7 @@
           break;
 
         case 'tricolour':
-          if (Math.random() < 0.08) spawnFirework();
+          if (Math.random() < 0.09) spawnFirework();
 
           for (let i = particles.length - 1; i >= 0; i--) {
             const p = particles[i];
@@ -1180,7 +1180,7 @@
               ctx.shadowBlur = 6;
               ctx.shadowColor = p.color;
               ctx.beginPath();
-              ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
+              ctx.arc(p.x, p.y, 3.5, 0, Math.PI * 5);
               ctx.fill();
             }
           }
