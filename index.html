@@ -1165,32 +1165,31 @@
           });
           break;
 
-        case 'tricolour':
-          if (Math.random() < 0.010) spawnFirework();
+      case 'tricolour':
+  if (Math.random() < 0.010) spawnFirework();
 
-          for (let i = particles.length - 1; i >= 0; i--) {
-            const p = particles[i];
-            p.x += p.vx;
-            p.y += p.vy;
-            p.vy += 0.04;
-            p.alpha -= p.decay;
+  for (let i = particles.length - 1; i >= 0; i--) {
+    const p = particles[i];
+    p.x += p.vx;
+    p.y += p.vy;
+    p.vy += 0.04;
+    p.alpha -= p.decay;
 
-            if (p.alpha <= 0) {
-              particles.splice(i, 1);
-            } else {
-              ctx.globalAlpha = p.alpha;
-              ctx.fillStyle = p.color;
-              ctx.shadowBlur = 5;
-              ctx.shadowColor = p.color;
-              ctx.beginPath();
-              ctx.arc(p.x, p.y, 0.5, 0, Math.PI * 5);
-              ctx.fill();
-            }
-          }
-          ctx.globalAlpha = 1;
-          ctx.shadowBlur = 0;
-          break;
-      }
+    if (p.alpha <= 0) {
+      particles.splice(i, 1);
+    } else {
+      ctx.globalAlpha = p.alpha;
+      ctx.fillStyle = p.color;
+      ctx.shadowBlur = 5;
+      ctx.shadowColor = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 0.5, 0, Math.PI * 2); // ✅ fixed: full circle
+      ctx.fill();
+    }
+  }
+  ctx.globalAlpha = 1;
+  ctx.shadowBlur = 0;
+  break;
 
       requestAnimationFrame(renderCanvasAnimation);
     }
