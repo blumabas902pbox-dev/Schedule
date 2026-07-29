@@ -14,7 +14,7 @@
 
   <style>
     /* ===================================================
-       THEME PALETTES (Balanced as requested)
+       THEME PALETTES (Re-balanced)
        =================================================== */
 
     /* 1. LIGHT */
@@ -70,84 +70,81 @@
       --border-color: #4a4036;
       --primary: #6B705c;
       --secondary: #CAB266;
-      --glow-color: rgba(171, 178, 122, 0.8); /* Adjusted Light Olive Glow */
+      --glow-color: rgba(107, 112, 92, 0.6); /* Adjusted light olive glow */
       --btn-save-bg: #CAB266;
       --btn-save-text: #1c140d;
     }
 
-    /* 5. MATRIX (Strict: White + Lightest, Normal, Darker, Darkest) */
+    /* 5. MATRIX (Balanced Greens + White) */
     :root[data-theme="matrix"] {
-      --bg: #052e16;          /* Darkest */
-      --grid-line: rgba(187, 247, 208, 0.1);
-      --card-bg: #14532d;     /* Darker */
-      --text-main: #ffffff;   /* White */
-      --text-muted: #bbf7d0;  /* Lightest */
-      --border-color: #22c55e;/* Normal */
-      --primary: #22c55e;     /* Normal */
-      --secondary: #bbf7d0;   /* Lightest */
-      --glow-color: rgba(34, 197, 94, 0.6);
-      --btn-save-bg: #bbf7d0;
-      --btn-save-text: #052e16;
+      --bg: #020b04;
+      --grid-line: rgba(34, 197, 94, 0.08);
+      --card-bg: #08160a;
+      --text-main: #ffffff;      /* White */
+      --text-muted: #bbf7d0;     /* Lightest */
+      --primary: #4ade80;        /* Normal */
+      --border-color: #16a34a;   /* Darker */
+      --secondary: #14532d;      /* Darkest */
+      --glow-color: rgba(74, 222, 128, 0.6);
+      --btn-save-bg: #4ade80;
+      --btn-save-text: #020b04;
     }
 
-    /* 6. SYNTHWAVE (Strict: White + Lightest, Normal, Darker, Darkest) */
+    /* 6. SYNTHWAVE (Balanced Purples + White) */
     :root[data-theme="synthwave"] {
-      --bg: #2e1065;          /* Darkest */
-      --grid-line: rgba(233, 213, 255, 0.1);
-      --card-bg: #4c1d95;     /* Darker */
-      --text-main: #ffffff;   /* White */
-      --text-muted: #e9d5ff;  /* Lightest */
-      --border-color: #a855f7;/* Normal */
-      --primary: #a855f7;     /* Normal */
-      --secondary: #e9d5ff;   /* Lightest */
-      --glow-color: rgba(168, 85, 247, 0.6);
-      --btn-save-bg: #e9d5ff;
-      --btn-save-text: #2e1065;
+      --bg: #1a0b1c; 
+      --grid-line: rgba(168, 85, 247, 0.1);
+      --card-bg: #2c122e;
+      --text-main: #ffffff;      /* White */
+      --text-muted: #e9d5ff;     /* Lightest */
+      --primary: #c084fc;        /* Normal */
+      --border-color: #9333ea;   /* Darker */
+      --secondary: #6b21a8;      /* Darkest */
+      --glow-color: rgba(192, 132, 252, 0.6);
+      --btn-save-bg: #c084fc;
+      --btn-save-text: #1a0b1c;
     }
 
-    /* 7. NORDIC (Strict: White + Lightest, Normal, Darker, Darkest) */
+    /* 7. NORDIC (Balanced Blues + White) */
     :root[data-theme="nordic"] {
-      --bg: #0f172a;          /* Darkest */
-      --grid-line: rgba(191, 219, 254, 0.1);
-      --card-bg: #1e3a8a;     /* Darker */
-      --text-main: #ffffff;   /* White */
-      --text-muted: #bfdbfe;  /* Lightest */
-      --border-color: #3b82f6;/* Normal */
-      --primary: #3b82f6;     /* Normal */
-      --secondary: #bfdbfe;   /* Lightest */
-      --glow-color: rgba(59, 130, 246, 0.6);
-      --btn-save-bg: #bfdbfe;
-      --btn-save-text: #0f172a;
+      --bg: #0b1329;
+      --card-bg: #132247;
+      --text-main: #ffffff;      /* White */
+      --text-muted: #bfdbfe;     /* Lightest */
+      --primary: #60a5fa;        /* Normal */
+      --border-color: #2563eb;   /* Darker */
+      --secondary: #1e40af;      /* Darkest */
+      --glow-color: rgba(96, 165, 250, 0.6);
+      --btn-save-bg: #60a5fa;
+      --btn-save-text: #0b1329;
     }
 
-    /* 8. LOVE (Strict: White + Lightest, Normal, Darker, Darkest) */
+    /* 8. LOVE (Balanced Reds + White) */
     :root[data-theme="love"] {
-      --bg: #450a0a;          /* Darkest */
-      --grid-line: rgba(254, 202, 202, 0.1);
-      --card-bg: #7f1d1d;     /* Darker */
-      --text-main: #ffffff;   /* White */
-      --text-muted: #fecaca;  /* Lightest */
-      --border-color: #ef4444;/* Normal */
-      --primary: #ef4444;     /* Normal */
-      --secondary: #fecaca;   /* Lightest */
-      --glow-color: rgba(239, 68, 68, 0.6);
-      --btn-save-bg: #fecaca;
-      --btn-save-text: #450a0a;
+      --bg: #1a0307;
+      --card-bg: #2a060c;
+      --text-main: #ffffff;      /* White */
+      --text-muted: #fecaca;     /* Lightest */
+      --primary: #f87171;        /* Normal */
+      --border-color: #dc2626;   /* Darker */
+      --secondary: #991b1b;      /* Darkest */
+      --glow-color: rgba(248, 113, 113, 0.6);
+      --btn-save-bg: #f87171;
+      --btn-save-text: #1a0307;
     }
 
-    /* 9. BUBBLY (Strict: White + Lightest, Normal, Darker, Darkest) */
+    /* 9. BUBBLY (Balanced Pinks + White) */
     :root[data-theme="bubbly"] {
-      --bg: #4a044e;          /* Darkest */
-      --grid-line: rgba(251, 207, 232, 0.1);
-      --card-bg: #831843;     /* Darker */
-      --text-main: #ffffff;   /* White */
-      --text-muted: #fbcfe8;  /* Lightest */
-      --border-color: #ec4899;/* Normal */
-      --primary: #ec4899;     /* Normal */
-      --secondary: #fbcfe8;   /* Lightest */
-      --glow-color: rgba(236, 72, 153, 0.6);
-      --btn-save-bg: #fbcfe8;
-      --btn-save-text: #4a044e;
+      --bg: #240a17;
+      --card-bg: #381024;
+      --text-main: #ffffff;      /* White */
+      --text-muted: #fce7f3;     /* Lightest */
+      --primary: #f9a8d4;        /* Normal */
+      --border-color: #ec4899;   /* Darker */
+      --secondary: #be185d;      /* Darkest */
+      --glow-color: rgba(249, 168, 212, 0.6);
+      --btn-save-bg: #f9a8d4;
+      --btn-save-text: #240a17;
     }
 
     /* 10. TRICOLOUR */
@@ -180,9 +177,9 @@
       background-size: 28px 28px;
       color: var(--text-main);
       min-height: 100vh;
-      padding: 1.25rem;
       position: relative;
       overflow-x: hidden;
+      padding: 1.25rem;
     }
 
     #nodeCanvas {
@@ -192,7 +189,7 @@
       width: 100vw;
       height: 100vh;
       z-index: 0;
-      pointer-events: auto;
+      pointer-events: none; /* Let clicks pass through for harp effect */
     }
 
     .container {
@@ -209,7 +206,7 @@
       justify-content: space-between;
       align-items: center;
       gap: 1rem;
-      margin-bottom: 0.5rem; /* Adjusted for calendar sync */
+      margin-bottom: 1.25rem;
       padding: 1.25rem;
       background-color: var(--card-bg);
       border-radius: 16px;
@@ -239,6 +236,38 @@
       word-break: break-word;
     }
 
+    .calendar-sync {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      background: rgba(0,0,0,0.1);
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px dashed var(--border-color);
+      width: fit-content;
+    }
+    
+    .calendar-sync label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .calendar-sync input[type="date"] {
+      background: var(--bg);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 2px 5px;
+      font-family: 'JetBrains Mono', monospace;
+      outline: none;
+    }
+
     .toolbar {
       display: flex;
       flex-wrap: wrap;
@@ -247,28 +276,6 @@
       flex: 1 1 auto;
       justify-content: flex-end;
     }
-
-    .calendar-sync {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 0.5rem;
-      margin-bottom: 1.25rem;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      font-weight: 600;
-    }
-    
-    .calendar-sync input[type="date"] {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      padding: 0.2rem 0.5rem;
-      border-radius: 6px;
-      font-family: 'JetBrains Mono', monospace;
-      outline: none;
-    }
-    .calendar-sync input[type="date"]:focus { border-color: var(--primary); }
 
     .btn, select {
       padding: 0.6rem 1rem;
@@ -338,16 +345,17 @@
       font-weight: 700;
       cursor: pointer;
       white-space: nowrap;
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 0.4rem;
+      gap: 6px;
     }
 
     .filter-chip.active {
-      background-color: var(--primary);
+      background: var(--primary);
       color: var(--bg);
       border-color: var(--primary);
       box-shadow: 0 0 15px var(--glow-color);
+      transform: translateY(-2px);
     }
 
     .filter-chip:hover, .filter-chip:focus-visible {
@@ -355,14 +363,6 @@
       box-shadow: 0 0 10px var(--glow-color);
       outline: none;
     }
-
-    .filter-chip .delete-day-btn {
-      color: inherit;
-      opacity: 0.6;
-      font-size: 0.75rem;
-      padding: 0 2px;
-    }
-    .filter-chip .delete-day-btn:hover { opacity: 1; transform: scale(1.2); }
 
     .schedule-grid {
       display: grid;
@@ -380,9 +380,7 @@
       cursor: pointer;
       transform: scale(1);
       transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-                  box-shadow 0.25s ease,
-                  border-color 0.25s ease,
-                  background-color 0.25s ease;
+                  box-shadow 0.25s ease, border-color 0.25s ease;
       user-select: none;
     }
 
@@ -398,6 +396,29 @@
       border-color: var(--primary);
       box-shadow: 0 0 28px var(--glow-color), 0 0 10px var(--secondary);
       z-index: 30;
+    }
+
+    /* Active Real-Time Highlight Styles */
+    .active-realtime-card {
+      border-color: var(--primary) !important;
+      box-shadow: 0 -10px 30px var(--glow-color), inset 0 0 15px var(--glow-color) !important;
+      transform: scale(1.03);
+    }
+
+    .active-realtime {
+      animation: realTimePulse 2s infinite;
+      color: var(--primary) !important;
+      font-weight: 800;
+      border: 1px dashed var(--primary);
+      padding: 4px 6px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.05);
+    }
+
+    @keyframes realTimePulse {
+      0% { box-shadow: inset 0 0 5px var(--glow-color), 0 0 8px var(--glow-color); }
+      50% { box-shadow: inset 0 0 15px var(--glow-color), 0 0 20px var(--glow-color); }
+      100% { box-shadow: inset 0 0 5px var(--glow-color), 0 0 8px var(--glow-color); }
     }
 
     .card-header {
@@ -474,8 +495,6 @@
       align-items: center;
       gap: 0.5rem;
       transition: all 0.3s ease;
-      padding: 2px 4px;
-      border-radius: 6px;
     }
     
     .slot-row a {
@@ -487,19 +506,6 @@
       color: var(--primary);
       width: 16px;
       text-align: center;
-    }
-
-    /* Real-Time Sync Glow */
-    .real-time-glow {
-      background: rgba(255,255,255,0.05);
-      color: var(--primary) !important;
-      font-weight: 800;
-      animation: slotPulseGlow 2s infinite alternate;
-      border-left: 3px solid var(--primary);
-    }
-    @keyframes slotPulseGlow {
-      from { text-shadow: 0 0 5px var(--glow-color); box-shadow: inset 0 0 5px var(--glow-color); }
-      to { text-shadow: 0 0 15px var(--glow-color), 0 0 20px var(--primary); box-shadow: inset 0 0 15px var(--glow-color); }
     }
 
     .card-details {
@@ -551,8 +557,6 @@
       color: var(--text-muted);
       border-top: 1px dashed var(--border-color);
       background: transparent;
-      position: relative;
-      z-index: 10;
     }
 
     #saveToast {
@@ -582,62 +586,64 @@
       transform: translateY(0);
     }
 
-    /* Modal Styles */
+    /* Modal for PDF Options */
     .modal-overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6);
-      z-index: 9999;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.7);
       display: none;
-      align-items: center; justify-content: center;
-      backdrop-filter: blur(4px);
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      backdrop-filter: blur(5px);
     }
+    .modal-overlay.active { display: flex; }
     .modal-content {
       background: var(--card-bg);
-      border: 2px solid var(--border-color);
+      border: 2px solid var(--primary);
       padding: 2rem;
       border-radius: 16px;
       width: 90%;
       max-width: 500px;
-      box-shadow: 0 10px 40px var(--glow-color);
+      box-shadow: 0 0 30px var(--glow-color);
+      color: var(--text-main);
     }
-    .modal-content h3 { margin-bottom: 1rem; color: var(--text-main); }
-    .modal-content button.pdf-opt-btn {
-      display: block; width: 100%; text-align: left;
-      padding: 0.8rem 1rem; margin-bottom: 0.5rem;
-      background: transparent; border: 1px solid var(--border-color);
-      color: var(--text-main); border-radius: 8px; cursor: pointer;
-      font-family: inherit; font-weight: 600;
+    .modal-content h3 { margin-bottom: 1.5rem; font-weight: 800; color: var(--text-main); }
+    .pdf-options label {
+      display: block;
+      margin-bottom: 1rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      padding: 0.5rem;
+      border: 1px solid transparent;
+      border-radius: 8px;
     }
-    .modal-content button.pdf-opt-btn:hover {
-      background: var(--primary); color: #fff; border-color: var(--primary);
+    .pdf-options label:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: var(--border-color);
     }
-    .modal-close {
-      margin-top: 1rem; width: 100%; text-align: center;
-      background: transparent; border: none; color: var(--text-muted);
-      cursor: pointer; font-weight: bold;
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      margin-top: 1.5rem;
     }
-    .modal-close:hover { color: var(--text-main); }
 
-    /* PDF Rendering Temporary Classes */
-    .pdf-clean { background: #fff !important; color: #000 !important; }
-    .pdf-clean * { color: #000 !important; text-shadow: none !important; border-color: #000 !important; }
-    .pdf-clean .card, .pdf-clean header { background: #fff !important; border: 1px solid #000 !important; box-shadow: none !important; }
-    .pdf-transparent-cards .card, .pdf-transparent-cards header { background: rgba(0,0,0,0.3) !important; backdrop-filter: blur(2px); }
-    .pdf-no-decorations .app-footer { display: none !important; }
-    .pdf-no-decorations .slots-list { border-top: none !important; }
-
-    @media (max-width: 768px) {
-      body { padding: 0.75rem; }
-      header { flex-direction: column; align-items: stretch; }
-      .toolbar { justify-content: stretch; }
-      .btn, select { flex: 1 1 auto; }
-      .schedule-grid { grid-template-columns: 1fr; }
-      #saveToast { bottom: 1rem; right: 1rem; left: 1rem; text-align: center; justify-content: center; }
-      .calendar-sync { justify-content: center; flex-wrap: wrap; }
-    }
+    /* PDF Export Temporary Classes */
+    .pdf-opt-c { background: white !important; color: black !important; background-image: none !important;}
+    .pdf-opt-c .card { background: white !important; border-color: black !important; color: black !important; box-shadow: none !important; }
+    .pdf-opt-c * { color: black !important; text-shadow: none !important; box-shadow: none !important; }
+    .pdf-opt-c .btn, .pdf-opt-c select, .pdf-opt-c .filter-bar, .pdf-opt-c .icon-btn { display: none !important; }
+    
+    .pdf-opt-d .card { background: rgba(0,0,0,0.3) !important; border-color: rgba(255,255,255,0.5) !important; box-shadow: none !important; backdrop-filter: blur(3px); }
+    .pdf-opt-d .btn, .pdf-opt-d select, .pdf-opt-d .filter-bar, .pdf-opt-d .icon-btn { display: none !important; }
+    
+    .pdf-opt-e .app-footer { display: none !important; }
+    .pdf-opt-e .slots-list { border-top: none !important; }
+    .pdf-opt-e .btn, .pdf-opt-e select, .pdf-opt-e .filter-bar, .pdf-opt-e .icon-btn { display: none !important; }
 
     @media print {
-      #nodeCanvas, .toolbar, .filter-bar, #saveToast, .icon-btn, .calendar-sync { display: none !important; }
+      #nodeCanvas, .toolbar, .filter-bar, #saveToast, .icon-btn { display: none !important; }
       body { background: #fff !important; color: #000 !important; }
       .card { border: 1px solid #000 !important; box-shadow: none !important; transform: none !important; }
     }
@@ -656,6 +662,13 @@
           <button class="icon-btn" onclick="editSpecificCard(this, event)" title="Edit Name"><i class="fa-solid fa-pen"></i></button>
         </h1>
         <p class="editable-field" contenteditable="false">PARTIDO STATE UNIVERSITY • FIRST SEMESTER ACADEMIC YEAR = 2026–2027 • BSIT 3D</p>
+        
+        <!-- Interactive Calendar Sync Section -->
+        <div class="calendar-sync">
+          <label>Sem Start: <input type="date" id="semStart" onchange="updateCountdown(); saveScheduleState(true);" /></label>
+          <label>Sem End: <input type="date" id="semEnd" onchange="updateCountdown(); saveScheduleState(true);" /></label>
+          <span id="countdownDisplay" class="badge">Awaiting Sync</span>
+        </div>
       </div>
 
       <div class="toolbar">
@@ -686,21 +699,14 @@
       </div>
     </header>
 
-    <div class="calendar-sync">
-      <i class="fa-solid fa-calendar-check"></i> Sync Real-Time:
-      <input type="date" id="semStart" onchange="checkCalendarSync()" title="Semester Start"> 
-      <span>to</span>
-      <input type="date" id="semEnd" onchange="checkCalendarSync()" title="Semester End">
-    </div>
-
-    <div class="filter-bar">
-      <div class="filter-chip active" onclick="filterDay('all', this)">All Days</div>
-      <div class="filter-chip" onclick="filterDay('Monday', this)">Monday</div>
-      <div class="filter-chip" onclick="filterDay('Tuesday', this)">Tuesday</div>
-      <div class="filter-chip" onclick="filterDay('Wednesday', this)">Wednesday</div>
-      <div class="filter-chip" onclick="filterDay('Thursday', this)">Thursday</div>
-      <div class="filter-chip" onclick="filterDay('Friday', this)">Friday</div>
-      <div class="filter-chip add-day-btn" onclick="addDay()"><i class="fa-solid fa-plus" color="var(--primary)"></i> DAY</div>
+    <div class="filter-bar" id="filterBarContainer">
+      <button class="filter-chip active" onclick="filterDay('all', this)">All Days</button>
+      <button class="filter-chip permanent-day" onclick="filterDay('Monday', this)">Monday</button>
+      <button class="filter-chip permanent-day" onclick="filterDay('Tuesday', this)">Tuesday</button>
+      <button class="filter-chip permanent-day" onclick="filterDay('Wednesday', this)">Wednesday</button>
+      <button class="filter-chip permanent-day" onclick="filterDay('Thursday', this)">Thursday</button>
+      <button class="filter-chip permanent-day" onclick="filterDay('Friday', this)">Friday</button>
+      <button class="filter-chip add-day-btn" onclick="addDay()"><i class="fa-solid fa-plus"></i> DAY</button>
     </div>
 
     <div class="schedule-grid" id="gridContainer">
@@ -862,36 +868,6 @@
         </div>
       </div>
 
-      <!-- Second Semester Card -->
-      <div class="card" data-days="Monday Tuesday Wednesday Thursday Friday" onclick="toggleCardPress(this, event)">
-        <div class="card-header">
-          <span class="badge editable-field" contenteditable="false">[CLASS•CODE]</span>
-          <div class="card-actions">
-            <button class="icon-btn" onclick="editSpecificCard(this, event)" title="Edit Subject"><i class="fa-solid fa-pen-to-square"></i></button>
-            <button class="icon-btn icon-btn-delete" onclick="deleteScheduleCard(this, event)" title="Delete Card"><i class="fa-solid fa-trash"></i></button>
-          </div>
-        </div>
-        <h2 class="card-title editable-field" contenteditable="false">Second Semester</h2>
-        <div class="slots-list">
-          <div class="slot-row">
-            <i class="fa-regular fa-clock"></i>
-            <a href="https://m.youtube.com" target="_blank" class="editable-field" contenteditable="false">To Be Scheduled</a>
-          </div>
-          <div class="slot-row">
-            <i class="fa-regular fa-clock"></i>
-            <span class="editable-field" contenteditable="false">"Our punctuality doesn't arrive on time."</span>
-          </div>
-          <div class="slot-row">
-            <i class="fa-solid fa-user-tie"></i> 
-            <span class="editable-field" contenteditable="false">Instructor: Unknown</span>
-          </div>
-          <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
-        </div>
-        <div class="card-details">
-          <p><i class="fa-solid fa-circle-info"></i> <strong>Units:</strong> <span class="editable-field" contenteditable="false">0.0</span></p>
-          <p><i class="fa-solid fa-location-dot"></i> <strong>Status:</strong> <span class="editable-field" contenteditable="false">Upcoming</span></p>
-        </div>
-      </div>
     </div>
 
     <footer class="app-footer">
@@ -899,22 +875,27 @@
     </footer>
   </div>
 
-  <div id="saveToast"><i class="fa-solid fa-circle-info"></i> <span id="toastMsg">Schedule saved successfully!</span></div>
+  <div id="saveToast"><i class="fa-solid fa-circle-check"></i> <span id="toastMessage">Schedule saved successfully!</span></div>
 
-  <!-- PDF Modal -->
+  <!-- PDF Export Options Modal -->
   <div id="pdfModal" class="modal-overlay">
     <div class="modal-content">
-      <h3><i class="fa-solid fa-file-pdf"></i> Export to PDF</h3>
-      <button class="pdf-opt-btn" onclick="executePdfDownload('A')">A) Downloaded Long Size PDF (Original)</button>
-      <button class="pdf-opt-btn" onclick="executePdfDownload('B')">B) With interactive animation background</button>
-      <button class="pdf-opt-btn" onclick="executePdfDownload('C')">C) Clean text, border and details only</button>
-      <button class="pdf-opt-btn" onclick="executePdfDownload('D')">D) Transparent schedule cards over background</button>
-      <button class="pdf-opt-btn" onclick="executePdfDownload('E')">E) Theme background (No Footnote/Dash lines)</button>
-      <button class="modal-close" onclick="closePdfModal()">Cancel</button>
+      <h3>Select Export Settings</h3>
+      <div class="pdf-options">
+        <label><input type="radio" name="pdfOpt" value="A" checked> A) Original Implementation (No modifications)</label>
+        <label><input type="radio" name="pdfOpt" value="B"> B) Interactive Animation Included (Like a screenshot)</label>
+        <label><input type="radio" name="pdfOpt" value="C"> C) Text Only (No backgrounds, borders & text only)</label>
+        <label><input type="radio" name="pdfOpt" value="D"> D) Animated Background + Transparent Schedule Cards</label>
+        <label><input type="radio" name="pdfOpt" value="E"> E) Animated Background Included + Remove Footnote/Dashes</label>
+      </div>
+      <div class="modal-actions">
+        <button class="btn" style="background: transparent" onclick="closePdfModal()">Cancel</button>
+        <button class="btn btn-save" onclick="executePDFDownload()">Download PDF</button>
+      </div>
     </div>
   </div>
 
-  <script>
+<script>
     /* ===================================================
        1. ANIMATION CANVAS ENGINE 
        =================================================== */
@@ -924,10 +905,19 @@
     let particles = [];
     let currentTheme = 'light';
     let waveOffset = 0;
+    let synthwaveHarpActive = 0; // Harp effect trigger multiplier
+
+    // Synthwave Harp trigger setup
+    document.addEventListener('click', () => {
+      if (currentTheme === 'synthwave') {
+        synthwaveHarpActive = 30; // Amplify wave temporarily
+      }
+    });
 
     function resizeCanvas() {
       width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+      // Use document height to make sure firework hits footer properly
+      height = canvas.height = Math.max(window.innerHeight, document.documentElement.scrollHeight);
       initThemeAnimation();
     }
     window.addEventListener('resize', resizeCanvas);
@@ -937,11 +927,12 @@
       document.documentElement.setAttribute('data-theme', themeName);
       localStorage.setItem('bsit_schedule_theme', themeName);
       initThemeAnimation();
+      checkRealTimeHighlight(document.querySelector('.filter-chip.active').innerText.trim()); // re-trigger glow colors
     }
 
     function spawnFirework() {
       const targetX = Math.random() * width;
-      const targetY = Math.random() * (height * 0.45) + (height * 0.4); // Spawned lower for visibility
+      const targetY = Math.random() * (height * 0.45) + 60;
       const count = 40;
       const bronzeColors = ['#cd7f32', '#e2e8f0', '#8c4a19', '#ffd700', '#c0c0c0'];
 
@@ -962,44 +953,24 @@
 
     function initThemeAnimation() {
       particles = [];
-      const density = Math.floor((width * height) / 14000);
+      const density = Math.floor((width * window.innerHeight) / 14000);
 
       switch (currentTheme) {
         case 'light':
           for (let i = 0; i < density; i++) {
-            particles.push({
-              x: Math.random() * width,
-              y: Math.random() * height,
-              vx: (Math.random() - 0.5) * 1.2,
-              vy: (Math.random() - 0.5) * 1.2,
-              radius: Math.random() * 2 + 2
-            });
+            particles.push({ x: Math.random() * width, y: Math.random() * height, vx: (Math.random() - 0.5) * 1.2, vy: (Math.random() - 0.5) * 1.2, radius: Math.random() * 2 + 2 });
           }
           break;
 
         case 'dark':
           for (let i = 0; i < density; i++) {
-            particles.push({
-              x: Math.random() * width,
-              y: Math.random() * height,
-              size: Math.random() * 2.5 + 1,
-              pulseSpeed: 0.02 + Math.random() * 0.03,
-              phase: Math.random() * Math.PI * 2
-            });
+            particles.push({ x: Math.random() * width, y: Math.random() * height, size: Math.random() * 2.5 + 1, pulseSpeed: 0.02 + Math.random() * 0.03, phase: Math.random() * Math.PI * 2 });
           }
           break;
 
         case 'party':
           for (let i = 0; i < density * 1.2; i++) {
-            particles.push({
-              x: Math.random() * width,
-              y: height + Math.random() * 100,
-              vx: (Math.random() - 0.5) * 2,
-              vy: -(Math.random() * 6 + 3),
-              size: Math.random() * 5 + 3,
-              color: `hsl(${Math.random() * 360}, 100%, 65%)`,
-              spin: Math.random() * Math.PI * 2
-            });
+            particles.push({ x: Math.random() * width, y: height + Math.random() * 100, vx: (Math.random() - 0.5) * 2, vy: -(Math.random() * 6 + 3), size: Math.random() * 5 + 3, color: `hsl(${Math.random() * 360}, 100%, 65%)`, spin: Math.random() * Math.PI * 2 });
           }
           break;
 
@@ -1007,30 +978,22 @@
           const treeHeight = height * 0.95;
           const earthlingColors = ['#CAB266', '#6b705c'];
           for(let i = 0; i < density * 1.69; i++) {
-            let h = Math.random(); 
-            let y = height - h * treeHeight;
-            let w = (1 - h) * (width * 0.82); 
-            let x = width/2 + (Math.random() - 0.5) * w * 2;
-            particles.push({ 
-              x, y, baseX: x, baseY: y, 
-              vx: 0, vy: 0, 
-              phase: Math.random() * 10,
-              size: Math.random() * 3 + 1.2,
-              color: earthlingColors[Math.floor(Math.random() * earthlingColors.length)]
-            });
+            let h = Math.random(); let y = height - h * treeHeight; let w = (1 - h) * (width * 0.82); let x = width/2 + (Math.random() - 0.5) * w * 2;
+            particles.push({ x, y, baseX: x, baseY: y, vx: 0, vy: 0, phase: Math.random() * 10, size: Math.random() * 3 + 1.2, color: earthlingColors[Math.floor(Math.random() * earthlingColors.length)] });
           }
           break;
         }
 
         case 'matrix': {
-          const cols = Math.floor(width / 10); // increased density
+          const cols = Math.floor(width / 12); // Increased density
           for (let i = 0; i < cols; i++) {
-            for(let j=0; j<3; j++) {
+            for(let j=0; j<3; j++) { // More vertical code drops
               particles.push({
-                x: i * 10,
+                x: i * 12,
                 y: Math.random() * height,
-                speed: Math.random() * 2 + 0.8,
-                val: Math.random() > 0.2 ? '1' : '0'
+                speed: Math.random() * 2.5 + 0.8,
+                // Random binary & Japanese Katakana for authentic Matrix feel
+                val: Math.random() > 0.5 ? (Math.random() > 0.5 ? '1' : '0') : String.fromCharCode(0x30A0 + Math.random() * 96) 
               });
             }
           }
@@ -1042,44 +1005,19 @@
 
         case 'nordic':
           for (let i = 0; i < density * 2; i++) {
-            particles.push({
-              x: Math.random() * width,
-              y: Math.random() * height,
-              vy: Math.random() * 3 + 1.5,
-              vx: (Math.random() - 0.5) * 2,
-              radius: Math.random() * 3 + 1,
-              windFactor: Math.random() * 1.5 + 0.5
-            });
+            particles.push({ x: Math.random() * width, y: Math.random() * height, vy: Math.random() * 3 + 1.5, vx: (Math.random() - 0.5) * 2, radius: Math.random() * 3 + 1, windFactor: Math.random() * 1.5 + 0.5 });
           }
           break;
 
         case 'love':
           for (let i = 0; i < Math.floor(density / 1.5); i++) {
-            particles.push({
-              x: Math.random() * width,
-              y: height + Math.random() * 50,
-              vy: -(Math.random() * 1.8 + 0.8),
-              vx: (Math.random() - 0.5) * 1.2,
-              size: Math.random() * 28 + 14,
-              alpha: Math.random() * 0.4 + 0.3,
-              wobbleSpeed: Math.random() * 0.04 + 0.01,
-              wobbleDist: Math.random() * 25 + 10,
-              phase: Math.random() * Math.PI * 2
-            });
+            particles.push({ x: Math.random() * width, y: height + Math.random() * 50, vy: -(Math.random() * 1.8 + 0.8), vx: (Math.random() - 0.5) * 1.2, size: Math.random() * 28 + 14, alpha: Math.random() * 0.4 + 0.3, wobbleSpeed: Math.random() * 0.04 + 0.01, wobbleDist: Math.random() * 25 + 10, phase: Math.random() * Math.PI * 2 });
           }
           break;
 
         case 'bubbly':
           for (let i = 0; i < density; i++) {
-            particles.push({
-              x: Math.random() * width,
-              y: Math.random() * height,
-              vx: (Math.random() - 0.5) * 1.5,
-              vy: (Math.random() - 0.5) * 1.5,
-              radius: Math.random() * 5 + 2,
-              maxRadius: Math.random() * 25 + 10,
-              alpha: Math.random() * 0.4 + 0.2
-            });
+            particles.push({ x: Math.random() * width, y: Math.random() * height, vx: (Math.random() - 0.5) * 1.5, vy: (Math.random() - 0.5) * 1.5, radius: Math.random() * 5 + 2, maxRadius: Math.random() * 25 + 10, alpha: Math.random() * 0.4 + 0.2 });
           }
           break;
 
@@ -1090,129 +1028,87 @@
     }
     
     function renderCanvasAnimation() {
-      ctx.clearRect(0, 0, width, height);
+      if(currentTheme === 'matrix') {
+        ctx.fillStyle = 'rgba(2, 11, 4, 0.2)';
+        ctx.fillRect(0, 0, width, height);
+      } else {
+        ctx.clearRect(0, 0, width, height);
+      }
 
       const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
 
       switch (currentTheme) {
         case 'light':
           particles.forEach((p, i) => {
-            p.x += p.vx;
-            p.y += p.vy;
+            p.x += p.vx; p.y += p.vy;
             if (p.x < 0 || p.x > width) p.vx *= -1;
             if (p.y < 0 || p.y > height) p.vy *= -1;
-
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-            ctx.fillStyle = primaryColor;
-            ctx.fill();
-
+            ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fillStyle = primaryColor; ctx.fill();
             for (let j = i + 1; j < particles.length; j++) {
-              let dx = p.x - particles[j].x;
-              let dy = p.y - particles[j].y;
-              let dist = Math.sqrt(dx * dx + dy * dy);
-              if (dist < 110) {
-                ctx.beginPath();
-                ctx.moveTo(p.x, p.y);
-                ctx.lineTo(particles[j].x, particles[j].y);
-                ctx.strokeStyle = primaryColor;
-                ctx.globalAlpha = (1 - dist / 110) * 0.25;
-                ctx.stroke();
-                ctx.globalAlpha = 1;
-              }
+              let dx = p.x - particles[j].x; let dy = p.y - particles[j].y; let dist = Math.sqrt(dx * dx + dy * dy);
+              if (dist < 110) { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(particles[j].x, particles[j].y); ctx.strokeStyle = primaryColor; ctx.globalAlpha = (1 - dist / 110) * 0.25; ctx.stroke(); ctx.globalAlpha = 1; }
             }
           });
           break;
 
         case 'dark':
           particles.forEach((p, idx) => {
-            p.phase += p.pulseSpeed;
-            const opacity = ((Math.sin(p.phase) + 1) / 2) * 0.75 + 0.2;
-
-            ctx.fillStyle = `rgba(248, 250, 252, ${opacity})`;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-            ctx.fill();
-
+            p.phase += p.pulseSpeed; const opacity = ((Math.sin(p.phase) + 1) / 2) * 0.75 + 0.2;
+            ctx.fillStyle = `rgba(248, 250, 252, ${opacity})`; ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
             for (let j = idx + 1; j < particles.length; j++) {
-              const p2 = particles[j];
-              const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-              if (dist < 110) {
-                ctx.strokeStyle = `rgba(248, 250, 252, ${(1 - dist / 110) * opacity * 0.25})`;
-                ctx.lineWidth = 0.6;
-                ctx.beginPath();
-                ctx.moveTo(p.x, p.y);
-                ctx.lineTo(p2.x, p2.y);
-                ctx.stroke();
-              }
+              const p2 = particles[j]; const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+              if (dist < 110) { ctx.strokeStyle = `rgba(248, 250, 252, ${(1 - dist / 110) * opacity * 0.25})`; ctx.lineWidth = 0.6; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke(); }
             }
           });
           break;
 
         case 'party':
           particles.forEach((p) => {
-            p.y += p.vy;
-            p.x += Math.sin(p.spin) * 1.2;
-            p.spin += 0.05;
-            
-            if (p.y < -20) {
-              p.y = height + 20;
-              p.x = Math.random() * width;
-              p.vy = -(Math.random() * 6 + 3);
-            }
-
-            ctx.save();
-            ctx.translate(p.x, p.y);
-            ctx.rotate(p.spin);
-            ctx.fillStyle = p.color;
-            ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
-            ctx.restore();
+            p.y += p.vy; p.x += Math.sin(p.spin) * 1.2; p.spin += 0.05;
+            if (p.y < -20) { p.y = height + 20; p.x = Math.random() * width; p.vy = -(Math.random() * 6 + 3); }
+            ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.spin); ctx.fillStyle = p.color; ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size); ctx.restore();
           });
           break;
 
         case 'earthlings':
           particles.forEach(p => {
-            p.phase += 0.03;
-            p.x = p.baseX + Math.sin(p.phase) * 12;
-            p.y = p.baseY + Math.cos(p.phase * 0.7) * 12;
-
-            const opacity = (Math.sin(p.phase * 2) + 1) / 2;
-            ctx.fillStyle = p.color;
-            ctx.shadowBlur = 8 * opacity;
-            ctx.shadowColor = p.color;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-            ctx.fill();
+            p.phase += 0.03; p.x = p.baseX + Math.sin(p.phase) * 12; p.y = p.baseY + Math.cos(p.phase * 0.7) * 12;
+            const opacity = (Math.sin(p.phase * 2) + 1) / 2; ctx.fillStyle = p.color; ctx.shadowBlur = 8 * opacity; ctx.shadowColor = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
           });
           ctx.shadowBlur = 0;
           break;
 
         case 'matrix':
-          ctx.font = '14px monospace';
+          ctx.font = '16px monospace';
           particles.forEach(p => {
-            if (Math.random() < 0.1) p.val = Math.random() > 0.5 ? '1' : '0';
-            ctx.fillStyle = 'rgba(187, 247, 208, 0.65)'; // Lighter, soothing green
+            if (Math.random() < 0.1) {
+              p.val = Math.random() > 0.5 ? (Math.random() > 0.5 ? '1' : '0') : String.fromCharCode(0x30A0 + Math.random() * 96);
+            }
+            ctx.fillStyle = '#4ade80'; // Bright green text
             ctx.fillText(p.val, p.x, p.y);
             p.y += p.speed;
-            if (p.y > height) p.y = -20;
+            if (p.y > height) p.y = -35;
           });
           break;
 
         case 'synthwave': {
           waveOffset += 0.05;
-          const horizonY = height * 0.85;
+          const horizonY = window.innerHeight * 0.85;
           ctx.lineWidth = 2;
           
-          // Vibrate effect
-          const vibrate = Math.sin(Date.now() * 0.01) * 2; 
+          let waveAmpBoost = 0;
+          if (synthwaveHarpActive > 0) {
+            waveAmpBoost = synthwaveHarpActive;
+            synthwaveHarpActive -= 0.5; // decay the harp effect
+          }
 
           for (let i = 0; i < 9; i++) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(168, 85, 247, ${0.3 + i * 0.07})`;
-            const yBase = horizonY + i * 12 + vibrate;
+            ctx.strokeStyle = `rgba(192, 132, 252, ${0.3 + i * 0.07})`; // Adjusted synth purple
+            const yBase = horizonY + i * 12;
 
             for (let x = 0; x < width; x += 6) { 
-              const wave = Math.sin(x * 0.02 + waveOffset + i) * (20 + i * 5);
+              const wave = Math.sin(x * 0.02 + waveOffset + i) * (20 + i * 5 + waveAmpBoost);
               if (x === 0) ctx.moveTo(x, yBase + wave);
               else ctx.lineTo(x, yBase + wave);
             }
@@ -1224,98 +1120,115 @@
         case 'nordic':
           waveOffset += 0.015;
           particles.forEach(p => {
-            let wind = Math.sin(p.y * 0.008 + waveOffset) * 2.5;
-            p.x += p.vx + wind * p.windFactor;
-            p.y += p.vy;
-
-            if (p.y > height + 10) {
-              p.y = -10;
-              p.x = Math.random() * width;
-            }
+            let wind = Math.sin(p.y * 0.008 + waveOffset) * 2.5; p.x += p.vx + wind * p.windFactor; p.y += p.vy;
+            if (p.y > height + 10) { p.y = -10; p.x = Math.random() * width; }
             if (p.x > width + 10) p.x = -10;
             if (p.x < -10) p.x = width + 10;
-
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(226, 232, 240, 0.85)';
-            ctx.fill();
+            ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fillStyle = 'rgba(226, 232, 240, 0.85)'; ctx.fill();
           });
           break;
 
         case 'love':
           particles.forEach(p => {
-            p.phase += p.wobbleSpeed;
-            p.y += p.vy;
-            p.x += Math.sin(p.phase) * 0.8;
-
-            if (p.y < -50) {
-              p.y = height + 50;
-              p.x = Math.random() * width;
-            }
-
-            ctx.font = `${p.size}px sans-serif`;
-            ctx.fillStyle = `rgba(239, 68, 68, ${p.alpha})`;
-            ctx.fillText('♥', p.x, p.y);
+            p.phase += p.wobbleSpeed; p.y += p.vy; p.x += Math.sin(p.phase) * 0.8;
+            if (p.y < -50) { p.y = height + 50; p.x = Math.random() * width; }
+            ctx.font = `${p.size}px sans-serif`; ctx.fillStyle = `rgba(248, 113, 113, ${p.alpha})`; ctx.fillText('♥', p.x, p.y);
           });
           break;
 
         case 'bubbly':
           particles.forEach(p => {
-            p.x += p.vx;
-            p.y += p.vy;
+            p.x += p.vx; p.y += p.vy;
             if (p.x < 0 || p.x > width) p.vx *= -1;
             if (p.y < 0 || p.y > height) p.vy *= -1;
-            
-            p.radius += 0.08;
-            if(p.radius > p.maxRadius) {
-               p.radius = Math.random() * 3 + 1;
-            }
-
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-            ctx.strokeStyle = '#ec4899';
-            ctx.lineWidth = 1.5;
-            ctx.globalAlpha = p.alpha;
-            ctx.stroke();
-            ctx.globalAlpha = 1;
+            p.radius += 0.08; if(p.radius > p.maxRadius) { p.radius = Math.random() * 3 + 1; }
+            ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.strokeStyle = '#f9a8d4'; ctx.lineWidth = 1.5; ctx.globalAlpha = p.alpha; ctx.stroke(); ctx.globalAlpha = 1;
           });
           break;
 
         case 'tricolour':
           if (Math.random() < 0.08) spawnFirework();
-
           for (let i = particles.length - 1; i >= 0; i--) {
-            const p = particles[i];
-            p.x += p.vx;
-            p.y += p.vy;
-            p.vy += 0.04;
-            p.alpha -= p.decay;
-
-            if (p.alpha <= 0) {
-              particles.splice(i, 1);
-            } else {
-              ctx.globalAlpha = p.alpha;
-              ctx.fillStyle = p.color;
-              ctx.shadowBlur = 6;
-              ctx.shadowColor = p.color;
-              ctx.beginPath();
-              ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
-              ctx.fill();
-            }
+            const p = particles[i]; p.x += p.vx; p.y += p.vy; p.vy += 0.04; p.alpha -= p.decay;
+            if (p.alpha <= 0) { particles.splice(i, 1); } 
+            else { ctx.globalAlpha = p.alpha; ctx.fillStyle = p.color; ctx.shadowBlur = 6; ctx.shadowColor = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2); ctx.fill(); }
           }
-          ctx.globalAlpha = 1;
-          ctx.shadowBlur = 0;
+          ctx.globalAlpha = 1; ctx.shadowBlur = 0;
           break;
       }
       requestAnimationFrame(renderCanvasAnimation);
     }
 
-    resizeCanvas();
-    renderCanvasAnimation();
+      /* ===================================================
+       2. CALENDAR SYNC & REAL-TIME HIGHLIGHTS
+       =================================================== */
+    function updateCountdown() {
+      const startInput = document.getElementById('semStart').value;
+      const endInput = document.getElementById('semEnd').value;
+      const display = document.getElementById('countdownDisplay');
 
+      if(startInput && endInput) {
+        const today = new Date();
+        const endDate = new Date(endInput);
+        const timeDiff = endDate - today;
+        const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+        
+        if (daysLeft < 0) display.innerText = "Semester Ended";
+        else display.innerText = `${daysLeft} Days Left`;
+      }
+    }
 
-        /* ===================================================
-       2. PERSISTENCE & LOCAL STORAGE LOGIC
+    function checkRealTimeHighlight(selectedDay) {
+      document.querySelectorAll('.active-realtime').forEach(el => el.classList.remove('active-realtime'));
+      document.querySelectorAll('.active-realtime-card').forEach(el => el.classList.remove('active-realtime-card'));
+
+      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const now = new Date();
+      const currentDayName = days[now.getDay()];
+
+      // Only glow if viewing "all" or if clicked the actual real current day
+      if (selectedDay !== currentDayName && selectedDay !== 'all') return;
+
+      const currentHour = now.getHours();
+      const currentMins = now.getMinutes();
+      const timeVal = currentHour + (currentMins / 60);
+
+      document.querySelectorAll('.card').forEach(card => {
+        if(card.style.display === 'none') return; // Skip hidden cards
+
+        let cardGlows = false;
+        card.querySelectorAll('.slot-row span').forEach(slot => {
+          const text = slot.innerText;
+          // E.g. checks if "Tue" is inside "Tue 8:00–10:00 AM"
+          if (text.includes(currentDayName.substring(0, 3))) {
+            const timeRegex = /(\d{1,2}):(\d{2})\s*(AM|PM)?\s*[–-]\s*(\d{1,2}):(\d{2})\s*(AM|PM)/i;
+            const match = text.match(timeRegex);
+            
+            if (match) {
+              let startH = parseInt(match[1]); let startM = parseInt(match[2]); let startAmPm = match[3] || match[6];
+              let endH = parseInt(match[4]); let endM = parseInt(match[5]); let endAmPm = match[6];
+
+              if(startAmPm.toUpperCase() === 'PM' && startH !== 12) startH += 12;
+              if(startAmPm.toUpperCase() === 'AM' && startH === 12) startH = 0;
+              if(endAmPm.toUpperCase() === 'PM' && endH !== 12) endH += 12;
+              if(endAmPm.toUpperCase() === 'AM' && endH === 12) endH = 0;
+
+              const startVal = startH + (startM/60);
+              const endVal = endH + (endM/60);
+
+              if (timeVal >= startVal && timeVal <= endVal) {
+                slot.closest('.slot-row').classList.add('active-realtime');
+                cardGlows = true;
+              }
+            }
+          }
+        });
+        if (cardGlows) card.classList.add('active-realtime-card');
+      });
+    }
+
+    /* ===================================================
+       3. PERSISTENCE & LOCAL STORAGE LOGIC
        =================================================== */
     function saveScheduleState(showToast = false) {
       lockAllEdits();
@@ -1323,19 +1236,24 @@
       const scheduleContainer = document.getElementById('gridContainer').innerHTML;
       const headerTitle = document.querySelector('.brand h1 .editable-field').innerText;
       const headerSubtitle = document.querySelector('.brand p.editable-field').innerText;
+      
+      const filterBar = document.getElementById('filterBarContainer').innerHTML;
+      const semStart = document.getElementById('semStart').value;
+      const semEnd = document.getElementById('semEnd').value;
 
       const dataToSave = {
         grid: scheduleContainer,
         title: headerTitle,
         subtitle: headerSubtitle,
-        semStart: document.getElementById('semStart').value,
-        semEnd: document.getElementById('semEnd').value
+        filterBar: filterBar,
+        semStart: semStart,
+        semEnd: semEnd
       };
 
       localStorage.setItem('bsit_schedule_data', JSON.stringify(dataToSave));
 
       if (showToast) {
-        showNotificationToast('Schedule saved successfully!');
+        showNotificationToast("Schedule saved successfully!");
       }
     }
 
@@ -1354,103 +1272,45 @@
           if (parsed.grid) document.getElementById('gridContainer').innerHTML = parsed.grid;
           if (parsed.title) document.querySelector('.brand h1 .editable-field').innerText = parsed.title;
           if (parsed.subtitle) document.querySelector('.brand p.editable-field').innerText = parsed.subtitle;
+          if (parsed.filterBar) document.getElementById('filterBarContainer').innerHTML = parsed.filterBar;
+          
           if (parsed.semStart) document.getElementById('semStart').value = parsed.semStart;
           if (parsed.semEnd) document.getElementById('semEnd').value = parsed.semEnd;
+          
+          updateCountdown();
         } catch (e) {
           console.error("Could not parse saved schedule data", e);
         }
       }
-      checkCalendarSync(false); // load dates without toast
+      
+      // Initially check realtime based on "All Days"
+      checkRealTimeHighlight('all');
     }
 
     function showNotificationToast(msg) {
       const toast = document.getElementById('saveToast');
-      document.getElementById('toastMsg').innerText = msg;
+      document.getElementById('toastMessage').innerText = msg;
       toast.classList.add('show');
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 2500);
+      setTimeout(() => { toast.classList.remove('show'); }, 2500);
     }
 
-    window.addEventListener('DOMContentLoaded', loadScheduleState);
+    window.addEventListener('DOMContentLoaded', () => {
+      loadScheduleState();
+      resizeCanvas(); // Ensure canvas wraps whole document initially
+    });
 
-    /* ===================================================
-       3. INTERACTIVE CARD GLOW & REAL-TIME SYNC
+      /* ===================================================
+       4. INTERACTIVE CARD GLOW & ZOOM
        =================================================== */
-    let semStart = null;
-    let semEnd = null;
-
-    function checkCalendarSync(notify = true) {
-      const start = document.getElementById('semStart').value;
-      const end = document.getElementById('semEnd').value;
-      if (start && end) {
-        semStart = new Date(start);
-        semEnd = new Date(end);
-        if(notify) showNotificationToast('Calendar synchronized! Real-time glow active.');
-        syncRealTimeGlow(); 
-      } else {
-        semStart = null; semEnd = null;
-      }
-    }
-
-    function syncRealTimeGlow() {
-      if (!semStart || !semEnd) return;
-      const now = new Date();
-      
-      if (now < semStart || now > semEnd) {
-        document.querySelectorAll('.real-time-glow').forEach(el => el.classList.remove('real-time-glow'));
-        return;
-      }
-
-      const dayMap = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-      const currentDay = dayMap[now.getDay()];
-      const currentMinutes = now.getHours() * 60 + now.getMinutes();
-
-      document.querySelectorAll('.slot-row span.editable-field').forEach(span => {
-        const text = span.innerText;
-        const match = text.match(/(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\s+(\d{1,2}):(\d{2})\s*(AM|PM)[^\d]+(\d{1,2}):(\d{2})\s*(AM|PM)/i);
-        
-        if (match) {
-          const slotDay = match[1].substring(0,3);
-          if (slotDay === currentDay) {
-            let startH = parseInt(match[2]);
-            if (match[4].toUpperCase() === 'PM' && startH !== 12) startH += 12;
-            if (match[4].toUpperCase() === 'AM' && startH === 12) startH = 0;
-            const startMins = startH * 60 + parseInt(match[3]);
-
-            let endH = parseInt(match[5]);
-            if (match[7].toUpperCase() === 'PM' && endH !== 12) endH += 12;
-            if (match[7].toUpperCase() === 'AM' && endH === 12) endH = 0;
-            const endMins = endH * 60 + parseInt(match[6]);
-
-            if (currentMinutes >= startMins && currentMinutes <= endMins) {
-              span.parentElement.classList.add('real-time-glow');
-            } else {
-              span.parentElement.classList.remove('real-time-glow');
-            }
-          } else {
-            span.parentElement.classList.remove('real-time-glow');
-          }
-        }
-      });
-    }
-    
-    // Check real-time slots every 60 seconds
-    setInterval(syncRealTimeGlow, 60000);
-
     function toggleCardPress(card, event) {
       if (event.target.isContentEditable || event.target.closest('.icon-btn') || event.target.tagName === 'A') return;
-
       const isPressed = card.classList.contains('pressed');
       document.querySelectorAll('.card.pressed').forEach(c => c.classList.remove('pressed'));
-
-      if (!isPressed) {
-        card.classList.add('pressed');
-      }
+      if (!isPressed) card.classList.add('pressed');
     }
 
     /* ===================================================
-       4. EDIT MODE STRICT INDIVIDUAL ICONS & ADD SCHED
+       5. EDIT MODE STRICT INDIVIDUAL ICONS & ADD SCHED
        =================================================== */
     function editSpecificCard(btn, event) {
       event.stopPropagation();
@@ -1477,10 +1337,9 @@
       const card = btn.closest('.card');
       const titleEl = card.querySelector('.card-title');
       const cardTitle = titleEl ? titleEl.innerText.trim() : 'this schedule card';
-      
       if (confirm(`Are you sure you want to delete "${cardTitle}"?`)) {
         card.remove();
-        saveScheduleState(true);
+        saveScheduleState(false);
       }
     }
 
@@ -1519,36 +1378,30 @@
         </div>
         <h2 class="card-title editable-field" contenteditable="false">New Subject Title</h2>
         <div class="slots-list">
-          <div class="slot-row">
-            <i class="fa-regular fa-clock"></i>
-            <span class="editable-field" contenteditable="false">Mon 8:00 AM-9:00 AM (RM1)</span>
-          </div>
-          <div class="slot-row">
-            <i class="fa-solid fa-user-tie"></i> 
-            <span class="editable-field" contenteditable="false">Instructor: Unknown</span>
-          </div>
+          <div class="slot-row"><i class="fa-regular fa-clock"></i><span class="editable-field" contenteditable="false">New Day/Time/Room</span></div>
+          <div class="slot-row"><i class="fa-solid fa-user-tie"></i><span class="editable-field" contenteditable="false">Instructor: Unknown</span></div>
           <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
         </div>
-        <div class="card-details">
-          <p><i class="fa-solid fa-circle-info"></i> <strong>Units:</strong> <span class="editable-field" contenteditable="false">0.0</span></p>
-          <p><i class="fa-solid fa-location-dot"></i> <strong>Status:</strong> <span class="editable-field" contenteditable="false">Upcoming</span></p>
-        </div>
+        <div class="card-details"><p><i class="fa-solid fa-circle-info"></i> <strong>Units:</strong> <span class="editable-field" contenteditable="false">0.0</span></p></div>
       `;
       grid.appendChild(newCard);
 
       const activeFilter = document.querySelector('.filter-chip.active');
-      if (activeFilter && activeFilter.innerText.trim() !== 'All Days') {
-        const currentFilterDay = activeFilter.innerText.replace('✕', '').trim();
+      if (activeFilter && activeFilter.innerText !== 'All Days') {
+        const currentFilterDay = activeFilter.innerText.replace(/[^a-zA-Z]/g, '').trim();
         if (!newCard.getAttribute('data-days').includes(currentFilterDay)) {
            newCard.setAttribute('data-days', newCard.getAttribute('data-days') + ' ' + currentFilterDay);
         }
       }
     }
-
-        /* ===================================================
-       5. DAY FILTERING & ADD/DELETE DAY
+    
+    /* ===================================================
+       6. DAY FILTERING & ADD/REMOVE DAY
        =================================================== */
-    function filterDay(day, btn) {
+    function filterDay(dayRaw, btn) {
+      if(btn.tagName === 'I') return; // Ignore click if on delete icon
+      const day = dayRaw.replace(/[^a-zA-Z]/g, '').trim(); // clean string
+      
       document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
       btn.classList.add('active');
 
@@ -1560,97 +1413,110 @@
           card.style.display = 'none';
         }
       });
+
+      // trigger real-time detection based on active filter
+      checkRealTimeHighlight(day);
     }
 
     function addDay() {
-      const filterBar = document.querySelector('.filter-bar');
+      const filterBar = document.getElementById('filterBarContainer');
       const newDay = prompt("Enter new day name (e.g. Saturday):");
       if(newDay && newDay.trim() !== '') {
         const cleanDay = newDay.trim();
-        const btn = document.createElement('div');
+        const btn = document.createElement('button');
         btn.className = 'filter-chip';
-        btn.innerHTML = `<span onclick="filterDay('${cleanDay}', this.parentElement)">${cleanDay}</span> <i class="fa-solid fa-xmark delete-day-btn" onclick="deleteDay(this.parentElement, event)" title="Remove Day"></i>`;
+        btn.onclick = function(e) { if(e.target.tagName !== 'I') filterDay(cleanDay, this); };
+        btn.innerHTML = `${cleanDay} <i class="fa-solid fa-xmark" style="color:var(--primary);" title="Remove Day" onclick="removeDay(this, event)"></i>`;
         
         filterBar.insertBefore(btn, document.querySelector('.add-day-btn'));
-        showNotificationToast(`Day ${cleanDay} added.`);
+        saveScheduleState();
       }
     }
 
-    function deleteDay(chipEl, event) {
+    function removeDay(icon, event) {
       event.stopPropagation();
-      const dayName = chipEl.querySelector('span').innerText;
-      if (confirm(`Remove ${dayName} tab?`)) {
-        chipEl.remove();
-        filterDay('all', document.querySelector('.filter-chip'));
-        showNotificationToast(`${dayName} removed.`);
+      if(confirm("Are you sure you want to remove this day tab?")) {
+        icon.parentElement.remove();
+        showNotificationToast("Custom day removed");
+        filterDay('all', document.querySelector('.filter-chip')); // fallback to all
+        saveScheduleState();
       }
-    }
+        }
 
-    /* ===================================================
-       6. EXPORT PDF WITH OPTIONS
+      /* ===================================================
+       7. DYNAMIC EXPORT PDF MODAL
        =================================================== */
     function openPdfModal() {
-      document.getElementById('pdfModal').style.display = 'flex';
-    }
-    function closePdfModal() {
-      document.getElementById('pdfModal').style.display = 'none';
-    }
-
-    function executePdfDownload(option) {
-      closePdfModal();
       lockAllEdits();
-      
-      const element = document.getElementById('scheduleCanvas');
-      
-      // Filename construction format: Course/Year_Name_Surname.pdf
-      let nameText = document.querySelector('.brand h1 .editable-field').innerText.trim();
-      let nameFormatted = nameText.replace(/[^a-zA-Z0-9\s]/g, '').split(' ').join('_');
-      let subtitleText = document.querySelector('.brand p.editable-field').innerText;
-      let courseMatch = subtitleText.match(/[A-Z]+\s*\d[A-Z]/i); 
-      let courseFormatted = courseMatch ? courseMatch[0].replace(/\s+/g, '') : 'Course';
-      const pdfFilename = `${courseFormatted}_Schedule_${nameFormatted}.pdf`;
+      document.getElementById('pdfModal').classList.add('active');
+    }
 
-      // Option preparations
-      let tempImg = null;
+    function closePdfModal() {
+      document.getElementById('pdfModal').classList.remove('active');
+    }
+
+    function generateFileName() {
+      const nameText = document.querySelector('.brand h1 .editable-field').innerText.trim().replace(/ /g, '_');
+      const subText = document.querySelector('.brand p.editable-field').innerText.trim();
       
-      if (['B', 'D', 'E'].includes(option)) {
-         // Create canvas image to include background in PDF
-         tempImg = document.createElement('img');
-         // Use a solid background based on theme to ensure no transparency bugs during canvas-to-img
-         let bgCanvas = document.createElement('canvas');
-         bgCanvas.width = canvas.width; bgCanvas.height = canvas.height;
-         let bCtx = bgCanvas.getContext('2d');
-         bCtx.fillStyle = getComputedStyle(document.body).getPropertyValue('--bg').trim();
-         bCtx.fillRect(0,0, bgCanvas.width, bgCanvas.height);
-         bCtx.drawImage(canvas, 0, 0);
-         
-         tempImg.src = bgCanvas.toDataURL('image/jpeg', 1.0);
-         tempImg.style.position = 'absolute';
-         tempImg.style.top = '0'; tempImg.style.left = '0';
-         tempImg.style.width = '100%'; tempImg.style.height = '100%';
-         tempImg.style.zIndex = '-1';
-         tempImg.style.objectFit = 'cover';
-         element.appendChild(tempImg);
+      let dept = "Department";
+      const bsitMatch = subText.match(/BSIT\s*\w*/i);
+      if (bsitMatch) {
+         dept = bsitMatch[0].replace(/ /g, '');
       }
+      return `${dept}_Schedule_${nameText}.pdf`;
+    }
 
-      if (option === 'C') element.classList.add('pdf-clean');
-      if (option === 'D') element.classList.add('pdf-transparent-cards');
-      if (option === 'E') element.classList.add('pdf-no-decorations');
+    function executePDFDownload() {
+      const selectedOption = document.querySelector('input[name="pdfOpt"]:checked').value;
+      const element = document.getElementById('scheduleCanvas');
+      const filename = generateFileName();
 
       const opt = {
-        margin:       [0.2, 0.2, 0.2, 0.2], // Do not modify margins
-        filename:     pdfFilename,
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true, logging: false },
+        margin:       [0.2, 0.2, 0.2, 0.2], // Exact margins retained
+        filename:     filename,
+        image:        { type: 'jpeg', quality: 1 },
+        html2canvas:  { scale: 2, useCORS: true },
         jsPDF:        { unit: 'in', format: [13, 8.5], orientation: 'portrait' }
       };
 
-      html2pdf().set(opt).from(element).save().then(() => {
-        // Cleanup
-        if (tempImg) tempImg.remove();
-        element.classList.remove('pdf-clean', 'pdf-transparent-cards', 'pdf-no-decorations');
-        showNotificationToast('PDF Exported Successfully!');
-      });
+      let bgImage = null;
+
+      // Handle Option CSS Injection
+      if (selectedOption === 'C') {
+        element.classList.add('pdf-opt-c');
+      } else if (selectedOption === 'D') {
+        element.classList.add('pdf-opt-d');
+      } else if (selectedOption === 'E') {
+        element.classList.add('pdf-opt-e');
+      }
+
+      // If B, D, or E is chosen, capture canvas and slap it as background temporarily
+      if (['B', 'D', 'E'].includes(selectedOption)) {
+        const dataUrl = document.getElementById('nodeCanvas').toDataURL('image/png');
+        bgImage = document.createElement('img');
+        bgImage.src = dataUrl;
+        bgImage.style.position = 'absolute';
+        bgImage.style.top = '0';
+        bgImage.style.left = '0';
+        bgImage.style.width = '100%';
+        bgImage.style.height = '100%';
+        bgImage.style.zIndex = '-1';
+        bgImage.style.objectFit = 'cover';
+        element.appendChild(bgImage);
+      }
+
+      closePdfModal();
+      
+      // Delay to ensure DOM paint, then generate PDF
+      setTimeout(() => {
+        html2pdf().set(opt).from(element).save().then(() => {
+          // Cleanup modifications post-generation
+          if (bgImage) bgImage.remove();
+          element.classList.remove('pdf-opt-c', 'pdf-opt-d', 'pdf-opt-e');
+          showNotificationToast("Export completed successfully!");
+        });
+      }, 500);
     }
   </script>
   
