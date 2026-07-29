@@ -977,3 +977,45 @@
     </footer>
   </div>
   
+  <!-- PDF Download Options Modal -->
+  <div class="pdf-modal-overlay" id="pdfModalOverlay">
+    <div class="pdf-modal-content">
+      <h3><i class="fa-solid fa-file-pdf"></i> Export Schedule Options</h3>
+      <div class="pdf-option-group">
+        <label class="pdf-option-item">
+          <input type="checkbox" id="pdfIncludeBg" checked>
+          <span>Include theme background in PDF</span>
+        </label>
+      </div>
+      <div class="pdf-option-group">
+        <label class="pdf-option-item">
+          <input type="radio" name="pdfStyle" value="A" checked>
+          <span><strong>A)</strong> Download Long Size PDF (original implementation) with dash line.</span>
+        </label>
+        <label class="pdf-option-item">
+          <input type="radio" name="pdfStyle" value="B">
+          <span><strong>B)</strong> Download Long Size PDF with interactive animation (as if the site had been screenshot).</span>
+        </label>
+        <label class="pdf-option-item">
+          <input type="radio" name="pdfStyle" value="C">
+          <span><strong>C)</strong> Download Long Size PDF without buttons (from time-sync to Add Day). Just text, border and details.</span>
+        </label>
+        <label class="pdf-option-item">
+          <input type="radio" name="pdfStyle" value="D">
+          <span><strong>D)</strong> Download Long Size PDF with interactive animation, theme background seen from schedule cards, and no buttons.</span>
+        </label>
+        <label class="pdf-option-item">
+          <input type="radio" name="pdfStyle" value="E">
+          <span><strong>E)</strong> Download Long Size PDF without any buttons, interactive animation background visible, without footnote and dash line.</span>
+        </label>
+      </div>
+      <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
+        <button class="btn" onclick="closePdfModal()">Cancel</button>
+        <button class="btn btn-pdf" onclick="executePdfDownload()">Confirm & Download</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="saveToast"><i class="fa-solid fa-circle-check"></i> <span id="toastMsg">Schedule saved successfully!</span></div>
+
+  
