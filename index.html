@@ -1018,4 +1018,770 @@
 
   <div id="saveToast"><i class="fa-solid fa-circle-check"></i> <span id="toastMsg">Schedule saved successfully!</span></div>
 
+  <script>
+    /* ===================================================
+       1. ANIMATION CANVAS ENGINE (Enhanced for All Themes)
+       =================================================== */
+    const canvas = document.getElementById('nodeCanvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
+    let currentTheme = 'light';
+    let waveOffset = 0;
+    let animStartTime = performance.now();
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      initThemeAnimation();
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    function changeTheme(themeName) {
+      currentTheme = themeName;
+      document.documentElement.setAttribute('data-theme', themeName);
+      localStorage.setItem('bsit_schedule_theme', themeName);
+      animStartTime = performance.now();
+      initThemeAnimation();
+    }
+
+    function spawnFirework() {
+      const targetX = Math.random() * width;
+      const targetY = Math.random() * height; // Full screen including footnote
+      const count = 50;
+      const bronzeColors = ['#cd7f32', '#e2e8f0', '#8c4a19', '#ffd700', '#f59e0b', '#fffbeb'];
+
+      for (let i = 0; i < count; i++) {
+        const angle = (Math.PI * 2 / count) * i;
+        const speed = Math.random() * 6 + 2;
+        particles.push({
+          x: targetX,
+          y: targetY,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          alpha: 1,
+          decay: 0.012 + Math.random() * 0.01,
+          color: bronzeColors[Math.floor(Math.random() * bronzeColors.length)]
+        });
+      }
+    }
+
+    function initThemeAnimation() {
+      particles = [];
+      const density = Math.floor((width * height) / 13000);
+
+      switch (currentTheme) {
+        case 'light':
+          for (let i = 0; i < density; i++) {
+            particles.push({
+              x: Math.random() * width,
+              y: Math.random() * height,
+              vx: (Math.random() - 0.5) * 1.2,
+              vy: (Math.random() - 0.5) * 1.2,
+              radius: Math.random() * 2 + 2
+            });
+          }
+          break;
+
+        case 'dark':
+          for (let i = 0; i < density; i++) {
+            particles.push({
+              x: Math.random() * width,
+              y: Math.random() * height,
+              size: Math.random() * 2.5 + 1,
+              pulseSpeed: 0.02 + Math.random() * 0.03,
+              phase: Math.random() * Math.PI * 2
+            });
+          }
+          break;
+
+        case 'party':
+          for (let i = 0; i < density * 1.2; i++) {
+            particles.push({
+              x: Math.random() * width,
+              y: height + Math.random() * 100,
+              vx: (Math.random() - 0.5) * 2,
+              vy: -(Math.random() * 6 + 3),
+              size: Math.random() * 5 + 3,
+              color: `hsl(${Math.random() * 360}, 100%, 65%)`,
+              spin: Math.random() * Math.PI * 2
+            });
+          }
+          break;
+
+        case 'earthlings': {
+          const treeHeight = height * 0.95;
+          const earthlingColors = ['#CAB266', '#8f967a', '#eadeb8'];
+          for(let i = 0; i < density * 1.8; i++) {
+            let h = Math.random(); 
+            let y = height - h * treeHeight;
+            let w = (1 - h) * (width * 0.82); 
+            let x = width/2 + (Math.random() - 0.5) * w * 2;
+            particles.push({ 
+              x, y, baseX: x, baseY: y, 
+              vx: 0, vy: 0, 
+              phase: Math.random() * 10,
+              size: Math.random() * 3 + 1.2,
+              color: earthlingColors[Math.floor(Math.random() * earthlingColors.length)]
+            });
+          }
+          break;
+        }
+
+        case 'matrix': {
+          // Dense matrix binary columns
+          const cols = Math.floor(width / 14);
+          for (let i = 0; i < cols; i++) {
+            for(let j = 0; j < 3; j++) {
+              particles.push({
+                x: i * 14,
+                y: Math.random() * height,
+                speed: Math.random() * 1.8 + 0.8,
+                val: Math.random() > 0.3 ? '1' : '0'
+              });
+            }
+          }
+          break;
+        }
+
+        case 'synthwave':
+          break;
+
+        case 'nordic':
+          for (let i = 0; i < density * 2; i++) {
+            particles.push({
+              x: Math.random() * width,
+              y: Math.random() * height,
+              vy: Math.random() * 3 + 1.5,
+              vx: (Math.random() - 0.5) * 2,
+              radius: Math.random() * 3 + 1,
+              windFactor: Math.random() * 1.5 + 0.5
+            });
+          }
+          break;
+
+        case 'love':
+          for (let i = 0; i < Math.floor(density / 1.5); i++) {
+            particles.push({
+              x: Math.random() * width,
+              y: height + Math.random() * 50,
+              vy: -(Math.random() * 1.8 + 0.8),
+              vx: (Math.random() - 0.5) * 1.2,
+              size: Math.random() * 28 + 14,
+              alpha: Math.random() * 0.4 + 0.3,
+              wobbleSpeed: Math.random() * 0.04 + 0.01,
+              wobbleDist: Math.random() * 25 + 10,
+              phase: Math.random() * Math.PI * 2
+            });
+          }
+          break;
+
+        case 'bubbly':
+          for (let i = 0; i < density; i++) {
+            particles.push({
+              x: Math.random() * width,
+              y: Math.random() * height,
+              vx: (Math.random() - 0.5) * 1.5,
+              vy: (Math.random() - 0.5) * 1.5,
+              radius: Math.random() * 5 + 2,
+              maxRadius: Math.random() * 25 + 10,
+              alpha: Math.random() * 0.4 + 0.2
+            });
+          }
+          break;
+
+        case 'tricolour':
+          for (let i = 0; i < 10; i++) spawnFirework();
+          break;
+      }
+    }
+    
+    function renderCanvasAnimation() {
+      if(currentTheme === 'matrix') {
+        ctx.fillStyle = 'rgba(2, 11, 4, 0.25)';
+        ctx.fillRect(0, 0, width, height);
+      } else {
+        ctx.clearRect(0, 0, width, height);
+      }
+
+      const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
+
+      switch (currentTheme) {
+        case 'light':
+          particles.forEach((p, i) => {
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x < 0 || p.x > width) p.vx *= -1;
+            if (p.y < 0 || p.y > height) p.vy *= -1;
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fillStyle = primaryColor;
+            ctx.fill();
+
+            for (let j = i + 1; j < particles.length; j++) {
+              let dx = p.x - particles[j].x;
+              let dy = p.y - particles[j].y;
+              let dist = Math.sqrt(dx * dx + dy * dy);
+              if (dist < 110) {
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(particles[j].x, particles[j].y);
+                ctx.strokeStyle = primaryColor;
+                ctx.globalAlpha = (1 - dist / 110) * 0.25;
+                ctx.stroke();
+                ctx.globalAlpha = 1;
+              }
+            }
+          });
+          break;
+
+        case 'dark':
+          particles.forEach((p, idx) => {
+            p.phase += p.pulseSpeed;
+            const opacity = ((Math.sin(p.phase) + 1) / 2) * 0.75 + 0.2;
+
+            ctx.fillStyle = `rgba(248, 250, 252, ${opacity})`;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+
+            for (let j = idx + 1; j < particles.length; j++) {
+              const p2 = particles[j];
+              const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+              if (dist < 110) {
+                ctx.strokeStyle = `rgba(248, 250, 252, ${(1 - dist / 110) * opacity * 0.25})`;
+                ctx.lineWidth = 0.6;
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.stroke();
+              }
+            }
+          });
+          break;
+
+        case 'party':
+          particles.forEach((p) => {
+            p.y += p.vy;
+            p.x += Math.sin(p.spin) * 1.2;
+            p.spin += 0.05;
+            
+            if (p.y < -20) {
+              p.y = height + 20;
+              p.x = Math.random() * width;
+              p.vy = -(Math.random() * 6 + 3);
+            }
+
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.spin);
+            ctx.fillStyle = p.color;
+            ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
+            ctx.restore();
+          });
+          break;
+
+        case 'earthlings':
+          particles.forEach(p => {
+            p.phase += 0.03;
+            p.x = p.baseX + Math.sin(p.phase) * 12;
+            p.y = p.baseY + Math.cos(p.phase * 0.7) * 12;
+
+            const opacity = (Math.sin(p.phase * 2) + 1) / 2;
+            ctx.fillStyle = p.color;
+            ctx.shadowBlur = 8 * opacity;
+            ctx.shadowColor = p.color;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+          });
+          ctx.shadowBlur = 0;
+          break;
+
+        case 'matrix':
+          ctx.font = '14px monospace';
+          particles.forEach(p => {
+            if (Math.random() < 0.3) p.val = Math.random() > 0.5 ? '1' : '0';
+            ctx.fillStyle = '#22c55e';
+            ctx.fillText(p.val, p.x, p.y);
+            p.y += p.speed;
+            if (p.y > height) p.y = -35;
+          });
+          break;
+
+        case 'synthwave': {
+          waveOffset += 0.06;
+          const elapsed = performance.now() - animStartTime;
+          // Harp vibration effect after 3 seconds opening (3000ms)
+          const harpVibration = elapsed > 3000 ? Math.sin(performance.now() * 0.015) * 8 : 0;
+          const horizonY = (height * 0.85) + harpVibration;
+          ctx.lineWidth = 2;
+
+          for (let i = 0; i < 11; i++) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(168, 85, 247, ${0.25 + i * 0.06})`;
+            const yBase = horizonY + i * 14;
+
+            for (let x = 0; x < width; x += 6) { 
+              const wave = Math.sin(x * 0.02 + waveOffset + i) * (18 + i * 4);
+              if (x === 0) ctx.moveTo(x, yBase + wave);
+              else ctx.lineTo(x, yBase + wave);
+            }
+            ctx.stroke();
+          }
+          break;
+        }
+
+        case 'nordic':
+          waveOffset += 0.015;
+          particles.forEach(p => {
+            let wind = Math.sin(p.y * 0.008 + waveOffset) * 2.5;
+            p.x += p.vx + wind * p.windFactor;
+            p.y += p.vy;
+
+            if (p.y > height + 10) {
+              p.y = -10;
+              p.x = Math.random() * width;
+            }
+            if (p.x > width + 10) p.x = -10;
+            if (p.x < -10) p.x = width + 10;
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(226, 232, 240, 0.85)';
+            ctx.fill();
+          });
+          break;
+
+        case 'love':
+          particles.forEach(p => {
+            p.phase += p.wobbleSpeed;
+            p.y += p.vy;
+            p.x += Math.sin(p.phase) * 0.8;
+
+            if (p.y < -50) {
+              p.y = height + 50;
+              p.x = Math.random() * width;
+            }
+
+            ctx.font = `${p.size}px sans-serif`;
+            ctx.fillStyle = `rgba(239, 68, 68, ${p.alpha})`;
+            ctx.fillText('♥', p.x, p.y);
+          });
+          break;
+
+        case 'bubbly':
+          particles.forEach(p => {
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x < 0 || p.x > width) p.vx *= -1;
+            if (p.y < 0 || p.y > height) p.vy *= -1;
+            
+            p.radius += 0.08;
+            if(p.radius > p.maxRadius) {
+               p.radius = Math.random() * 3 + 1;
+            }
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.strokeStyle = '#ec4899';
+            ctx.lineWidth = 1.5;
+            ctx.globalAlpha = p.alpha;
+            ctx.stroke();
+            ctx.globalAlpha = 1;
+          });
+          break;
+
+        case 'tricolour':
+          if (Math.random() < 0.12) spawnFirework();
+
+          for (let i = particles.length - 1; i >= 0; i--) {
+            const p = particles[i];
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.04;
+            p.alpha -= p.decay;
+
+            if (p.alpha <= 0) {
+              particles.splice(i, 1);
+            } else {
+              ctx.globalAlpha = p.alpha;
+              ctx.fillStyle = p.color;
+              ctx.shadowBlur = 8;
+              ctx.shadowColor = p.color;
+              ctx.beginPath();
+              ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+              ctx.fill();
+            }
+          }
+          ctx.globalAlpha = 1;
+          ctx.shadowBlur = 0;
+          break;
+      }
+
+      requestAnimationFrame(renderCanvasAnimation);
+    }
+
+    resizeCanvas();
+    renderCanvasAnimation();
+
+        /* ===================================================
+       2. REAL-TIME SCHEDULE SLOT DETECTION & COUNTDOWN
+       =================================================== */
+    function updateRealtimeScheduleGlow() {
+      const now = new Date();
+      const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const currentDayName = daysOfWeek[now.getDay()];
+      const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+      // Clear previous realtime highlights
+      document.querySelectorAll('.slot-row').forEach(row => {
+        row.classList.remove('active-realtime-slot');
+      });
+
+      // Find active slot for today
+      document.querySelectorAll('.card').forEach(card => {
+        const daysAttr = card.getAttribute('data-days') || '';
+        if (daysAttr.includes(currentDayName)) {
+          card.querySelectorAll('.slot-row[data-day]').forEach(row => {
+            const slotDay = row.getAttribute('data-day');
+            const timeRange = row.getAttribute('data-time');
+            if (slotDay === currentDayName && timeRange) {
+              const [startStr, endStr] = timeRange.split('-');
+              const [startH, startM] = startStr.split(':').map(Number);
+              const [endH, endM] = endStr.split(':').map(Number);
+              const startTotal = startH * 60 + startM;
+              const endTotal = endH * 60 + endM;
+
+              if (currentMinutes >= startTotal && currentMinutes <= endTotal) {
+                row.classList.add('active-realtime-slot');
+              }
+            }
+          });
+        }
+      });
+    }
+    setInterval(updateRealtimeScheduleGlow, 30000);
+    window.addEventListener('DOMContentLoaded', updateRealtimeScheduleGlow);
+
+    function updateSemesterCountdown() {
+      const startInput = document.getElementById('semStart').value;
+      const endInput = document.getElementById('semEnd').value;
+      const countdownEl = document.getElementById('countdownNumerics');
+
+      if (!startInput || !endInput) return;
+      const startDate = new Date(startInput);
+      const endDate = new Date(endInput);
+      const today = new Date();
+
+      const diffTime = endDate - today;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      if (diffDays > 0) {
+        countdownEl.innerText = `${diffDays} days left`;
+      } else if (diffDays === 0) {
+        countdownEl.innerText = `Sem ends today!`;
+      } else {
+        countdownEl.innerText = `Sem concluded`;
+      }
+    }
+    window.addEventListener('DOMContentLoaded', updateSemesterCountdown);
+
+    /* ===================================================
+       3. PERSISTENCE & LOCAL STORAGE LOGIC
+       =================================================== */
+    function saveScheduleState(showToast = true, customMsg = "Schedule saved successfully!") {
+      lockAllEdits();
+
+      const scheduleContainer = document.getElementById('gridContainer').innerHTML;
+      const headerTitle = document.querySelector('.brand h1 .editable-field').innerText;
+      const headerSubtitle = document.querySelector('.brand p.editable-field').innerText;
+      const semStart = document.getElementById('semStart').value;
+      const semEnd = document.getElementById('semEnd').value;
+
+      const dataToSave = {
+        grid: scheduleContainer,
+        title: headerTitle,
+        subtitle: headerSubtitle,
+        semStart,
+        semEnd
+      };
+
+      localStorage.setItem('bsit_schedule_data', JSON.stringify(dataToSave));
+
+      if (showToast) {
+        showNotificationToast(customMsg);
+      }
+    }
+
+    function loadScheduleState() {
+      const savedTheme = localStorage.getItem('bsit_schedule_theme');
+      if (savedTheme) {
+        currentTheme = savedTheme;
+        document.getElementById('themeSelect').value = savedTheme;
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      }
+
+      const savedData = localStorage.getItem('bsit_schedule_data');
+      if (savedData) {
+        try {
+          const parsed = JSON.parse(savedData);
+          if (parsed.grid) document.getElementById('gridContainer').innerHTML = parsed.grid;
+          if (parsed.title) document.querySelector('.brand h1 .editable-field').innerText = parsed.title;
+          if (parsed.subtitle) document.querySelector('.brand p.editable-field').innerText = parsed.subtitle;
+          if (parsed.semStart) document.getElementById('semStart').value = parsed.semStart;
+          if (parsed.semEnd) document.getElementById('semEnd').value = parsed.semEnd;
+          updateSemesterCountdown();
+        } catch (e) {
+          console.error("Could not parse saved schedule data", e);
+        }
+      }
+    }
+
+    function showNotificationToast(msg = "Schedule saved successfully!") {
+      const toast = document.getElementById('saveToast');
+      document.getElementById('toastMsg').innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+
+    window.addEventListener('DOMContentLoaded', loadScheduleState);
+
+    /* ===================================================
+       4. INTERACTIVE CARD GLOW & ZOOM
+       =================================================== */
+    function toggleCardPress(card, event) {
+      if (event.target.isContentEditable || event.target.closest('.icon-btn') || event.target.tagName === 'A') return;
+
+      const isPressed = card.classList.contains('pressed');
+      document.querySelectorAll('.card.pressed').forEach(c => c.classList.remove('pressed'));
+
+      if (!isPressed) {
+        card.classList.add('pressed');
+      }
+    }
+
+    /* ===================================================
+       5. EDIT MODE & SCHEDULE MANAGEMENT
+       =================================================== */
+    function editSpecificCard(btn, event) {
+      event.stopPropagation();
+      const card = btn.closest('.card, .brand');
+      const fields = card.querySelectorAll('.editable-field');
+      const isCurrentlyEditable = fields[0].getAttribute('contenteditable') === 'true';
+
+      if (isCurrentlyEditable) {
+        fields.forEach(f => f.setAttribute('contenteditable', 'false'));
+        btn.classList.remove('active-edit');
+        btn.innerHTML = btn.closest('.brand') ? '<i class="fa-solid fa-pen"></i>' : '<i class="fa-solid fa-pen-to-square"></i>';
+        card.classList.remove('is-editing');
+      } else {
+        fields.forEach(f => f.setAttribute('contenteditable', 'true'));
+        btn.classList.add('active-edit');
+        btn.innerHTML = '<i class="fa-solid fa-check"></i>';
+        fields[0].focus();
+        card.classList.add('is-editing');
+      }
+    }
+
+    function deleteScheduleCard(btn, event) {
+      event.stopPropagation();
+      const card = btn.closest('.card');
+      const titleEl = card.querySelector('.card-title');
+      const cardTitle = titleEl ? titleEl.innerText.trim() : 'this schedule card';
+      
+      if (confirm(`Are you sure you want to delete "${cardTitle}"?`)) {
+        card.remove();
+        saveScheduleState(true, "Card deleted successfully!");
+      }
+    }
+
+    function lockAllEdits() {
+      document.querySelectorAll('.editable-field').forEach(f => f.setAttribute('contenteditable', 'false'));
+      document.querySelectorAll('.icon-btn.active-edit').forEach(btn => {
+        btn.classList.remove('active-edit');
+        btn.innerHTML = btn.closest('.brand') ? '<i class="fa-solid fa-pen"></i>' : '<i class="fa-solid fa-pen-to-square"></i>';
+      });
+      document.querySelectorAll('.is-editing').forEach(c => c.classList.remove('is-editing'));
+    }
+
+    function addSlot(btn, event) {
+      event.stopPropagation();
+      const list = btn.parentElement;
+      const newSlot = document.createElement('div');
+      newSlot.className = 'slot-row';
+      newSlot.setAttribute('data-day', 'Monday');
+      newSlot.setAttribute('data-time', '09:00-10:00');
+      newSlot.innerHTML = `<i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="true">Mon 9:00–10:00 AM (ROOM)</span>`;
+      list.insertBefore(newSlot, btn);
+    }
+
+    function addSchedule() {
+      const grid = document.getElementById('gridContainer');
+      const newCard = document.createElement('div');
+      newCard.className = 'card';
+      newCard.setAttribute('data-days', 'Monday Tuesday Wednesday Thursday Friday');
+      newCard.setAttribute('onclick', 'toggleCardPress(this, event)');
+      
+      newCard.innerHTML = `
+        <div class="card-header">
+          <span class="badge editable-field" contenteditable="false">[CLASS•CODE]</span>
+          <div class="card-actions">
+            <button class="icon-btn" onclick="editSpecificCard(this, event)" title="Edit Subject"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="icon-btn icon-btn-delete" onclick="deleteScheduleCard(this, event)" title="Delete Card"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+        <h2 class="card-title editable-field" contenteditable="false">New Subject Title</h2>
+        <div class="slots-list">
+          <div class="slot-row" data-day="Monday" data-time="09:00-10:00">
+            <i class="fa-regular fa-clock"></i>
+            <span class="editable-field" contenteditable="false">Mon 9:00–10:00 AM (ROOM)</span>
+          </div>
+          <div class="slot-row">
+            <i class="fa-solid fa-user-tie"></i> 
+            <span class="editable-field" contenteditable="false">Instructor: Unknown</span>
+          </div>
+          <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
+        </div>
+        <div class="card-details">
+          <p><i class="fa-solid fa-circle-info"></i> <strong>Units:</strong> <span class="editable-field" contenteditable="false">3.0</span></p>
+          <p><i class="fa-solid fa-location-dot"></i> <strong>Status:</strong> <span class="editable-field" contenteditable="false">Active</span></p>
+        </div>
+      `;
+      grid.appendChild(newCard);
+      showNotificationToast("New schedule card added!");
+    }
+
+    /* ===================================================
+       6. DAY FILTERING, ADD/DELETE DAYS (MON-FRI PROTECTED)
+       =================================================== */
+    function filterDay(day, btn) {
+      document.querySelectorAll('.filter-chip').forEach(c => {
+        c.classList.remove('active');
+        c.classList.remove('pressed-glow');
+      });
+      btn.classList.add('active');
+      btn.classList.add('pressed-glow');
+
+      document.querySelectorAll('.card').forEach(card => {
+        const days = card.getAttribute('data-days');
+        if (day === 'all' || (days && days.includes(day))) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function addDay() {
+      const filterBar = document.querySelector('.filter-bar');
+      const newDay = prompt("Enter new day name (e.g. Saturday):");
+      if(newDay && newDay.trim() !== '') {
+        const cleanDay = newDay.trim();
+        const btn = document.createElement('button');
+        btn.className = 'filter-chip';
+        btn.onclick = function() { filterDay(cleanDay, this); };
+        btn.innerHTML = `${cleanDay} <span class="day-delete-x" onclick="deleteDay(event, '${cleanDay}')">&times;</span>`;
+        filterBar.insertBefore(btn, document.querySelector('.add-day-btn'));
+        showNotificationToast(`Day "${cleanDay}" added successfully!`);
+      }
+    }
+
+    function deleteDay(event, dayName) {
+      event.stopPropagation();
+      const protectedDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+      if (protectedDays.includes(dayName)) {
+        showNotificationToast(`Cannot delete protected weekday (${dayName})!`);
+        return;
+      }
+      if (confirm(`Are you sure you want to delete day "${dayName}"?`)) {
+        const chips = document.querySelectorAll('.filter-chip');
+        chips.forEach(c => {
+          if (c.innerText.includes(dayName)) c.remove();
+        });
+        filterDay('all', document.querySelector('.filter-chip'));
+        showNotificationToast(`Day "${dayName}" deleted.`);
+      }
+    }
+
+        /* ===================================================
+       7. PDF EXPORT MODAL & GENERATOR (Options A to E)
+       =================================================== */
+    function openPdfModal() {
+      document.getElementById('pdfModalOverlay').classList.add('show');
+    }
+
+    function closePdfModal() {
+      document.getElementById('pdfModalOverlay').classList.remove('show');
+    }
+
+    function executePdfDownload() {
+      lockAllEdits();
+      closePdfModal();
+
+      const includeBg = document.getElementById('pdfIncludeBg').checked;
+      const selectedStyle = document.querySelector('input[name="pdfStyle"]:checked').value;
+      const element = document.getElementById('scheduleCanvas');
+
+      // Save original inline styles to restore after export
+      const origBg = element.style.background;
+      const origColor = element.style.color;
+
+      // Temporarily adapt view according to A, B, C, D, E options
+      const toolbar = document.querySelector('.toolbar');
+      const filterBar = document.querySelector('.filter-bar');
+      const footer = document.querySelector('.app-footer');
+      const canvasEl = document.getElementById('nodeCanvas');
+
+      let originalToolbarDisplay = toolbar.style.display;
+      let originalFilterDisplay = filterBar.style.display;
+      let originalFooterDisplay = footer.style.display;
+
+      if (!includeBg) {
+        element.style.background = '#ffffff';
+        element.style.color = '#000000';
+      }
+
+      if (selectedStyle === 'C' || selectedStyle === 'D' || selectedStyle === 'E') {
+        toolbar.style.display = 'none';
+        filterBar.style.display = 'none';
+      }
+      if (selectedStyle === 'E') {
+        footer.style.display = 'none';
+      }
+      if (selectedStyle === 'A') {
+        // original with dash line
+      }
+
+      // Dynamic filename based on user formula: Course/Year_Name_Surname.pdf
+      const nameField = document.querySelector('.brand h1 .editable-field').innerText.trim().replace(/\s+/g, '_').replace(/[^\w]/g, '');
+      const subText = document.querySelector('.brand p.editable-field').innerText.trim();
+      let courseYear = "BSIT3D";
+      if (subText.includes("BSIT")) courseYear = "BSIT3D";
+      const filename = `${courseYear}_Schedule_${nameField}.pdf`;
+
+      const opt = {
+        margin:       [0.2, 0.2, 0.2, 0.2],
+        filename:     filename,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true, background: includeBg ? null : '#ffffff' },
+        jsPDF:        { unit: 'in', format: [13, 8.5], orientation: 'portrait' }
+      };
+
+      html2pdf().set(opt).from(element).save().then(() => {
+        // Restore elements
+        element.style.background = origBg;
+        element.style.color = origColor;
+        toolbar.style.display = originalToolbarDisplay;
+        filterBar.style.display = originalFilterDisplay;
+        footer.style.display = originalFooterDisplay;
+        showNotificationToast("PDF exported successfully!");
+      });
+    }
+  </script>
   
+</body>
+</html>
