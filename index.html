@@ -715,66 +715,15 @@
     }
   </style>
 </head>
-<body>
-
-  <canvas id="nodeCanvas"></canvas>
-
-  <div class="container" id="scheduleCanvas">
-    <header>
-      <div class="brand">
-        <h1 class="editable-group">
-          <span class="editable-field" contenteditable="false">Bryan Jay M. Lumabas</span>
-          <button class="icon-btn" onclick="editSpecificCard(this, event)" title="Edit Name"><i class="fa-solid fa-pen"></i></button>
-        </h1>
-        <p class="editable-field" contenteditable="false">PARTIDO STATE UNIVERSITY • FIRST SEMESTER ACADEMIC YEAR = 2026–2027 • BSIT 3D</p>
-        
-        <!-- Interactive Calendar Sync Section -->
-        <div class="calendar-sync">
-          <label>Sem Start: <input type="date" id="semStart" onchange="updateCountdown(); saveScheduleState(true);" /></label>
-          <label>Sem End: <input type="date" id="semEnd" onchange="updateCountdown(); saveScheduleState(true);" /></label>
-          <span id="countdownDisplay" class="badge">Awaiting Sync</span>
-        </div>
-      </div>
-
-      <div class="toolbar">
-        <select id="themeSelect" onchange="changeTheme(this.value)">
-          <option value="light" selected>Light Theme</option>
-          <option value="dark">Dark Theme</option>
-          <option value="party">Party Theme</option>
-          <option value="earthlings">Earth Theme</option>
-          <option value="matrix">Matrix Theme</option>
-          <option value="synthwave">Synthwave Theme</option>
-          <option value="nordic">Nordic Theme</option>
-          <option value="love">Love Theme</option>
-          <option value="bubbly">Bubbly Theme</option>
-          <option value="tricolour">Tricolour Theme</option>
-        </select>
-
-        <button class="btn btn-save" onclick="saveScheduleState(true)">
-          <i class="fa-solid fa-floppy-disk"></i> Save
-        </button>
-
-        <button class="btn btn-add-sched" id="addSchedBtn" onclick="addSchedule()">
-          <i class="fa-solid fa-plus" color="var(--primary)"></i> SCHED
-        </button>
-
-        <button class="btn btn-pdf" onclick="openPdfModal()">
-          <i class="fa-solid fa-file-pdf"></i> Export
-        </button>
-      </div>
-    </header>
-
-    <div class="filter-bar" id="filterBarContainer">
-      <button class="filter-chip active" onclick="filterDay('all', this)">All Days</button>
-      <button class="filter-chip permanent-day" onclick="filterDay('Monday', this)">Monday</button>
-      <button class="filter-chip permanent-day" onclick="filterDay('Tuesday', this)">Tuesday</button>
-      <button class="filter-chip permanent-day" onclick="filterDay('Wednesday', this)">Wednesday</button>
-      <button class="filter-chip permanent-day" onclick="filterDay('Thursday', this)">Thursday</button>
-      <button class="filter-chip permanent-day" onclick="filterDay('Friday', this)">Friday</button>
-      <button class="filter-chip add-day-btn" onclick="addDay()"><i class="fa-solid fa-plus"></i> DAY</button>
+      <button class="filter-chip" onclick="filterDay('Thursday', this)">Thursday</button>
+      <button class="filter-chip" onclick="filterDay('Friday', this)">Friday</button>
+      <button class="filter-chip" onclick="filterDay('Saturday', this)">Saturday <span class="day-delete-x" onclick="deleteDay(event, 'Saturday')">&times;</span></button>
+      <button class="filter-chip" onclick="filterDay('Sunday', this)">Sunday <span class="day-delete-x" onclick="deleteDay(event, 'Sunday')">&times;</span></button>
+      <button class="filter-chip add-day-btn" onclick="addDay()"><i class="fa-solid fa-plus" style="color:var(--primary);"></i> DAY</button>
     </div>
 
     <div class="schedule-grid" id="gridContainer">
+
       <!-- Subject 1: C216 -->
       <div class="card" data-days="Monday Wednesday Friday" onclick="toggleCardPress(this, event)">
         <div class="card-header">
@@ -786,9 +735,9 @@
         </div>
         <h2 class="card-title editable-field" contenteditable="false">Advanced Database Systems</h2>
         <div class="slots-list">
-          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Mon 3:00–4:00 PM (IITRM5)</span></div>
-          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Wed 8:00–10:00 AM (IITONLINE3)</span></div>
-          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Fri 1:00–3:00 PM (IITRM5)</span></div>
+          <div class="slot-row" data-day="Monday" data-time="15:00-16:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Mon 3:00–4:00 PM (IITRM5)</span></div>
+          <div class="slot-row" data-day="Wednesday" data-time="08:00-10:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Wed 8:00–10:00 AM (IITONLINE3)</span></div>
+          <div class="slot-row" data-day="Friday" data-time="13:00-15:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Fri 1:00–3:00 PM (IITRM5)</span></div>
           <div class="slot-row"><i class="fa-solid fa-user-tie"></i> <span class="editable-field" contenteditable="false">Instructor: J. Capucao</span></div>
           <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
         </div>
@@ -809,9 +758,9 @@
         </div>
         <h2 class="card-title editable-field" contenteditable="false">Networking 2</h2>
         <div class="slots-list">
-          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Mon 11:00 AM–12:00 PM (IITRM6)</span></div>
-          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Tue 10:00 AM–12:00 PM (IITRM6)</span></div>
-          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Thu 10:00 AM–12:00 PM (IITRM12)</span></div>
+          <div class="slot-row" data-day="Monday" data-time="11:00-12:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Mon 11:00 AM–12:00 PM (IITRM6)</span></div>
+          <div class="slot-row" data-day="Tuesday" data-time="10:00-12:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Tue 10:00 AM–12:00 PM (IITRM6)</span></div>
+          <div class="slot-row" data-day="Thursday" data-time="10:00-12:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Thu 10:00 AM–12:00 PM (IITRM12)</span></div>
           <div class="slot-row"><i class="fa-solid fa-user-tie"></i> <span class="editable-field" contenteditable="false">Instructor: M. Indico</span></div>
           <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
         </div>
@@ -832,9 +781,9 @@
         </div>
         <h2 class="card-title editable-field" contenteditable="false">Information Assurance & Security 1</h2>
         <div class="slots-list">
-          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Wed 3:00–4:00 PM (IITRM6)</span></div>
-          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Thu 8:00–10:00 AM (IITRM6)</span></div>
-          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Fri 8:00–10:00 AM (IITONLINE1)</span></div>
+          <div class="slot-row" data-day="Wednesday" data-time="15:00-16:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Wed 3:00–4:00 PM (IITRM6)</span></div>
+          <div class="slot-row" data-day="Thursday" data-time="08:00-10:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Thu 8:00–10:00 AM (IITRM6)</span></div>
+          <div class="slot-row" data-day="Friday" data-time="08:00-10:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Fri 8:00–10:00 AM (IITONLINE1)</span></div>
           <div class="slot-row"><i class="fa-solid fa-user-tie"></i> <span class="editable-field" contenteditable="false">Instructor: D. Peñas</span></div>
           <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
         </div>
@@ -855,9 +804,9 @@
         </div>
         <h2 class="card-title editable-field" contenteditable="false">Web Systems and Technologies</h2>
         <div class="slots-list">
-          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Tue 8:00–10:00 AM (ITBLENDED3)</span></div>
-          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Thu 3:00–4:00 PM (IITRM7)</span></div>
-          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Fri 3:00–5:00 PM (IITRM7)</span></div>
+          <div class="slot-row" data-day="Tuesday" data-time="08:00-10:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Tue 8:00–10:00 AM (ITBLENDED3)</span></div>
+          <div class="slot-row" data-day="Thursday" data-time="15:00-16:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Thu 3:00–4:00 PM (IITRM7)</span></div>
+          <div class="slot-row" data-day="Friday" data-time="15:00-17:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Fri 3:00–5:00 PM (IITRM7)</span></div>
           <div class="slot-row"><i class="fa-solid fa-user-tie"></i> <span class="editable-field" contenteditable="false">Instructor: Sa. Briones</span></div>
           <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
         </div>
@@ -878,8 +827,8 @@
         </div>
         <h2 class="card-title editable-field" contenteditable="false">Digital Illustration</h2>
         <div class="slots-list">
-          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Mon 8:00–11:00 AM (IITRM5)</span></div>
-          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Tue 1:00–3:00 PM (IITRM22)</span></div>
+          <div class="slot-row" data-day="Monday" data-time="08:00-11:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Mon 8:00–11:00 AM (IITRM5)</span></div>
+          <div class="slot-row" data-day="Tuesday" data-time="13:00-15:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Tue 1:00–3:00 PM (IITRM22)</span></div>
           <div class="slot-row"><i class="fa-solid fa-user-tie"></i> <span class="editable-field" contenteditable="false">Instructor: NP. Serrano</span></div>
           <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
         </div>
@@ -900,8 +849,8 @@
         </div>
         <h2 class="card-title editable-field" contenteditable="false">Service Management</h2>
         <div class="slots-list">
-          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Tue 3:00–5:00 PM (IITRM13)</span></div>
-          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Wed 2:00–3:00 PM (IITRM13)</span></div>
+          <div class="slot-row" data-day="Tuesday" data-time="15:00-17:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Tue 3:00–5:00 PM (IITRM13)</span></div>
+          <div class="slot-row" data-day="Wednesday" data-time="14:00-15:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Wed 2:00–3:00 PM (IITRM13)</span></div>
           <div class="slot-row"><i class="fa-solid fa-user-tie"></i> <span class="editable-field" contenteditable="false">Instructor: A. Cayao</span></div>
           <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
         </div>
@@ -922,14 +871,45 @@
         </div>
         <h2 class="card-title editable-field" contenteditable="false">Life and Works of Rizal</h2>
         <div class="slots-list">
-          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Wed 10:00 AM–12:00 PM (IITBLENDED3)</span></div>
-          <div class="slot-row"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Fri 10:00 AM–12:00 PM (IITBLENDED3)</span></div>
+          <div class="slot-row" data-day="Wednesday" data-time="10:00-12:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Wed 10:00 AM–12:00 PM (IITBLENDED3)</span></div>
+          <div class="slot-row" data-day="Friday" data-time="10:00-12:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Fri 10:00 AM–12:00 PM (IITBLENDED3)</span></div>
           <div class="slot-row"><i class="fa-solid fa-user-tie"></i> <span class="editable-field" contenteditable="false">Instructor: M. Cielos</span></div>
           <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
         </div>
         <div class="card-details">
           <p><i class="fa-solid fa-circle-info"></i> <strong>Units:</strong> 3.0 (Lab 0.0)</p>
           <p><i class="fa-solid fa-location-dot"></i> <strong>Status:</strong> Active Enrolled Class</p>
+        </div>
+      </div>
+
+      <!-- Second Semester Card -->
+      <div class="card" data-days="Monday Tuesday Wednesday Thursday Friday" onclick="toggleCardPress(this, event)">
+        <div class="card-header">
+          <span class="badge editable-field" contenteditable="false">[CLASS•CODE]</span>
+          <div class="card-actions">
+            <button class="icon-btn" onclick="editSpecificCard(this, event)" title="Edit Subject"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="icon-btn icon-btn-delete" onclick="deleteScheduleCard(this, event)" title="Delete Card"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+        <h2 class="card-title editable-field" contenteditable="false">Second Semester</h2>
+        <div class="slots-list">
+          <div class="slot-row">
+            <i class="fa-regular fa-clock"></i>
+            <a href="https://m.youtube.com" target="_blank" class="editable-field" contenteditable="false">To Be Scheduled</a>
+          </div>
+          <div class="slot-row">
+            <i class="fa-regular fa-clock"></i>
+            <span class="editable-field" contenteditable="false">"Our punctuality doesn't arrive on time."</span>
+          </div>
+          <div class="slot-row">
+            <i class="fa-solid fa-user-tie"></i> 
+            <span class="editable-field" contenteditable="false">Instructor: Unknown</span>
+          </div>
+          <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
+        </div>
+        <div class="card-details">
+          <p><i class="fa-solid fa-circle-info"></i> <strong>Units:</strong> <span class="editable-field" contenteditable="false">0.0</span></p>
+          <p><i class="fa-solid fa-location-dot"></i> <strong>Status:</strong> <span class="editable-field" contenteditable="false">Upcoming</span></p>
         </div>
       </div>
 
@@ -940,29 +920,50 @@
     </footer>
   </div>
 
-  <div id="saveToast"><i class="fa-solid fa-circle-check"></i> <span id="toastMessage">Schedule saved successfully!</span></div>
-
-  <!-- PDF Export Options Modal -->
-  <div id="pdfModal" class="modal-overlay">
-    <div class="modal-content">
-      <h3>Select Export Settings</h3>
-      <div class="pdf-options">
-        <label><input type="radio" name="pdfOpt" value="A" checked> A) Original Implementation (No modifications)</label>
-        <label><input type="radio" name="pdfOpt" value="B"> B) Interactive Animation Included (Like a screenshot)</label>
-        <label><input type="radio" name="pdfOpt" value="C"> C) Text Only (No backgrounds, borders & text only)</label>
-        <label><input type="radio" name="pdfOpt" value="D"> D) Animated Background + Transparent Schedule Cards</label>
-        <label><input type="radio" name="pdfOpt" value="E"> E) Animated Background Included + Remove Footnote/Dashes</label>
+  <!-- PDF Download Options Modal -->
+  <div class="pdf-modal-overlay" id="pdfModalOverlay">
+    <div class="pdf-modal-content">
+      <h3><i class="fa-solid fa-file-pdf"></i> Export Schedule Options</h3>
+      <div class="pdf-option-group">
+        <label class="pdf-option-item">
+          <input type="checkbox" id="pdfIncludeBg" checked>
+          <span>Include theme background in PDF</span>
+        </label>
       </div>
-      <div class="modal-actions">
-        <button class="btn" style="background: transparent" onclick="closePdfModal()">Cancel</button>
-        <button class="btn btn-save" onclick="executePDFDownload()">Download PDF</button>
+      <div class="pdf-option-group">
+        <label class="pdf-option-item">
+          <input type="radio" name="pdfStyle" value="A" checked>
+          <span><strong>A)</strong> Download Long Size PDF (original implementation) with dash line.</span>
+        </label>
+        <label class="pdf-option-item">
+          <input type="radio" name="pdfStyle" value="B">
+          <span><strong>B)</strong> Download Long Size PDF with interactive animation (as if the site had been screenshot).</span>
+        </label>
+        <label class="pdf-option-item">
+          <input type="radio" name="pdfStyle" value="C">
+          <span><strong>C)</strong> Download Long Size PDF without buttons (from time-sync to Add Day). Just text, border and details.</span>
+        </label>
+        <label class="pdf-option-item">
+          <input type="radio" name="pdfStyle" value="D">
+          <span><strong>D)</strong> Download Long Size PDF with interactive animation, theme background seen from schedule cards, and no buttons.</span>
+        </label>
+        <label class="pdf-option-item">
+          <input type="radio" name="pdfStyle" value="E">
+          <span><strong>E)</strong> Download Long Size PDF without any buttons, interactive animation background visible, without footnote and dash line.</span>
+        </label>
+      </div>
+      <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
+        <button class="btn" onclick="closePdfModal()">Cancel</button>
+        <button class="btn btn-pdf" onclick="executePdfDownload()">Confirm & Download</button>
       </div>
     </div>
   </div>
 
+  <div id="saveToast"><i class="fa-solid fa-circle-check"></i> <span id="toastMsg">Schedule saved successfully!</span></div>
+
   <script>
     /* ===================================================
-       1. ANIMATION CANVAS ENGINE 
+       1. ANIMATION CANVAS ENGINE (Enhanced for All Themes)
        =================================================== */
     const canvas = document.getElementById('nodeCanvas');
     const ctx = canvas.getContext('2d');
@@ -970,19 +971,11 @@
     let particles = [];
     let currentTheme = 'light';
     let waveOffset = 0;
-    let synthwaveHarpActive = 0; // Harp effect trigger multiplier
-
-    // Synthwave Harp trigger setup
-    document.addEventListener('click', () => {
-      if (currentTheme === 'synthwave') {
-        synthwaveHarpActive = 30; // Amplify wave temporarily
-      }
-    });
+    let animStartTime = performance.now();
 
     function resizeCanvas() {
       width = canvas.width = window.innerWidth;
-      // Use document height to make sure firework hits footer properly
-      height = canvas.height = Math.max(window.innerHeight, document.documentElement.scrollHeight);
+      height = canvas.height = window.innerHeight;
       initThemeAnimation();
     }
     window.addEventListener('resize', resizeCanvas);
@@ -991,26 +984,26 @@
       currentTheme = themeName;
       document.documentElement.setAttribute('data-theme', themeName);
       localStorage.setItem('bsit_schedule_theme', themeName);
+      animStartTime = performance.now();
       initThemeAnimation();
-      checkRealTimeHighlight(document.querySelector('.filter-chip.active').innerText.trim()); // re-trigger glow colors
     }
 
     function spawnFirework() {
       const targetX = Math.random() * width;
-      const targetY = Math.random() * (height * 0.45) + 60;
-      const count = 40;
-      const bronzeColors = ['#cd7f32', '#e2e8f0', '#8c4a19', '#ffd700', '#c0c0c0'];
+      const targetY = Math.random() * height; // Full screen including footnote
+      const count = 50;
+      const bronzeColors = ['#cd7f32', '#e2e8f0', '#8c4a19', '#ffd700', '#f59e0b', '#fffbeb'];
 
       for (let i = 0; i < count; i++) {
         const angle = (Math.PI * 2 / count) * i;
-        const speed = Math.random() * 5 + 2;
+        const speed = Math.random() * 6 + 2;
         particles.push({
           x: targetX,
           y: targetY,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
           alpha: 1,
-          decay: 0.015 + Math.random() * 0.01,
+          decay: 0.012 + Math.random() * 0.01,
           color: bronzeColors[Math.floor(Math.random() * bronzeColors.length)]
         });
       }
@@ -1018,47 +1011,76 @@
 
     function initThemeAnimation() {
       particles = [];
-      const density = Math.floor((width * window.innerHeight) / 14000);
+      const density = Math.floor((width * height) / 13000);
 
       switch (currentTheme) {
         case 'light':
           for (let i = 0; i < density; i++) {
-            particles.push({ x: Math.random() * width, y: Math.random() * height, vx: (Math.random() - 0.5) * 1.2, vy: (Math.random() - 0.5) * 1.2, radius: Math.random() * 2 + 2 });
+            particles.push({
+              x: Math.random() * width,
+              y: Math.random() * height,
+              vx: (Math.random() - 0.5) * 1.2,
+              vy: (Math.random() - 0.5) * 1.2,
+              radius: Math.random() * 2 + 2
+            });
           }
           break;
 
         case 'dark':
           for (let i = 0; i < density; i++) {
-            particles.push({ x: Math.random() * width, y: Math.random() * height, size: Math.random() * 2.5 + 1, pulseSpeed: 0.02 + Math.random() * 0.03, phase: Math.random() * Math.PI * 2 });
+            particles.push({
+              x: Math.random() * width,
+              y: Math.random() * height,
+              size: Math.random() * 2.5 + 1,
+              pulseSpeed: 0.02 + Math.random() * 0.03,
+              phase: Math.random() * Math.PI * 2
+            });
           }
           break;
 
         case 'party':
           for (let i = 0; i < density * 1.2; i++) {
-            particles.push({ x: Math.random() * width, y: height + Math.random() * 100, vx: (Math.random() - 0.5) * 2, vy: -(Math.random() * 6 + 3), size: Math.random() * 5 + 3, color: `hsl(${Math.random() * 360}, 100%, 65%)`, spin: Math.random() * Math.PI * 2 });
+            particles.push({
+              x: Math.random() * width,
+              y: height + Math.random() * 100,
+              vx: (Math.random() - 0.5) * 2,
+              vy: -(Math.random() * 6 + 3),
+              size: Math.random() * 5 + 3,
+              color: `hsl(${Math.random() * 360}, 100%, 65%)`,
+              spin: Math.random() * Math.PI * 2
+            });
           }
           break;
 
         case 'earthlings': {
           const treeHeight = height * 0.95;
-          const earthlingColors = ['#CAB266', '#6b705c'];
-          for(let i = 0; i < density * 1.69; i++) {
-            let h = Math.random(); let y = height - h * treeHeight; let w = (1 - h) * (width * 0.82); let x = width/2 + (Math.random() - 0.5) * w * 2;
-            particles.push({ x, y, baseX: x, baseY: y, vx: 0, vy: 0, phase: Math.random() * 10, size: Math.random() * 3 + 1.2, color: earthlingColors[Math.floor(Math.random() * earthlingColors.length)] });
+          const earthlingColors = ['#CAB266', '#8f967a', '#eadeb8'];
+          for(let i = 0; i < density * 1.8; i++) {
+            let h = Math.random(); 
+            let y = height - h * treeHeight;
+            let w = (1 - h) * (width * 0.82); 
+            let x = width/2 + (Math.random() - 0.5) * w * 2;
+            particles.push({ 
+              x, y, baseX: x, baseY: y, 
+              vx: 0, vy: 0, 
+              phase: Math.random() * 10,
+              size: Math.random() * 3 + 1.2,
+              color: earthlingColors[Math.floor(Math.random() * earthlingColors.length)]
+            });
           }
           break;
         }
 
         case 'matrix': {
-          const cols = Math.floor(width / 12); // Increased density
+          // Dense matrix binary columns
+          const cols = Math.floor(width / 14);
           for (let i = 0; i < cols; i++) {
-            for(let j=0; j<3; j++) { // More vertical code drops
+            for(let j = 0; j < 3; j++) {
               particles.push({
-                x: i * 12,
+                x: i * 14,
                 y: Math.random() * height,
-                speed: Math.random() * 2.5 + 0.8,
-                // Random binary & Japanese Katakana for authentic Matrix feel
-                val: Math.random() > 0.5 ? (Math.random() > 0.5 ? '1' : '0') : String.fromCharCode(0x30A0 + Math.random() * 96) 
+                speed: Math.random() * 1.8 + 0.8,
+                val: Math.random() > 0.3 ? '1' : '0'
               });
             }
           }
@@ -1070,31 +1092,56 @@
 
         case 'nordic':
           for (let i = 0; i < density * 2; i++) {
-            particles.push({ x: Math.random() * width, y: Math.random() * height, vy: Math.random() * 3 + 1.5, vx: (Math.random() - 0.5) * 2, radius: Math.random() * 3 + 1, windFactor: Math.random() * 1.5 + 0.5 });
+            particles.push({
+              x: Math.random() * width,
+              y: Math.random() * height,
+              vy: Math.random() * 3 + 1.5,
+              vx: (Math.random() - 0.5) * 2,
+              radius: Math.random() * 3 + 1,
+              windFactor: Math.random() * 1.5 + 0.5
+            });
           }
           break;
 
         case 'love':
           for (let i = 0; i < Math.floor(density / 1.5); i++) {
-            particles.push({ x: Math.random() * width, y: height + Math.random() * 50, vy: -(Math.random() * 1.8 + 0.8), vx: (Math.random() - 0.5) * 1.2, size: Math.random() * 28 + 14, alpha: Math.random() * 0.4 + 0.3, wobbleSpeed: Math.random() * 0.04 + 0.01, wobbleDist: Math.random() * 25 + 10, phase: Math.random() * Math.PI * 2 });
+            particles.push({
+              x: Math.random() * width,
+              y: height + Math.random() * 50,
+              vy: -(Math.random() * 1.8 + 0.8),
+              vx: (Math.random() - 0.5) * 1.2,
+              size: Math.random() * 28 + 14,
+              alpha: Math.random() * 0.4 + 0.3,
+              wobbleSpeed: Math.random() * 0.04 + 0.01,
+              wobbleDist: Math.random() * 25 + 10,
+              phase: Math.random() * Math.PI * 2
+            });
           }
           break;
 
         case 'bubbly':
           for (let i = 0; i < density; i++) {
-            particles.push({ x: Math.random() * width, y: Math.random() * height, vx: (Math.random() - 0.5) * 1.5, vy: (Math.random() - 0.5) * 1.5, radius: Math.random() * 5 + 2, maxRadius: Math.random() * 25 + 10, alpha: Math.random() * 0.4 + 0.2 });
+            particles.push({
+              x: Math.random() * width,
+              y: Math.random() * height,
+              vx: (Math.random() - 0.5) * 1.5,
+              vy: (Math.random() - 0.5) * 1.5,
+              radius: Math.random() * 5 + 2,
+              maxRadius: Math.random() * 25 + 10,
+              alpha: Math.random() * 0.4 + 0.2
+            });
           }
           break;
 
         case 'tricolour':
-          for (let i = 0; i < 6; i++) spawnFirework();
+          for (let i = 0; i < 10; i++) spawnFirework();
           break;
       }
     }
     
     function renderCanvasAnimation() {
       if(currentTheme === 'matrix') {
-        ctx.fillStyle = 'rgba(2, 11, 4, 0.2)';
+        ctx.fillStyle = 'rgba(2, 11, 4, 0.25)';
         ctx.fillRect(0, 0, width, height);
       } else {
         ctx.clearRect(0, 0, width, height);
@@ -1105,51 +1152,101 @@
       switch (currentTheme) {
         case 'light':
           particles.forEach((p, i) => {
-            p.x += p.vx; p.y += p.vy;
+            p.x += p.vx;
+            p.y += p.vy;
             if (p.x < 0 || p.x > width) p.vx *= -1;
             if (p.y < 0 || p.y > height) p.vy *= -1;
-            ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fillStyle = primaryColor; ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fillStyle = primaryColor;
+            ctx.fill();
+
             for (let j = i + 1; j < particles.length; j++) {
-              let dx = p.x - particles[j].x; let dy = p.y - particles[j].y; let dist = Math.sqrt(dx * dx + dy * dy);
-              if (dist < 110) { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(particles[j].x, particles[j].y); ctx.strokeStyle = primaryColor; ctx.globalAlpha = (1 - dist / 110) * 0.25; ctx.stroke(); ctx.globalAlpha = 1; }
+              let dx = p.x - particles[j].x;
+              let dy = p.y - particles[j].y;
+              let dist = Math.sqrt(dx * dx + dy * dy);
+              if (dist < 110) {
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(particles[j].x, particles[j].y);
+                ctx.strokeStyle = primaryColor;
+                ctx.globalAlpha = (1 - dist / 110) * 0.25;
+                ctx.stroke();
+                ctx.globalAlpha = 1;
+              }
             }
           });
           break;
 
         case 'dark':
           particles.forEach((p, idx) => {
-            p.phase += p.pulseSpeed; const opacity = ((Math.sin(p.phase) + 1) / 2) * 0.75 + 0.2;
-            ctx.fillStyle = `rgba(248, 250, 252, ${opacity})`; ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
+            p.phase += p.pulseSpeed;
+            const opacity = ((Math.sin(p.phase) + 1) / 2) * 0.75 + 0.2;
+
+            ctx.fillStyle = `rgba(248, 250, 252, ${opacity})`;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+
             for (let j = idx + 1; j < particles.length; j++) {
-              const p2 = particles[j]; const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-              if (dist < 110) { ctx.strokeStyle = `rgba(248, 250, 252, ${(1 - dist / 110) * opacity * 0.25})`; ctx.lineWidth = 0.6; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke(); }
+              const p2 = particles[j];
+              const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+              if (dist < 110) {
+                ctx.strokeStyle = `rgba(248, 250, 252, ${(1 - dist / 110) * opacity * 0.25})`;
+                ctx.lineWidth = 0.6;
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.stroke();
+              }
             }
           });
           break;
 
         case 'party':
           particles.forEach((p) => {
-            p.y += p.vy; p.x += Math.sin(p.spin) * 1.2; p.spin += 0.05;
-            if (p.y < -20) { p.y = height + 20; p.x = Math.random() * width; p.vy = -(Math.random() * 6 + 3); }
-            ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.spin); ctx.fillStyle = p.color; ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size); ctx.restore();
+            p.y += p.vy;
+            p.x += Math.sin(p.spin) * 1.2;
+            p.spin += 0.05;
+            
+            if (p.y < -20) {
+              p.y = height + 20;
+              p.x = Math.random() * width;
+              p.vy = -(Math.random() * 6 + 3);
+            }
+
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.spin);
+            ctx.fillStyle = p.color;
+            ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
+            ctx.restore();
           });
           break;
 
         case 'earthlings':
           particles.forEach(p => {
-            p.phase += 0.03; p.x = p.baseX + Math.sin(p.phase) * 12; p.y = p.baseY + Math.cos(p.phase * 0.7) * 12;
-            const opacity = (Math.sin(p.phase * 2) + 1) / 2; ctx.fillStyle = p.color; ctx.shadowBlur = 8 * opacity; ctx.shadowColor = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
+            p.phase += 0.03;
+            p.x = p.baseX + Math.sin(p.phase) * 12;
+            p.y = p.baseY + Math.cos(p.phase * 0.7) * 12;
+
+            const opacity = (Math.sin(p.phase * 2) + 1) / 2;
+            ctx.fillStyle = p.color;
+            ctx.shadowBlur = 8 * opacity;
+            ctx.shadowColor = p.color;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
           });
           ctx.shadowBlur = 0;
           break;
 
         case 'matrix':
-          ctx.font = '16px monospace';
+          ctx.font = '14px monospace';
           particles.forEach(p => {
-            if (Math.random() < 0.1) {
-              p.val = Math.random() > 0.5 ? (Math.random() > 0.5 ? '1' : '0') : String.fromCharCode(0x30A0 + Math.random() * 96);
-            }
-            ctx.fillStyle = '#4ade80'; // Bright green text
+            if (Math.random() < 0.3) p.val = Math.random() > 0.5 ? '1' : '0';
+            ctx.fillStyle = '#22c55e';
             ctx.fillText(p.val, p.x, p.y);
             p.y += p.speed;
             if (p.y > height) p.y = -35;
@@ -1157,23 +1254,20 @@
           break;
 
         case 'synthwave': {
-          waveOffset += 0.05;
-          const horizonY = window.innerHeight * 0.85;
+          waveOffset += 0.06;
+          const elapsed = performance.now() - animStartTime;
+          // Harp vibration effect after 3 seconds opening (3000ms)
+          const harpVibration = elapsed > 3000 ? Math.sin(performance.now() * 0.015) * 8 : 0;
+          const horizonY = (height * 0.85) + harpVibration;
           ctx.lineWidth = 2;
-          
-          let waveAmpBoost = 0;
-          if (synthwaveHarpActive > 0) {
-            waveAmpBoost = synthwaveHarpActive;
-            synthwaveHarpActive -= 0.5; // decay the harp effect
-          }
 
-          for (let i = 0; i < 9; i++) {
+          for (let i = 0; i < 11; i++) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(192, 132, 252, ${0.3 + i * 0.07})`; // Adjusted synth purple
-            const yBase = horizonY + i * 12;
+            ctx.strokeStyle = `rgba(168, 85, 247, ${0.25 + i * 0.06})`;
+            const yBase = horizonY + i * 14;
 
             for (let x = 0; x < width; x += 6) { 
-              const wave = Math.sin(x * 0.02 + waveOffset + i) * (20 + i * 5 + waveAmpBoost);
+              const wave = Math.sin(x * 0.02 + waveOffset + i) * (18 + i * 4);
               if (x === 0) ctx.moveTo(x, yBase + wave);
               else ctx.lineTo(x, yBase + wave);
             }
@@ -1185,44 +1279,95 @@
         case 'nordic':
           waveOffset += 0.015;
           particles.forEach(p => {
-            let wind = Math.sin(p.y * 0.008 + waveOffset) * 2.5; p.x += p.vx + wind * p.windFactor; p.y += p.vy;
-            if (p.y > height + 10) { p.y = -10; p.x = Math.random() * width; }
+            let wind = Math.sin(p.y * 0.008 + waveOffset) * 2.5;
+            p.x += p.vx + wind * p.windFactor;
+            p.y += p.vy;
+
+            if (p.y > height + 10) {
+              p.y = -10;
+              p.x = Math.random() * width;
+            }
             if (p.x > width + 10) p.x = -10;
             if (p.x < -10) p.x = width + 10;
-            ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fillStyle = 'rgba(226, 232, 240, 0.85)'; ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(226, 232, 240, 0.85)';
+            ctx.fill();
           });
           break;
 
         case 'love':
           particles.forEach(p => {
-            p.phase += p.wobbleSpeed; p.y += p.vy; p.x += Math.sin(p.phase) * 0.8;
-            if (p.y < -50) { p.y = height + 50; p.x = Math.random() * width; }
-            ctx.font = `${p.size}px sans-serif`; ctx.fillStyle = `rgba(248, 113, 113, ${p.alpha})`; ctx.fillText('♥', p.x, p.y);
+            p.phase += p.wobbleSpeed;
+            p.y += p.vy;
+            p.x += Math.sin(p.phase) * 0.8;
+
+            if (p.y < -50) {
+              p.y = height + 50;
+              p.x = Math.random() * width;
+            }
+
+            ctx.font = `${p.size}px sans-serif`;
+            ctx.fillStyle = `rgba(239, 68, 68, ${p.alpha})`;
+            ctx.fillText('♥', p.x, p.y);
           });
           break;
 
         case 'bubbly':
           particles.forEach(p => {
-            p.x += p.vx; p.y += p.vy;
+            p.x += p.vx;
+            p.y += p.vy;
             if (p.x < 0 || p.x > width) p.vx *= -1;
             if (p.y < 0 || p.y > height) p.vy *= -1;
-            p.radius += 0.08; if(p.radius > p.maxRadius) { p.radius = Math.random() * 3 + 1; }
-            ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.strokeStyle = '#f9a8d4'; ctx.lineWidth = 1.5; ctx.globalAlpha = p.alpha; ctx.stroke(); ctx.globalAlpha = 1;
+            
+            p.radius += 0.08;
+            if(p.radius > p.maxRadius) {
+               p.radius = Math.random() * 3 + 1;
+            }
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.strokeStyle = '#ec4899';
+            ctx.lineWidth = 1.5;
+            ctx.globalAlpha = p.alpha;
+            ctx.stroke();
+            ctx.globalAlpha = 1;
           });
           break;
 
         case 'tricolour':
-          if (Math.random() < 0.08) spawnFirework();
+          if (Math.random() < 0.12) spawnFirework();
+
           for (let i = particles.length - 1; i >= 0; i--) {
-            const p = particles[i]; p.x += p.vx; p.y += p.vy; p.vy += 0.04; p.alpha -= p.decay;
-            if (p.alpha <= 0) { particles.splice(i, 1); } 
-            else { ctx.globalAlpha = p.alpha; ctx.fillStyle = p.color; ctx.shadowBlur = 6; ctx.shadowColor = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2); ctx.fill(); }
+            const p = particles[i];
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.04;
+            p.alpha -= p.decay;
+
+            if (p.alpha <= 0) {
+              particles.splice(i, 1);
+            } else {
+              ctx.globalAlpha = p.alpha;
+              ctx.fillStyle = p.color;
+              ctx.shadowBlur = 8;
+              ctx.shadowColor = p.color;
+              ctx.beginPath();
+              ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+              ctx.fill();
+            }
           }
-          ctx.globalAlpha = 1; ctx.shadowBlur = 0;
+          ctx.globalAlpha = 1;
+          ctx.shadowBlur = 0;
           break;
       }
+
       requestAnimationFrame(renderCanvasAnimation);
     }
+
+    resizeCanvas();
+    renderCanvasAnimation();
 
         /* ===================================================
        2. REAL-TIME SCHEDULE SLOT DETECTION & COUNTDOWN
@@ -1348,7 +1493,7 @@
 
     window.addEventListener('DOMContentLoaded', loadScheduleState);
 
-        /* ===================================================
+    /* ===================================================
        4. INTERACTIVE CARD GLOW & ZOOM
        =================================================== */
     function toggleCardPress(card, event) {
@@ -1362,7 +1507,7 @@
       }
     }
 
-    /* ===================================================
+        /* ===================================================
        5. EDIT MODE & SCHEDULE MANAGEMENT
        =================================================== */
     function editSpecificCard(btn, event) {
@@ -1453,7 +1598,6 @@
       showNotificationToast("New schedule card added!");
     }
 
-    
     /* ===================================================
        6. DAY FILTERING, ADD/DELETE DAYS (MON-FRI PROTECTED)
        =================================================== */
@@ -1506,7 +1650,7 @@
       }
     }
 
-    /* ===================================================
+        /* ===================================================
        7. PDF EXPORT MODAL & GENERATOR (Options A to E)
        =================================================== */
     function openPdfModal() {
