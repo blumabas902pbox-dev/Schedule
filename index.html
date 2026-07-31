@@ -61,9 +61,9 @@
       --primary: #f472b6; --secondary: #be185d; --glow-color: rgba(244, 114, 182, 0.55); --btn-save-bg: #f472b6;
       --btn-save-text: #240a17; --lightest: #ffffff; --normal: #f472b6; --darker: #be185d; --darkest: #500724;
     }
-    :root[data-theme="tricolour"] {
-      --bg: #180e08; --card-bg: #26170d; --text-main: #fef3c7; --text-muted: #e2e8f0; --border-color: #8c4a19;
-      --primary: #cd7f32; --secondary: #cbd5e1; --glow-color: rgba(205, 127, 50, 0.6); --btn-save-bg: #cd7f32;
+    :root[data-theme="celebration"] {
+      --bg: #180e08; --card-bg: #26170d; --text-main: #fef3c7; --text-muted: #fde047; --border-color: #8c4a19;
+      --primary: #cd7f32; --secondary: #ffd700; --glow-color: rgba(205, 127, 50, 0.6); --btn-save-bg: #cd7f32;
       --btn-save-text: #ffffff; --lightest: #fffbeb; --normal: #f59e0b; --darker: #b45309; --darkest: #451a03;
     }
 
@@ -125,7 +125,7 @@
     .filter-bar::-webkit-scrollbar-thumb { background-color: var(--primary); border-radius: 3px; }
     .filter-chip { background: var(--card-bg); border: 2px solid var(--border-color); color: var(--text-muted); padding: 0.5rem 1rem; border-radius: 10px; font-size: 0.82rem; font-weight: 700; cursor: pointer; white-space: nowrap; position: relative; }
     .filter-chip.active, .filter-chip:hover, .filter-chip:focus-visible { border-color: var(--primary); color: var(--primary); box-shadow: 0 0 14px var(--glow-color); outline: none; }
-    .filter-chip.pressed-glow, :root[data-theme="earthlings"] .filter-chip.active, :root[data-theme="matrix"] .filter-chip.active, :root[data-theme="synthwave"] .filter-chip.active, :root[data-theme="nordic"] .filter-chip.active, :root[data-theme="love"] .filter-chip.active, :root[data-theme="bubbly"] .filter-chip.active {
+    .filter-chip.pressed-glow, :root[data-theme="earthlings"] .filter-chip.active, :root[data-theme="matrix"] .filter-chip.active, :root[data-theme="synthwave"] .filter-chip.active, :root[data-theme="nordic"] .filter-chip.active, :root[data-theme="love"] .filter-chip.active, :root[data-theme="bubbly"] .filter-chip.active, :root[data-theme="celebration"] .filter-chip.active {
       box-shadow: 0 0 12px var(--glow-color); border-color: var(--primary); color: var(--lightest); background: var(--darker);
     }
     .day-delete-x { margin-left: 6px; font-size: 0.7rem; color: var(--text-muted); cursor: pointer; padding: 2px; border-radius: 50%; }
@@ -171,25 +171,57 @@
     }
 
     .pdf-export-active.container {
-        width: 816px !important; /* 8.5 inches approx */
-        max-width: 816px !important;
+        width: 100% !important;
+        max-width: 100% !important;
         margin: 0 auto !important;
         transform: none !important;
         background-color: transparent !important;
+        padding: 0.25in !important;
     }
     .pdf-export-active header {
-        padding: 0.8rem 1rem !important;
-        margin-bottom: 0.75rem !important;
+        padding: 0.5rem 0.75rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    .pdf-export-active .brand h1 {
+        font-size: 1.15rem !important;
+    }
+    .pdf-export-active .brand p {
+        font-size: 0.7rem !important;
+    }
+    .pdf-export-active .semester-sync-widget {
+        padding: 3px 6px !important;
+        font-size: 0.65rem !important;
+        margin-top: 4px !important;
     }
     .pdf-export-active .schedule-grid {
-        grid-template-columns: repeat(2, 1fr) !important; /* Forces uniform compact fit */
-        gap: 0.65rem !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.45rem !important;
     }
     .pdf-export-active .card {
-        padding: 0.9rem !important;
+        padding: 0.65rem !important;
         transform: none !important;
         box-shadow: none !important;
         page-break-inside: avoid !important;
+    }
+    .pdf-export-active .card-title {
+        font-size: 0.95rem !important;
+        margin-bottom: 0.4rem !important;
+    }
+    .pdf-export-active .slots-list {
+        font-size: 0.72rem !important;
+        gap: 0.35rem !important;
+        margin-top: 0.4rem !important;
+        padding-top: 0.4rem !important;
+    }
+    .pdf-export-active .card.pressed .card-details {
+        max-height: 120px !important;
+        padding: 0.4rem !important;
+        margin-top: 0.4rem !important;
+    }
+    .pdf-export-active footer.app-footer {
+        margin-top: 0.75rem !important;
+        padding: 0.25rem !important;
+        font-size: 0.7rem !important;
     }
     
     /* Scanned Option Styles */
@@ -231,7 +263,6 @@
         
         <div class="semester-sync-widget">
           <span>Sem:</span>
-          <!-- Empty initial values per user request -->
           <input type="date" id="semStart" value="" onchange="updateSemesterCountdown(); triggerUnsaved();">
           <span>to</span>
           <input type="date" id="semEnd" value="" onchange="updateSemesterCountdown(); triggerUnsaved();">
@@ -251,7 +282,7 @@
           <option value="nordic">Nordic Theme</option>
           <option value="love">Love Theme</option>
           <option value="bubbly">Bubbly Theme</option>
-          <option value="tricolour">Tricolour Theme</option>
+          <option value="celebration">Celebration Theme</option>
         </select>
 
         <button class="btn btn-save" id="saveBtn" disabled style="opacity: 0.5; cursor: not-allowed;">
@@ -473,29 +504,29 @@
     <footer class="app-footer">
       © BJML 2026.
     </footer>
-              </div>
+  </div>
 
     <!-- PDF Download Options Modal -->
   <div class="pdf-modal-overlay" id="pdfModalOverlay">
     <div class="pdf-modal-content">
       <h3><i class="fa-solid fa-file-pdf"></i> Export Schedule</h3>
       <p style="font-size: 0.82em; color: var(--text-muted); margin-bottom: 1rem;">
-        Format: 8.5" x 13" Bond Paper. 
+        Format: 8.5" x 13" Long Bond Paper (Filename: <code style="color:var(--primary);">BSIT 3D_Bryan Jay M. Lumabas.pdf</code>)
       </p>
       
       <div class="pdf-option-group">
         <label style="font-weight: 800; margin-bottom: 0.2rem; display: block; color: var(--primary);">Select Style:</label>
         <label class="pdf-option-item">
           <input type="radio" name="pdfStyle" value="light" checked>
-          <span>Option Style 1: </span>
+          <span>Option Style 1: Light Theme</span>
         </label>
         <label class="pdf-option-item">
           <input type="radio" name="pdfStyle" value="nordic">
-          <span>Option Style 2:</span>
+          <span>Option Style 2: Nordic Theme</span>
         </label>
         <label class="pdf-option-item">
-          <input type="radio" name="pdfStyle" value="tricolour">
-          <span>Option Style 3:</span>
+          <input type="radio" name="pdfStyle" value="celebration">
+          <span>Option Style 3: Celebration Theme</span>
         </label>
         <label class="pdf-option-item">
           <input type="radio" name="pdfStyle" value="screenshot">
@@ -534,28 +565,11 @@
     let particles = [];
     let currentTheme = 'light';
     let waveOffset = 0;
-    let animStartTime = performance.now();
+    let synthwaveTime = 0;
 
-    let synthwaveNodes = [];
     let mouse = { x: -1000, y: -1000, radius: 100 };
     window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
     window.addEventListener('mouseleave', () => { mouse.x = -1000; mouse.y = -1000; });
-
-    class StringNode {
-        constructor(x, y) {
-            this.x = x; this.y = y; this.baseY = y; this.vy = 0;
-        }
-        update() {
-            let dx = mouse.x - this.x; let dy = mouse.y - this.y;
-            let distance = Math.sqrt(dx * dx + dy * dy);
-            if (distance < mouse.radius) {
-                let forceDirectionY = dy / distance; let force = (mouse.radius - distance) / mouse.radius;
-                this.vy -= forceDirectionY * force * 2;
-            }
-            let springForce = (this.baseY - this.y) * 0.05; 
-            this.vy += springForce; this.vy *= 0.85; this.y += this.vy;
-        }
-    }
 
     function resizeCanvas() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; initThemeAnimation(); }
     window.addEventListener('resize', resizeCanvas);
@@ -564,57 +578,251 @@
       currentTheme = themeName;
       document.documentElement.setAttribute('data-theme', themeName);
       localStorage.setItem('bsit_schedule_theme', themeName);
-      animStartTime = performance.now();
       initThemeAnimation();
     }
 
-    function spawnFirework() {
-      const targetX = Math.random() * width; const targetY = Math.random() * height; const count = 55;
-      const bronzeColors = ['#cd7f32', '#e2e8f0', '#8c4a19', '#ffd700', '#f59e0b', '#fffbeb'];
+    function spawnFirework(customX, customY) {
+      const targetX = customX !== undefined ? customX : Math.random() * width;
+      const targetY = customY !== undefined ? customY : Math.random() * (height * 0.7);
+      const count = 55;
+      const celebrationColors = ['#ffd700', '#f59e0b', '#cd7f32', '#ef4444', '#38bdf8', '#a855f7', '#ffffff'];
       for (let i = 0; i < count; i++) {
-        const angle = (Math.PI * 2 / count) * i; const speed = Math.random() * 6 + 2;
-        particles.push({ x: targetX, y: targetY, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed, alpha: 1, decay: 0.012 + Math.random() * 0.01, color: bronzeColors[Math.floor(Math.random() * bronzeColors.length)] });
+        const angle = (Math.PI * 2 / count) * i;
+        const speed = Math.random() * 5 + 2;
+        particles.push({
+          x: targetX, y: targetY,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          alpha: 1,
+          decay: 0.012 + Math.random() * 0.01,
+          color: celebrationColors[Math.floor(Math.random() * celebrationColors.length)]
+        });
       }
     }
 
     function initThemeAnimation() {
-      particles = []; const density = Math.floor((width * height) / 13000);
+      particles = [];
+      const density = Math.floor((width * height) / 13000);
       switch (currentTheme) {
-        case 'light': for (let i = 0; i < density; i++) { particles.push({ x: Math.random() * width, y: Math.random() * height, vx: (Math.random() - 0.5) * 1.2, vy: (Math.random() - 0.5) * 1.2, radius: Math.random() * 2 + 2 }); } break;
-        case 'dark': for (let i = 0; i < density; i++) { particles.push({ x: Math.random() * width, y: Math.random() * height, size: Math.random() * 2.5 + 1, pulseSpeed: 0.02 + Math.random() * 0.03, phase: Math.random() * Math.PI * 2 }); } break;
-        case 'party': for (let i = 0; i < density * 1.2; i++) { particles.push({ x: Math.random() * width, y: height + Math.random() * 100, vx: (Math.random() - 0.5) * 2, vy: -(Math.random() * 6 + 3), size: Math.random() * 5 + 3, color: `hsl(${Math.random() * 360}, 100%, 65%)`, spin: Math.random() * Math.PI * 2 }); } break;
-        case 'earthlings': const treeHeight = height * 0.95; const earthlingColors = ['#CAB266', '#8f967a', '#eadeb8']; for(let i = 0; i < density * 1.8; i++) { let h = Math.random(); let y = height - h * treeHeight; let w = (1 - h) * (width * 0.82); let x = width/2 + (Math.random() - 0.5) * w * 2; particles.push({ x, y, baseX: x, baseY: y, vx: 0, vy: 0, phase: Math.random() * 10, size: Math.random() * 3 + 1.2, color: earthlingColors[Math.floor(Math.random() * earthlingColors.length)] }); } break;
-        case 'matrix': const cols = Math.floor(width / 14); for (let i = 0; i < cols; i++) { for(let j = 0; j < 4; j++) { particles.push({ x: i * 14, y: Math.random() * height, speed: Math.random() * 2.2 + 1.0, val: Math.random() > 0.3 ? '1' : '0' }); } } break;
-        case 'synthwave': synthwaveNodes = []; const spacing = 40; const linesCount = 8; for (let i = 0; i < linesCount; i++) { let lineNodes = []; let yPos = (height / linesCount) * i + 50; for (let x = 0; x < width + spacing; x += spacing) { lineNodes.push(new StringNode(x, yPos)); } synthwaveNodes.push(lineNodes); } break;
-        case 'nordic': for (let i = 0; i < density * 2; i++) { particles.push({ x: Math.random() * width, y: Math.random() * height, vy: Math.random() * 3 + 1.5, vx: (Math.random() - 0.5) * 2, radius: Math.random() * 3 + 1, windFactor: Math.random() * 1.5 + 0.5 }); } break;
-        case 'love': for (let i = 0; i < Math.floor(density / 1.5); i++) { particles.push({ x: Math.random() * width, y: height + Math.random() * 50, vy: -(Math.random() * 1.8 + 0.8), vx: (Math.random() - 0.5) * 1.2, size: Math.random() * 28 + 14, alpha: Math.random() * 0.4 + 0.3, wobbleSpeed: Math.random() * 0.04 + 0.01, wobbleDist: Math.random() * 25 + 10, phase: Math.random() * Math.PI * 2 }); } break;
-        case 'bubbly': for (let i = 0; i < density; i++) { particles.push({ x: Math.random() * width, y: Math.random() * height, vx: (Math.random() - 0.5) * 1.5, vy: (Math.random() - 0.5) * 1.5, radius: Math.random() * 5 + 2, maxRadius: Math.random() * 25 + 10, alpha: Math.random() * 0.4 + 0.2 }); } break;
-        case 'tricolour': for (let i = 0; i < 15; i++) spawnFirework(); break;
+        case 'light':
+          for (let i = 0; i < density; i++) { particles.push({ x: Math.random() * width, y: Math.random() * height, vx: (Math.random() - 0.5) * 1.2, vy: (Math.random() - 0.5) * 1.2, radius: Math.random() * 2 + 2 }); }
+          break;
+        case 'dark':
+          for (let i = 0; i < density; i++) { particles.push({ x: Math.random() * width, y: Math.random() * height, size: Math.random() * 2.5 + 1, pulseSpeed: 0.02 + Math.random() * 0.03, phase: Math.random() * Math.PI * 2 }); }
+          break;
+        case 'party':
+          // Confetti that shoots upwards from bottom and falls down in an endless loop
+          for (let i = 0; i < density * 1.5; i++) {
+            particles.push({
+              x: Math.random() * width,
+              y: height + Math.random() * 100,
+              vx: (Math.random() - 0.5) * 3,
+              vy: -(Math.random() * 9 + 4),
+              gravity: 0.12 + Math.random() * 0.08,
+              size: Math.random() * 6 + 4,
+              color: `hsl(${Math.random() * 360}, 100%, 65%)`,
+              spin: Math.random() * Math.PI * 2,
+              spinSpeed: (Math.random() - 0.5) * 0.1
+            });
+          }
+          break;
+        case 'earthlings':
+          const treeHeight = height * 0.95;
+          const earthlingColors = ['#CAB266', '#8f967a', '#eadeb8'];
+          for(let i = 0; i < density * 1.8; i++) {
+            let h = Math.random();
+            let y = height - h * treeHeight;
+            let w = (1 - h) * (width * 0.82);
+            let x = width/2 + (Math.random() - 0.5) * w * 2;
+            particles.push({ x, y, baseX: x, baseY: y, vx: 0, vy: 0, phase: Math.random() * 10, size: Math.random() * 3 + 1.2, color: earthlingColors[Math.floor(Math.random() * earthlingColors.length)] });
+          }
+          break;
+        case 'matrix':
+          const cols = Math.floor(width / 14);
+          for (let i = 0; i < cols; i++) {
+            for(let j = 0; j < 4; j++) { particles.push({ x: i * 14, y: Math.random() * height, speed: Math.random() * 2.2 + 1.0, val: Math.random() > 0.3 ? '1' : '0' }); }
+          }
+          break;
+        case 'synthwave':
+          synthwaveTime = 0;
+          break;
+        case 'nordic':
+          for (let i = 0; i < density * 2; i++) { particles.push({ x: Math.random() * width, y: Math.random() * height, vy: Math.random() * 3 + 1.5, vx: (Math.random() - 0.5) * 2, radius: Math.random() * 3 + 1, windFactor: Math.random() * 1.5 + 0.5 }); }
+          break;
+        case 'love':
+          for (let i = 0; i < Math.floor(density / 1.5); i++) { particles.push({ x: Math.random() * width, y: height + Math.random() * 50, vy: -(Math.random() * 1.8 + 0.8), vx: (Math.random() - 0.5) * 1.2, size: Math.random() * 28 + 14, alpha: Math.random() * 0.4 + 0.3, wobbleSpeed: Math.random() * 0.04 + 0.01, wobbleDist: Math.random() * 25 + 10, phase: Math.random() * Math.PI * 2 }); }
+          break;
+        case 'bubbly':
+          for (let i = 0; i < density; i++) { particles.push({ x: Math.random() * width, y: Math.random() * height, vx: (Math.random() - 0.5) * 1.5, vy: (Math.random() - 0.5) * 1.5, radius: Math.random() * 5 + 2, maxRadius: Math.random() * 25 + 10, alpha: Math.random() * 0.4 + 0.2 }); }
+          break;
+        case 'celebration':
+          for (let i = 0; i < 6; i++) spawnFirework(Math.random() * width, Math.random() * (height * 0.6));
+          break;
       }
     }
     
     function renderCanvasAnimation() {
-      if(currentTheme === 'matrix') { ctx.fillStyle = 'rgba(2, 11, 4, 0.25)'; ctx.fillRect(0, 0, width, height); } else { ctx.clearRect(0, 0, width, height); }
+      if(currentTheme === 'matrix') {
+        ctx.fillStyle = 'rgba(2, 11, 4, 0.25)';
+        ctx.fillRect(0, 0, width, height);
+      } else {
+        ctx.clearRect(0, 0, width, height);
+      }
       const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
 
       switch (currentTheme) {
-        case 'light': particles.forEach((p, i) => { p.x += p.vx; p.y += p.vy; if (p.x < 0 || p.x > width) p.vx *= -1; if (p.y < 0 || p.y > height) p.vy *= -1; ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fillStyle = primaryColor; ctx.fill(); for (let j = i + 1; j < particles.length; j++) { let dist = Math.hypot(p.x - particles[j].x, p.y - particles[j].y); if (dist < 110) { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(particles[j].x, particles[j].y); ctx.strokeStyle = primaryColor; ctx.globalAlpha = (1 - dist / 110) * 0.25; ctx.stroke(); ctx.globalAlpha = 1; } } }); break;
-        case 'dark': particles.forEach((p, idx) => { p.phase += p.pulseSpeed; const opacity = ((Math.sin(p.phase) + 1) / 2) * 0.75 + 0.2; ctx.fillStyle = `rgba(248, 250, 252, ${opacity})`; ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill(); for (let j = idx + 1; j < particles.length; j++) { const dist = Math.hypot(p.x - particles[j].x, p.y - particles[j].y); if (dist < 110) { ctx.strokeStyle = `rgba(248, 250, 252, ${(1 - dist / 110) * opacity * 0.25})`; ctx.lineWidth = 0.6; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke(); } } }); break;
-        case 'party': particles.forEach((p) => { p.y += p.vy; p.x += Math.sin(p.spin) * 1.2; p.spin += 0.05; if (p.y < -20) { p.y = height + 20; p.x = Math.random() * width; p.vy = -(Math.random() * 6 + 3); } ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.spin); ctx.fillStyle = p.color; ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size); ctx.restore(); }); break;
-        case 'earthlings': particles.forEach(p => { p.phase += 0.03; p.x = p.baseX + Math.sin(p.phase) * 12; p.y = p.baseY + Math.cos(p.phase * 0.7) * 12; const opacity = (Math.sin(p.phase * 2) + 1) / 2; ctx.fillStyle = p.color; ctx.shadowBlur = 8 * opacity; ctx.shadowColor = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill(); }); ctx.shadowBlur = 0; break;
-        case 'matrix': ctx.font = '13px monospace'; particles.forEach(p => { if (Math.random() < 0.25) p.val = Math.random() > 0.5 ? '1' : '0'; ctx.fillStyle = '#22c55e'; ctx.fillText(p.val, p.x, p.y); p.y += p.speed; if (p.y > height) p.y = -35; }); break;
-        case 'synthwave': ctx.strokeStyle = 'rgba(128, 0, 128, 0.2)'; ctx.lineWidth = 1; for(let x = 0; x < width; x += 50) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, height); ctx.stroke(); } ctx.strokeStyle = 'rgba(255, 0, 255, 0.8)'; ctx.lineWidth = 2; synthwaveNodes.forEach(line => { ctx.beginPath(); ctx.moveTo(line[0].x, line[0].y); for (let i = 0; i < line.length - 1; i++) { line[i].update(); let xc = (line[i].x + line[i + 1].x) / 2; let yc = (line[i].y + line[i + 1].y) / 2; ctx.quadraticCurveTo(line[i].x, line[i].y, xc, yc); } line[line.length - 1].update(); ctx.lineTo(line[line.length - 1].x, line[line.length - 1].y); ctx.stroke(); }); break;
-        case 'nordic': waveOffset += 0.015; particles.forEach(p => { let wind = Math.sin(p.y * 0.008 + waveOffset) * 2.5; p.x += p.vx + wind * p.windFactor; p.y += p.vy; if (p.y > height + 10) { p.y = -10; p.x = Math.random() * width; } if (p.x > width + 10) p.x = -10; if (p.x < -10) p.x = width + 10; ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fillStyle = 'rgba(226, 232, 240, 0.85)'; ctx.fill(); }); break;
-        case 'love': particles.forEach(p => { p.phase += p.wobbleSpeed; p.y += p.vy; p.x += Math.sin(p.phase) * 0.8; if (p.y < -50) { p.y = height + 50; p.x = Math.random() * width; } ctx.font = `${p.size}px sans-serif`; ctx.fillStyle = `rgba(248, 113, 113, ${p.alpha})`; ctx.fillText('♥', p.x, p.y); }); break;
-        case 'bubbly': particles.forEach(p => { p.x += p.vx; p.y += p.vy; if (p.x < 0 || p.x > width) p.vx *= -1; if (p.y < 0 || p.y > height) p.vy *= -1; p.radius += 0.08; if(p.radius > p.maxRadius) { p.radius = Math.random() * 3 + 1; } ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.strokeStyle = '#f472b6'; ctx.lineWidth = 1.5; ctx.globalAlpha = p.alpha; ctx.stroke(); ctx.globalAlpha = 1; }); break;
-        case 'tricolour': if (Math.random() < 0.15) spawnFirework(); for (let i = particles.length - 1; i >= 0; i--) { const p = particles[i]; p.x += p.vx; p.y += p.vy; p.vy += 0.04; p.alpha -= p.decay; if (p.alpha <= 0) { particles.splice(i, 1); } else { ctx.globalAlpha = p.alpha; ctx.fillStyle = p.color; ctx.shadowBlur = 8; ctx.shadowColor = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, 3, 0, Math.PI * 2); ctx.fill(); } } ctx.globalAlpha = 1; ctx.shadowBlur = 0; break;
+        case 'light':
+          particles.forEach((p, i) => {
+            p.x += p.vx; p.y += p.vy;
+            if (p.x < 0 || p.x > width) p.vx *= -1;
+            if (p.y < 0 || p.y > height) p.vy *= -1;
+            ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fillStyle = primaryColor; ctx.fill();
+            for (let j = i + 1; j < particles.length; j++) {
+              let dist = Math.hypot(p.x - particles[j].x, p.y - particles[j].y);
+              if (dist < 110) {
+                ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(particles[j].x, particles[j].y);
+                ctx.strokeStyle = primaryColor; ctx.globalAlpha = (1 - dist / 110) * 0.25; ctx.stroke(); ctx.globalAlpha = 1;
+              }
+            }
+          });
+          break;
+        case 'dark':
+          particles.forEach((p, idx) => {
+            p.phase += p.pulseSpeed;
+            const opacity = ((Math.sin(p.phase) + 1) / 2) * 0.75 + 0.2;
+            ctx.fillStyle = `rgba(248, 250, 252, ${opacity})`;
+            ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
+            for (let j = idx + 1; j < particles.length; j++) {
+              const dist = Math.hypot(p.x - particles[j].x, p.y - particles[j].y);
+              if (dist < 110) {
+                ctx.strokeStyle = `rgba(248, 250, 252, ${(1 - dist / 110) * opacity * 0.25})`;
+                ctx.lineWidth = 0.6; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();
+              }
+            }
+          });
+          break;
+        case 'party':
+          particles.forEach((p) => {
+            p.vy += p.gravity;
+            p.y += p.vy;
+            p.x += p.vx + Math.sin(p.y * 0.02) * 0.8;
+            p.spin += p.spinSpeed;
+            if (p.y > height + 30) {
+              p.y = -20;
+              p.x = Math.random() * width;
+              p.vy = -(Math.random() * 8 + 4);
+            }
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.spin);
+            ctx.fillStyle = p.color;
+            ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size * 0.6);
+            ctx.restore();
+          });
+          break;
+        case 'earthlings':
+          particles.forEach(p => {
+            p.phase += 0.03;
+            p.x = p.baseX + Math.sin(p.phase) * 12;
+            p.y = p.baseY + Math.cos(p.phase * 0.7) * 12;
+            const opacity = (Math.sin(p.phase * 2) + 1) / 2;
+            ctx.fillStyle = p.color; ctx.shadowBlur = 8 * opacity; ctx.shadowColor = p.color;
+            ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
+          });
+          ctx.shadowBlur = 0;
+          break;
+        case 'matrix':
+          ctx.font = '13px monospace';
+          particles.forEach(p => {
+            if (Math.random() < 0.25) p.val = Math.random() > 0.5 ? '1' : '0';
+            ctx.fillStyle = '#22c55e'; ctx.fillText(p.val, p.x, p.y);
+            p.y += p.speed;
+            if (p.y > height) p.y = -35;
+          });
+          break;
+        case 'synthwave':
+          // Moving Synthwave Grid / Waves
+          synthwaveTime += 0.03;
+          ctx.strokeStyle = 'rgba(192, 132, 252, 0.4)';
+          ctx.lineWidth = 1.5;
+          
+          const horizonY = height * 0.55;
+          const centerX = width / 2;
+
+          // Draw perspective vertical lines radiating outward from horizon center
+          for (let x = -width; x < width * 2; x += 80) {
+            ctx.beginPath();
+            ctx.moveTo(centerX, horizonY);
+            ctx.lineTo(x + Math.sin(synthwaveTime) * 20, height);
+            ctx.stroke();
+          }
+
+          // Draw moving horizontal grid lines moving downwards to simulate forward motion
+          const gridCount = 14;
+          for (let i = 0; i < gridCount; i++) {
+            let progress = (i + (synthwaveTime % 1)) / gridCount;
+            let currentY = horizonY + Math.pow(progress, 2.5) * (height - horizonY);
+            let alpha = progress * 0.8;
+            ctx.strokeStyle = `rgba(232, 121, 249, ${alpha})`;
+            ctx.beginPath();
+            ctx.moveTo(0, currentY);
+            ctx.lineTo(width, currentY);
+            ctx.stroke();
+          }
+          break;
+        case 'nordic':
+          waveOffset += 0.015;
+          particles.forEach(p => {
+            let wind = Math.sin(p.y * 0.008 + waveOffset) * 2.5;
+            p.x += p.vx + wind * p.windFactor; p.y += p.vy;
+            if (p.y > height + 10) { p.y = -10; p.x = Math.random() * width; }
+            if (p.x > width + 10) p.x = -10; if (p.x < -10) p.x = width + 10;
+            ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fillStyle = 'rgba(226, 232, 240, 0.85)'; ctx.fill();
+          });
+          break;
+        case 'love':
+          particles.forEach(p => {
+            p.phase += p.wobbleSpeed; p.y += p.vy; p.x += Math.sin(p.phase) * 0.8;
+            if (p.y < -50) { p.y = height + 50; p.x = Math.random() * width; }
+            ctx.font = `${p.size}px sans-serif`; ctx.fillStyle = `rgba(248, 113, 113, ${p.alpha})`;
+            ctx.fillText('♥', p.x, p.y);
+          });
+          break;
+        case 'bubbly':
+          particles.forEach(p => {
+            p.x += p.vx; p.y += p.vy;
+            if (p.x < 0 || p.x > width) p.vx *= -1;
+            if (p.y < 0 || p.y > height) p.vy *= -1;
+            p.radius += 0.08;
+            if(p.radius > p.maxRadius) { p.radius = Math.random() * 3 + 1; }
+            ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.strokeStyle = '#f472b6'; ctx.lineWidth = 1.5; ctx.globalAlpha = p.alpha; ctx.stroke(); ctx.globalAlpha = 1;
+          });
+          break;
+        case 'celebration':
+          if (Math.randomStr < 0.1 || Math.random() < 0.08) spawnFirework();
+          for (let i = particles.length - 1; i >= 0; i--) {
+            const p = particles[i];
+            p.x += p.vx; p.y += p.vy; p.vy += 0.04; p.alpha -= p.decay;
+            if (p.alpha <= 0) {
+              particles.splice(i, 1);
+            } else {
+              ctx.globalAlpha = p.alpha;
+              ctx.fillStyle = p.color;
+              ctx.shadowBlur = 8; ctx.shadowColor = p.color;
+              ctx.beginPath(); ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+              ctx.fill();
+            }
+          }
+          ctx.globalAlpha = 1; ctx.shadowBlur = 0;
+          break;
       }
       requestAnimationFrame(renderCanvasAnimation);
     }
     resizeCanvas();
     renderCanvasAnimation();
 
-    /* ===================================================
+        /* ===================================================
        2. REAL-TIME SCHEDULE SLOT DETECTION & COUNTDOWN
        =================================================== */
     function updateRealtimeScheduleGlow() {
@@ -656,7 +864,7 @@
     }
     window.addEventListener('DOMContentLoaded', updateSemesterCountdown);
 
-        /* ===================================================
+    /* ===================================================
        3. PERSISTENCE, LOCAL STORAGE & SAVE LOCKING LOGIC
        =================================================== */
     let hasUnsavedChanges = false;
@@ -731,9 +939,9 @@
       document.getElementById('toastMsg').innerText = msg;
       toast.classList.add('show');
       setTimeout(() => toast.classList.remove('show'), 2500);
-    }
+                            }
 
-    /* ===================================================
+        /* ===================================================
        4. INTERACTIVE CARD GLOW & EDIT MODE
        =================================================== */
     function toggleCardPress(card, event) {
@@ -834,15 +1042,14 @@
         filterDay('all', document.querySelector('.filter-chip')); showNotificationToast(`Day "${dayName}" deleted.`);
         triggerUnsaved();
       }
-            }
+    }
 
-        /* ===================================================
+    /* ===================================================
        5. PDF EXPORT MODAL & GENERATOR (8.5x13 Long Bond)
        =================================================== */
     function openPdfModal() { document.getElementById('pdfModalOverlay').classList.add('show'); }
     function closePdfModal() { document.getElementById('pdfModalOverlay').classList.remove('show'); }
 
-    // Prepares the DOM based on user's selected export options
     function setupPdfExport() {
       lockAllEdits();
       const element = document.getElementById('scheduleCanvas'); 
@@ -860,11 +1067,10 @@
       } else if (style === 'nordic') {
         document.documentElement.setAttribute('data-theme', 'nordic');
         pdfBg = '#0b1329';
-      } else if (style === 'tricolour') {
-        document.documentElement.setAttribute('data-theme', 'tricolour');
+      } else if (style === 'celebration') {
+        document.documentElement.setAttribute('data-theme', 'celebration');
         pdfBg = '#180e08';
       } else if (style === 'screenshot') {
-        // Keep current theme logic, inject current body background directly to Canvas
         pdfBg = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();
       } else if (style === 'scanned') {
         document.documentElement.setAttribute('data-theme', 'light');
@@ -874,7 +1080,6 @@
 
       element.style.background = pdfBg;
 
-      // Toggle Footer Checkbox
       if (!document.getElementById('pdfIncludeFooter').checked) {
         element.classList.add('hide-footer');
       } else {
@@ -894,12 +1099,12 @@
 
     function getPdfOptions(pdfBg) {
       return {
-          margin:       0.2, // Padding buffer
-          filename:     'Class_Schedule.pdf',
+          margin:       0.2,
+          filename:     'BSIT 3D_Bryan Jay M. Lumabas.pdf',
           image:        { type: 'jpeg', quality: 0.98 },
           html2canvas:  { scale: 2, useCORS: true, background: pdfBg },
           jsPDF:        { unit: 'in', format: [8.5, 13], orientation: 'portrait' },
-          pagebreak:    { mode: 'avoid-all' } // Restrict splitting content
+          pagebreak:    { mode: 'avoid-all' }
       };
     }
 
@@ -917,10 +1122,9 @@
       html2pdf().set(getPdfOptions(pdfBg)).from(element).save().then(() => {
           restorePdfExport(element, origTheme, origBg);
           closePdfModal();
-          showNotificationToast("Schedule downloaded successfully!");
+          showNotificationToast("Schedule downloaded successfully as BSIT 3D_Bryan Jay M. Lumabas.pdf!");
       });
     }
   </script>
 </body>
 </html>
-  
