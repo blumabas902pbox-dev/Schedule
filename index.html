@@ -155,18 +155,50 @@
     .is-editing .add-slot-btn { display: flex; }
     footer.app-footer { text-align: center; margin-top: 2rem; padding: 1rem; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--text-muted); border-top: 1px dashed var(--border-color); }
 
-    /* PDF Specific Styles (Merged dynamically for the 8.5x13 requirement) */
+    /* ===================================================
+       PDF EXPORT - STRICTLY 1 PAGE & 8.5x13 COMPLIANT
+       =================================================== */
     .pdf-export-active .toolbar, 
     .pdf-export-active .filter-bar, 
     .pdf-export-active .icon-btn,
     .pdf-export-active .add-day-btn,
-    .pdf-export-active .add-slot-btn,
-    .pdf-export-active .app-footer {
+    .pdf-export-active .add-slot-btn {
         display: none !important;
     }
+    
+    .hide-footer footer.app-footer {
+        display: none !important;
+    }
+
     .pdf-export-active.container {
-        transform: scale(0.92);
-        transform-origin: top center;
+        width: 816px !important; /* 8.5 inches approx */
+        max-width: 816px !important;
+        margin: 0 auto !important;
+        transform: none !important;
+        background-color: transparent !important;
+    }
+    .pdf-export-active header {
+        padding: 0.8rem 1rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+    .pdf-export-active .schedule-grid {
+        grid-template-columns: repeat(2, 1fr) !important; /* Forces uniform compact fit */
+        gap: 0.65rem !important;
+    }
+    .pdf-export-active .card {
+        padding: 0.9rem !important;
+        transform: none !important;
+        box-shadow: none !important;
+        page-break-inside: avoid !important;
+    }
+    
+    /* Scanned Option Styles */
+    .scanned-print-active {
+        filter: grayscale(100%) contrast(1.3) !important;
+        color: #000000 !important;
+    }
+    .scanned-print-active .card, .scanned-print-active header {
+        border: 2px solid #000 !important;
     }
     
     #saveToast { position: fixed; bottom: 2rem; right: 2rem; background: var(--card-bg); color: var(--text-main); border: 2px solid var(--primary); box-shadow: 0 0 20px var(--glow-color); padding: 0.8rem 1.4rem; border-radius: 12px; font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 0.6rem; z-index: 1000; opacity: 0; transform: translateY(20px); transition: opacity 0.3s ease, transform 0.3s ease; pointer-events: none; }
@@ -174,11 +206,11 @@
     
     .pdf-modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.75); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
     .pdf-modal-overlay.show { opacity: 1; pointer-events: auto; }
-    .pdf-modal-content { background: var(--card-bg); border: 2px solid var(--primary); box-shadow: 0 0 30px var(--glow-color); border-radius: 16px; padding: 1.5rem; width: 90%; max-width: 600px; color: var(--text-main); max-height: 90vh; overflow-y: auto; }
-    .pdf-modal-content h3 { font-size: 1.25rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; color: var(--primary); }
-    .pdf-option-group { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.25rem; font-size: 0.88rem; }
-    .pdf-option-item { display: flex; align-items: flex-start; gap: 0.5rem; cursor: pointer; }
-    .pdf-option-item input { margin-top: 3px; accent-color: var(--primary); }
+    .pdf-modal-content { background: var(--card-bg); border: 2px solid var(--primary); box-shadow: 0 0 30px var(--glow-color); border-radius: 16px; padding: 1.5rem; width: 90%; max-width: 500px; color: var(--text-main); max-height: 90vh; overflow-y: auto; }
+    .pdf-modal-content h3 { font-size: 1.25rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; color: var(--primary); }
+    .pdf-option-group { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.25rem; font-size: 0.95rem; }
+    .pdf-option-item { display: flex; align-items: center; gap: 0.6rem; cursor: pointer; padding: 0.3rem 0; }
+    .pdf-option-item input[type="radio"], .pdf-option-item input[type="checkbox"] { accent-color: var(--primary); transform: scale(1.15); cursor: pointer; }
 
     @media (max-width: 768px) { body { padding: 0.75rem; } header { flex-direction: column; align-items: stretch; } .toolbar { justify-content: stretch; } .btn, select { flex: 1 1 auto; } .schedule-grid { grid-template-columns: 1fr; } #saveToast { bottom: 1rem; right: 1rem; left: 1rem; text-align: center; justify-content: center; } }
     @media print { #nodeCanvas, .toolbar, .filter-bar, #saveToast, .icon-btn, .pdf-modal-overlay { display: none !important; } body { background: #fff !important; color: #000 !important; } .card { border: 1px solid #000 !important; box-shadow: none !important; transform: none !important; } }
@@ -199,11 +231,12 @@
         
         <div class="semester-sync-widget">
           <span>Sem:</span>
-          <input type="date" id="semStart" value="2026-08-01" onchange="updateSemesterCountdown()">
+          <!-- Empty initial values per user request -->
+          <input type="date" id="semStart" value="" onchange="updateSemesterCountdown(); triggerUnsaved();">
           <span>to</span>
-          <input type="date" id="semEnd" value="2026-12-20" onchange="updateSemesterCountdown()">
-          <span class="countdown-display" id="countdownNumerics">Syncing...</span>
-          <span id="saveWarningNotice" style="font-size:0.7rem; color:var(--primary); margin-left:auto;"><i class="fa-solid fa-triangle-exclamation"></i> save your progress</span>
+          <input type="date" id="semEnd" value="" onchange="updateSemesterCountdown(); triggerUnsaved();">
+          <span class="countdown-display" id="countdownNumerics">Awaiting Sync</span>
+          <span id="saveWarningNotice" style="font-size:0.7rem; color:var(--primary); margin-left:auto;"></span>
         </div>
       </div>
 
@@ -221,8 +254,8 @@
           <option value="tricolour">Tricolour Theme</option>
         </select>
 
-        <button class="btn btn-save" id="saveBtn">
-          <i class="fa-solid fa-floppy-disk"></i> Save
+        <button class="btn btn-save" id="saveBtn" disabled style="opacity: 0.5; cursor: not-allowed;">
+          <i class="fa-solid fa-lock"></i> Saved
         </button>
 
         <button class="btn btn-add-sched" id="addSchedBtn" onclick="addSchedule()">
@@ -440,22 +473,48 @@
     <footer class="app-footer">
       © BJML 2026.
     </footer>
-  </div>
+              </div>
 
-  <!-- PDF Download Options Modal -->
+    <!-- PDF Download Options Modal -->
   <div class="pdf-modal-overlay" id="pdfModalOverlay">
     <div class="pdf-modal-content">
-      <h3><i class="fa-solid fa-file-pdf"></i> Export Schedule (Long Bond Paper)</h3>
+      <h3><i class="fa-solid fa-file-pdf"></i> Export Schedule</h3>
+      <p style="font-size: 0.82em; color: var(--text-muted); margin-bottom: 1rem;">
+        Format: 8.5" x 13" Bond Paper. 
+      </p>
+      
       <div class="pdf-option-group">
+        <label style="font-weight: 800; margin-bottom: 0.2rem; display: block; color: var(--primary);">Select Style:</label>
         <label class="pdf-option-item">
-          <input type="checkbox" id="pdfIncludeBg" checked>
-          <span>Include theme background &amp; animations</span>
+          <input type="radio" name="pdfStyle" value="light" checked>
+          <span>Option Style 1: </span>
+        </label>
+        <label class="pdf-option-item">
+          <input type="radio" name="pdfStyle" value="nordic">
+          <span>Option Style 2:</span>
+        </label>
+        <label class="pdf-option-item">
+          <input type="radio" name="pdfStyle" value="tricolour">
+          <span>Option Style 3:</span>
+        </label>
+        <label class="pdf-option-item">
+          <input type="radio" name="pdfStyle" value="screenshot">
+          <span>Option 4: Screenshot Style</span>
+        </label>
+        <label class="pdf-option-item">
+          <input type="radio" name="pdfStyle" value="scanned">
+          <span>Option 5: Scanned Print</span>
         </label>
       </div>
-      <p style="font-size: 0.85em; color: var(--text-muted, #888); margin-bottom: 1rem;">
-        Format: 8.5" x 13" (Strictly one page). Footnotes and dash lines will be hidden automatically.
-      </p>
-      <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
+
+      <div class="pdf-option-group" style="margin-top: 1rem; border-top: 1px dashed var(--border-color); padding-top: 1rem;">
+        <label class="pdf-option-item">
+          <input type="checkbox" id="pdfIncludeFooter" checked>
+          <span>Include footnote and dashline (© BJML 2026)</span>
+        </label>
+      </div>
+      
+      <div style="display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem;">
         <button class="btn" onclick="closePdfModal()">Cancel</button>
         <button class="btn btn-preview" onclick="previewPdf()">Preview</button>
         <button class="btn btn-pdf" onclick="executePdfDownload()">Confirm &amp; Download</button>
@@ -465,7 +524,7 @@
 
   <div id="saveToast"><i class="fa-solid fa-circle-check"></i> <span id="toastMsg">Schedule saved successfully!</span></div>
 
-    <script>
+  <script>
     /* ===================================================
        1. ANIMATION CANVAS ENGINE & GLOBAL VARS
        =================================================== */
@@ -477,7 +536,6 @@
     let waveOffset = 0;
     let animStartTime = performance.now();
 
-    // Variables for Synthwave Interactive Hooke's Law String Physics
     let synthwaveNodes = [];
     let mouse = { x: -1000, y: -1000, radius: 100 };
     window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
@@ -485,34 +543,21 @@
 
     class StringNode {
         constructor(x, y) {
-            this.x = x;
-            this.y = y;
-            this.baseY = y; 
-            this.vy = 0;
+            this.x = x; this.y = y; this.baseY = y; this.vy = 0;
         }
         update() {
-            let dx = mouse.x - this.x;
-            let dy = mouse.y - this.y;
+            let dx = mouse.x - this.x; let dy = mouse.y - this.y;
             let distance = Math.sqrt(dx * dx + dy * dy);
-
             if (distance < mouse.radius) {
-                let forceDirectionY = dy / distance;
-                let force = (mouse.radius - distance) / mouse.radius;
+                let forceDirectionY = dy / distance; let force = (mouse.radius - distance) / mouse.radius;
                 this.vy -= forceDirectionY * force * 2;
             }
-
             let springForce = (this.baseY - this.y) * 0.05; 
-            this.vy += springForce;
-            this.vy *= 0.85; 
-            this.y += this.vy;
+            this.vy += springForce; this.vy *= 0.85; this.y += this.vy;
         }
     }
 
-    function resizeCanvas() {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-      initThemeAnimation();
-    }
+    function resizeCanvas() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; initThemeAnimation(); }
     window.addEventListener('resize', resizeCanvas);
 
     function changeTheme(themeName) {
@@ -524,153 +569,45 @@
     }
 
     function spawnFirework() {
-      const targetX = Math.random() * width;
-      const targetY = Math.random() * height;
-      const count = 55;
+      const targetX = Math.random() * width; const targetY = Math.random() * height; const count = 55;
       const bronzeColors = ['#cd7f32', '#e2e8f0', '#8c4a19', '#ffd700', '#f59e0b', '#fffbeb'];
       for (let i = 0; i < count; i++) {
-        const angle = (Math.PI * 2 / count) * i;
-        const speed = Math.random() * 6 + 2;
-        particles.push({
-          x: targetX, y: targetY, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed,
-          alpha: 1, decay: 0.012 + Math.random() * 0.01, color: bronzeColors[Math.floor(Math.random() * bronzeColors.length)]
-        });
+        const angle = (Math.PI * 2 / count) * i; const speed = Math.random() * 6 + 2;
+        particles.push({ x: targetX, y: targetY, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed, alpha: 1, decay: 0.012 + Math.random() * 0.01, color: bronzeColors[Math.floor(Math.random() * bronzeColors.length)] });
       }
     }
 
     function initThemeAnimation() {
-      particles = [];
-      const density = Math.floor((width * height) / 13000);
-
+      particles = []; const density = Math.floor((width * height) / 13000);
       switch (currentTheme) {
-        case 'light':
-          for (let i = 0; i < density; i++) { particles.push({ x: Math.random() * width, y: Math.random() * height, vx: (Math.random() - 0.5) * 1.2, vy: (Math.random() - 0.5) * 1.2, radius: Math.random() * 2 + 2 }); } break;
-        case 'dark':
-          for (let i = 0; i < density; i++) { particles.push({ x: Math.random() * width, y: Math.random() * height, size: Math.random() * 2.5 + 1, pulseSpeed: 0.02 + Math.random() * 0.03, phase: Math.random() * Math.PI * 2 }); } break;
-        case 'party':
-          for (let i = 0; i < density * 1.2; i++) { particles.push({ x: Math.random() * width, y: height + Math.random() * 100, vx: (Math.random() - 0.5) * 2, vy: -(Math.random() * 6 + 3), size: Math.random() * 5 + 3, color: `hsl(${Math.random() * 360}, 100%, 65%)`, spin: Math.random() * Math.PI * 2 }); } break;
-        case 'earthlings':
-          const treeHeight = height * 0.95;
-          const earthlingColors = ['#CAB266', '#8f967a', '#eadeb8'];
-          for(let i = 0; i < density * 1.8; i++) {
-            let h = Math.random(); let y = height - h * treeHeight; let w = (1 - h) * (width * 0.82); let x = width/2 + (Math.random() - 0.5) * w * 2;
-            particles.push({ x, y, baseX: x, baseY: y, vx: 0, vy: 0, phase: Math.random() * 10, size: Math.random() * 3 + 1.2, color: earthlingColors[Math.floor(Math.random() * earthlingColors.length)] });
-          } break;
-        case 'matrix':
-          const cols = Math.floor(width / 14);
-          for (let i = 0; i < cols; i++) { for(let j = 0; j < 4; j++) { particles.push({ x: i * 14, y: Math.random() * height, speed: Math.random() * 2.2 + 1.0, val: Math.random() > 0.3 ? '1' : '0' }); } } break;
-        case 'synthwave':
-          synthwaveNodes = [];
-          const spacing = 40;
-          const linesCount = 8;
-          for (let i = 0; i < linesCount; i++) {
-              let lineNodes = [];
-              let yPos = (height / linesCount) * i + 50;
-              for (let x = 0; x < width + spacing; x += spacing) { lineNodes.push(new StringNode(x, yPos)); }
-              synthwaveNodes.push(lineNodes);
-          } break;
-        case 'nordic':
-          for (let i = 0; i < density * 2; i++) { particles.push({ x: Math.random() * width, y: Math.random() * height, vy: Math.random() * 3 + 1.5, vx: (Math.random() - 0.5) * 2, radius: Math.random() * 3 + 1, windFactor: Math.random() * 1.5 + 0.5 }); } break;
-        case 'love':
-          for (let i = 0; i < Math.floor(density / 1.5); i++) { particles.push({ x: Math.random() * width, y: height + Math.random() * 50, vy: -(Math.random() * 1.8 + 0.8), vx: (Math.random() - 0.5) * 1.2, size: Math.random() * 28 + 14, alpha: Math.random() * 0.4 + 0.3, wobbleSpeed: Math.random() * 0.04 + 0.01, wobbleDist: Math.random() * 25 + 10, phase: Math.random() * Math.PI * 2 }); } break;
-        case 'bubbly':
-          for (let i = 0; i < density; i++) { particles.push({ x: Math.random() * width, y: Math.random() * height, vx: (Math.random() - 0.5) * 1.5, vy: (Math.random() - 0.5) * 1.5, radius: Math.random() * 5 + 2, maxRadius: Math.random() * 25 + 10, alpha: Math.random() * 0.4 + 0.2 }); } break;
-        case 'tricolour':
-          for (let i = 0; i < 15; i++) spawnFirework(); break;
+        case 'light': for (let i = 0; i < density; i++) { particles.push({ x: Math.random() * width, y: Math.random() * height, vx: (Math.random() - 0.5) * 1.2, vy: (Math.random() - 0.5) * 1.2, radius: Math.random() * 2 + 2 }); } break;
+        case 'dark': for (let i = 0; i < density; i++) { particles.push({ x: Math.random() * width, y: Math.random() * height, size: Math.random() * 2.5 + 1, pulseSpeed: 0.02 + Math.random() * 0.03, phase: Math.random() * Math.PI * 2 }); } break;
+        case 'party': for (let i = 0; i < density * 1.2; i++) { particles.push({ x: Math.random() * width, y: height + Math.random() * 100, vx: (Math.random() - 0.5) * 2, vy: -(Math.random() * 6 + 3), size: Math.random() * 5 + 3, color: `hsl(${Math.random() * 360}, 100%, 65%)`, spin: Math.random() * Math.PI * 2 }); } break;
+        case 'earthlings': const treeHeight = height * 0.95; const earthlingColors = ['#CAB266', '#8f967a', '#eadeb8']; for(let i = 0; i < density * 1.8; i++) { let h = Math.random(); let y = height - h * treeHeight; let w = (1 - h) * (width * 0.82); let x = width/2 + (Math.random() - 0.5) * w * 2; particles.push({ x, y, baseX: x, baseY: y, vx: 0, vy: 0, phase: Math.random() * 10, size: Math.random() * 3 + 1.2, color: earthlingColors[Math.floor(Math.random() * earthlingColors.length)] }); } break;
+        case 'matrix': const cols = Math.floor(width / 14); for (let i = 0; i < cols; i++) { for(let j = 0; j < 4; j++) { particles.push({ x: i * 14, y: Math.random() * height, speed: Math.random() * 2.2 + 1.0, val: Math.random() > 0.3 ? '1' : '0' }); } } break;
+        case 'synthwave': synthwaveNodes = []; const spacing = 40; const linesCount = 8; for (let i = 0; i < linesCount; i++) { let lineNodes = []; let yPos = (height / linesCount) * i + 50; for (let x = 0; x < width + spacing; x += spacing) { lineNodes.push(new StringNode(x, yPos)); } synthwaveNodes.push(lineNodes); } break;
+        case 'nordic': for (let i = 0; i < density * 2; i++) { particles.push({ x: Math.random() * width, y: Math.random() * height, vy: Math.random() * 3 + 1.5, vx: (Math.random() - 0.5) * 2, radius: Math.random() * 3 + 1, windFactor: Math.random() * 1.5 + 0.5 }); } break;
+        case 'love': for (let i = 0; i < Math.floor(density / 1.5); i++) { particles.push({ x: Math.random() * width, y: height + Math.random() * 50, vy: -(Math.random() * 1.8 + 0.8), vx: (Math.random() - 0.5) * 1.2, size: Math.random() * 28 + 14, alpha: Math.random() * 0.4 + 0.3, wobbleSpeed: Math.random() * 0.04 + 0.01, wobbleDist: Math.random() * 25 + 10, phase: Math.random() * Math.PI * 2 }); } break;
+        case 'bubbly': for (let i = 0; i < density; i++) { particles.push({ x: Math.random() * width, y: Math.random() * height, vx: (Math.random() - 0.5) * 1.5, vy: (Math.random() - 0.5) * 1.5, radius: Math.random() * 5 + 2, maxRadius: Math.random() * 25 + 10, alpha: Math.random() * 0.4 + 0.2 }); } break;
+        case 'tricolour': for (let i = 0; i < 15; i++) spawnFirework(); break;
       }
     }
     
     function renderCanvasAnimation() {
-      if(currentTheme === 'matrix') { ctx.fillStyle = 'rgba(2, 11, 4, 0.25)'; ctx.fillRect(0, 0, width, height); } 
-      else { ctx.clearRect(0, 0, width, height); }
-
+      if(currentTheme === 'matrix') { ctx.fillStyle = 'rgba(2, 11, 4, 0.25)'; ctx.fillRect(0, 0, width, height); } else { ctx.clearRect(0, 0, width, height); }
       const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
 
       switch (currentTheme) {
-        case 'light':
-          particles.forEach((p, i) => {
-            p.x += p.vx; p.y += p.vy;
-            if (p.x < 0 || p.x > width) p.vx *= -1; if (p.y < 0 || p.y > height) p.vy *= -1;
-            ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fillStyle = primaryColor; ctx.fill();
-            for (let j = i + 1; j < particles.length; j++) {
-              let dist = Math.hypot(p.x - particles[j].x, p.y - particles[j].y);
-              if (dist < 110) { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(particles[j].x, particles[j].y); ctx.strokeStyle = primaryColor; ctx.globalAlpha = (1 - dist / 110) * 0.25; ctx.stroke(); ctx.globalAlpha = 1; }
-            }
-          }); break;
-        case 'dark':
-          particles.forEach((p, idx) => {
-            p.phase += p.pulseSpeed; const opacity = ((Math.sin(p.phase) + 1) / 2) * 0.75 + 0.2;
-            ctx.fillStyle = `rgba(248, 250, 252, ${opacity})`; ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
-            for (let j = idx + 1; j < particles.length; j++) {
-              const dist = Math.hypot(p.x - particles[j].x, p.y - particles[j].y);
-              if (dist < 110) { ctx.strokeStyle = `rgba(248, 250, 252, ${(1 - dist / 110) * opacity * 0.25})`; ctx.lineWidth = 0.6; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke(); }
-            }
-          }); break;
-        case 'party':
-          particles.forEach((p) => {
-            p.y += p.vy; p.x += Math.sin(p.spin) * 1.2; p.spin += 0.05;
-            if (p.y < -20) { p.y = height + 20; p.x = Math.random() * width; p.vy = -(Math.random() * 6 + 3); }
-            ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.spin); ctx.fillStyle = p.color; ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size); ctx.restore();
-          }); break;
-        case 'earthlings':
-          particles.forEach(p => {
-            p.phase += 0.03; p.x = p.baseX + Math.sin(p.phase) * 12; p.y = p.baseY + Math.cos(p.phase * 0.7) * 12;
-            const opacity = (Math.sin(p.phase * 2) + 1) / 2; ctx.fillStyle = p.color; ctx.shadowBlur = 8 * opacity; ctx.shadowColor = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
-          }); ctx.shadowBlur = 0; break;
-        case 'matrix':
-          ctx.font = '13px monospace';
-          particles.forEach(p => {
-            if (Math.random() < 0.25) p.val = Math.random() > 0.5 ? '1' : '0';
-            ctx.fillStyle = '#22c55e'; ctx.fillText(p.val, p.x, p.y);
-            p.y += p.speed; if (p.y > height) p.y = -35;
-          }); break;
-        case 'synthwave':
-          ctx.strokeStyle = 'rgba(128, 0, 128, 0.2)';
-          ctx.lineWidth = 1;
-          for(let x = 0; x < width; x += 50) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, height); ctx.stroke(); }
-          
-          ctx.strokeStyle = 'rgba(255, 0, 255, 0.8)';
-          ctx.lineWidth = 2;
-          synthwaveNodes.forEach(line => {
-              ctx.beginPath();
-              ctx.moveTo(line[0].x, line[0].y);
-              for (let i = 0; i < line.length - 1; i++) {
-                  line[i].update();
-                  let xc = (line[i].x + line[i + 1].x) / 2; let yc = (line[i].y + line[i + 1].y) / 2;
-                  ctx.quadraticCurveTo(line[i].x, line[i].y, xc, yc);
-              }
-              line[line.length - 1].update();
-              ctx.lineTo(line[line.length - 1].x, line[line.length - 1].y);
-              ctx.stroke();
-          });
-          break;
-        case 'nordic':
-          waveOffset += 0.015;
-          particles.forEach(p => {
-            let wind = Math.sin(p.y * 0.008 + waveOffset) * 2.5; p.x += p.vx + wind * p.windFactor; p.y += p.vy;
-            if (p.y > height + 10) { p.y = -10; p.x = Math.random() * width; }
-            if (p.x > width + 10) p.x = -10; if (p.x < -10) p.x = width + 10;
-            ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fillStyle = 'rgba(226, 232, 240, 0.85)'; ctx.fill();
-          }); break;
-        case 'love':
-          particles.forEach(p => {
-            p.phase += p.wobbleSpeed; p.y += p.vy; p.x += Math.sin(p.phase) * 0.8;
-            if (p.y < -50) { p.y = height + 50; p.x = Math.random() * width; }
-            ctx.font = `${p.size}px sans-serif`; ctx.fillStyle = `rgba(248, 113, 113, ${p.alpha})`; ctx.fillText('♥', p.x, p.y);
-          }); break;
-        case 'bubbly':
-          particles.forEach(p => {
-            p.x += p.vx; p.y += p.vy; if (p.x < 0 || p.x > width) p.vx *= -1; if (p.y < 0 || p.y > height) p.vy *= -1;
-            p.radius += 0.08; if(p.radius > p.maxRadius) { p.radius = Math.random() * 3 + 1; }
-            ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.strokeStyle = '#f472b6'; ctx.lineWidth = 1.5; ctx.globalAlpha = p.alpha; ctx.stroke(); ctx.globalAlpha = 1;
-          }); break;
-        case 'tricolour':
-          if (Math.random() < 0.15) spawnFirework();
-          for (let i = particles.length - 1; i >= 0; i--) {
-            const p = particles[i]; p.x += p.vx; p.y += p.vy; p.vy += 0.04; p.alpha -= p.decay;
-            if (p.alpha <= 0) { particles.splice(i, 1); } else { ctx.globalAlpha = p.alpha; ctx.fillStyle = p.color; ctx.shadowBlur = 8; ctx.shadowColor = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, 3, 0, Math.PI * 2); ctx.fill(); }
-          }
-          ctx.globalAlpha = 1; ctx.shadowBlur = 0; break;
+        case 'light': particles.forEach((p, i) => { p.x += p.vx; p.y += p.vy; if (p.x < 0 || p.x > width) p.vx *= -1; if (p.y < 0 || p.y > height) p.vy *= -1; ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fillStyle = primaryColor; ctx.fill(); for (let j = i + 1; j < particles.length; j++) { let dist = Math.hypot(p.x - particles[j].x, p.y - particles[j].y); if (dist < 110) { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(particles[j].x, particles[j].y); ctx.strokeStyle = primaryColor; ctx.globalAlpha = (1 - dist / 110) * 0.25; ctx.stroke(); ctx.globalAlpha = 1; } } }); break;
+        case 'dark': particles.forEach((p, idx) => { p.phase += p.pulseSpeed; const opacity = ((Math.sin(p.phase) + 1) / 2) * 0.75 + 0.2; ctx.fillStyle = `rgba(248, 250, 252, ${opacity})`; ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill(); for (let j = idx + 1; j < particles.length; j++) { const dist = Math.hypot(p.x - particles[j].x, p.y - particles[j].y); if (dist < 110) { ctx.strokeStyle = `rgba(248, 250, 252, ${(1 - dist / 110) * opacity * 0.25})`; ctx.lineWidth = 0.6; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke(); } } }); break;
+        case 'party': particles.forEach((p) => { p.y += p.vy; p.x += Math.sin(p.spin) * 1.2; p.spin += 0.05; if (p.y < -20) { p.y = height + 20; p.x = Math.random() * width; p.vy = -(Math.random() * 6 + 3); } ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.spin); ctx.fillStyle = p.color; ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size); ctx.restore(); }); break;
+        case 'earthlings': particles.forEach(p => { p.phase += 0.03; p.x = p.baseX + Math.sin(p.phase) * 12; p.y = p.baseY + Math.cos(p.phase * 0.7) * 12; const opacity = (Math.sin(p.phase * 2) + 1) / 2; ctx.fillStyle = p.color; ctx.shadowBlur = 8 * opacity; ctx.shadowColor = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill(); }); ctx.shadowBlur = 0; break;
+        case 'matrix': ctx.font = '13px monospace'; particles.forEach(p => { if (Math.random() < 0.25) p.val = Math.random() > 0.5 ? '1' : '0'; ctx.fillStyle = '#22c55e'; ctx.fillText(p.val, p.x, p.y); p.y += p.speed; if (p.y > height) p.y = -35; }); break;
+        case 'synthwave': ctx.strokeStyle = 'rgba(128, 0, 128, 0.2)'; ctx.lineWidth = 1; for(let x = 0; x < width; x += 50) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, height); ctx.stroke(); } ctx.strokeStyle = 'rgba(255, 0, 255, 0.8)'; ctx.lineWidth = 2; synthwaveNodes.forEach(line => { ctx.beginPath(); ctx.moveTo(line[0].x, line[0].y); for (let i = 0; i < line.length - 1; i++) { line[i].update(); let xc = (line[i].x + line[i + 1].x) / 2; let yc = (line[i].y + line[i + 1].y) / 2; ctx.quadraticCurveTo(line[i].x, line[i].y, xc, yc); } line[line.length - 1].update(); ctx.lineTo(line[line.length - 1].x, line[line.length - 1].y); ctx.stroke(); }); break;
+        case 'nordic': waveOffset += 0.015; particles.forEach(p => { let wind = Math.sin(p.y * 0.008 + waveOffset) * 2.5; p.x += p.vx + wind * p.windFactor; p.y += p.vy; if (p.y > height + 10) { p.y = -10; p.x = Math.random() * width; } if (p.x > width + 10) p.x = -10; if (p.x < -10) p.x = width + 10; ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fillStyle = 'rgba(226, 232, 240, 0.85)'; ctx.fill(); }); break;
+        case 'love': particles.forEach(p => { p.phase += p.wobbleSpeed; p.y += p.vy; p.x += Math.sin(p.phase) * 0.8; if (p.y < -50) { p.y = height + 50; p.x = Math.random() * width; } ctx.font = `${p.size}px sans-serif`; ctx.fillStyle = `rgba(248, 113, 113, ${p.alpha})`; ctx.fillText('♥', p.x, p.y); }); break;
+        case 'bubbly': particles.forEach(p => { p.x += p.vx; p.y += p.vy; if (p.x < 0 || p.x > width) p.vx *= -1; if (p.y < 0 || p.y > height) p.vy *= -1; p.radius += 0.08; if(p.radius > p.maxRadius) { p.radius = Math.random() * 3 + 1; } ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.strokeStyle = '#f472b6'; ctx.lineWidth = 1.5; ctx.globalAlpha = p.alpha; ctx.stroke(); ctx.globalAlpha = 1; }); break;
+        case 'tricolour': if (Math.random() < 0.15) spawnFirework(); for (let i = particles.length - 1; i >= 0; i--) { const p = particles[i]; p.x += p.vx; p.y += p.vy; p.vy += 0.04; p.alpha -= p.decay; if (p.alpha <= 0) { particles.splice(i, 1); } else { ctx.globalAlpha = p.alpha; ctx.fillStyle = p.color; ctx.shadowBlur = 8; ctx.shadowColor = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, 3, 0, Math.PI * 2); ctx.fill(); } } ctx.globalAlpha = 1; ctx.shadowBlur = 0; break;
       }
       requestAnimationFrame(renderCanvasAnimation);
     }
@@ -710,19 +647,21 @@
       const endInput = document.getElementById('semEnd').value;
       const countdownEl = document.getElementById('countdownNumerics');
 
-      if (!startInput || !endInput) return;
+      if (!startInput || !endInput) { 
+          countdownEl.innerText = "Awaiting Sync";
+          return; 
+      }
       const diffDays = Math.ceil((new Date(endInput) - new Date()) / (1000 * 60 * 60 * 24));
       countdownEl.innerText = diffDays > 0 ? `${diffDays} days left` : (diffDays === 0 ? `Sem ends today!` : `Sem concluded`);
     }
     window.addEventListener('DOMContentLoaded', updateSemesterCountdown);
 
-    /* ===================================================
+        /* ===================================================
        3. PERSISTENCE, LOCAL STORAGE & SAVE LOCKING LOGIC
        =================================================== */
     let hasUnsavedChanges = false;
     
-    // Unlock button upon modifications in the DOM inputs or elements
-    document.addEventListener('input', () => {
+    function triggerUnsaved() {
         hasUnsavedChanges = true;
         const saveBtn = document.getElementById('saveBtn');
         if(saveBtn) {
@@ -731,7 +670,11 @@
             saveBtn.style.cursor = 'pointer';
             saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save';
         }
-    });
+        const warningEl = document.getElementById('saveWarningNotice');
+        if (warningEl) warningEl.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> save your progress`;
+    }
+
+    document.addEventListener('input', triggerUnsaved);
 
     document.getElementById('saveBtn').addEventListener('click', (e) => {
         if (!hasUnsavedChanges) { e.preventDefault(); return; }
@@ -772,8 +715,9 @@
           if (parsed.grid) document.getElementById('gridContainer').innerHTML = parsed.grid;
           if (parsed.title) document.querySelector('.brand h1 .editable-field').innerText = parsed.title;
           if (parsed.subtitle) document.querySelector('.brand p.editable-field').innerText = parsed.subtitle;
-          if (parsed.semStart) document.getElementById('semStart').value = parsed.semStart;
-          if (parsed.semEnd) document.getElementById('semEnd').value = parsed.semEnd;
+          if (parsed.semStart !== undefined) document.getElementById('semStart').value = parsed.semStart;
+          if (parsed.semEnd !== undefined) document.getElementById('semEnd').value = parsed.semEnd;
+          
           const warningEl = document.getElementById('saveWarningNotice');
           if (warningEl) warningEl.innerHTML = `<i class="fa-solid fa-circle-check" style="color:var(--primary);"></i> progress saved`;
           updateSemesterCountdown();
@@ -811,11 +755,7 @@
         fields.forEach(f => f.setAttribute('contenteditable', 'true'));
         btn.classList.add('active-edit'); btn.innerHTML = '<i class="fa-solid fa-check"></i>';
         fields[0].focus(); card.classList.add('is-editing');
-        hasUnsavedChanges = true; 
-        document.getElementById('saveBtn').disabled = false;
-        document.getElementById('saveBtn').style.opacity = '1';
-        document.getElementById('saveBtn').style.cursor = 'pointer';
-        document.getElementById('saveBtn').innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save';
+        triggerUnsaved();
       }
     }
 
@@ -823,7 +763,7 @@
       event.stopPropagation();
       const card = btn.closest('.card');
       if (confirm(`Are you sure you want to delete "${card.querySelector('.card-title') ? card.querySelector('.card-title').innerText.trim() : 'this schedule card'}"?`)) {
-        card.remove(); hasUnsavedChanges = true; saveScheduleState(true, "Card deleted successfully!");
+        card.remove(); triggerUnsaved(); saveScheduleState(true, "Card deleted successfully!");
       }
     }
 
@@ -841,7 +781,7 @@
       newSlot.className = 'slot-row'; newSlot.setAttribute('data-day', 'Monday'); newSlot.setAttribute('data-time', '09:00-10:00');
       newSlot.innerHTML = `<i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="true">Mon 9:00–10:00 AM (ROOM)</span>`;
       btn.parentElement.insertBefore(newSlot, btn);
-      hasUnsavedChanges = true;
+      triggerUnsaved();
     }
 
     function addSchedule() {
@@ -863,7 +803,7 @@
           <p><i class="fa-solid fa-location-dot"></i> <strong>Status:</strong> <span class="editable-field" contenteditable="false">Active</span></p>
         </div>`;
       grid.appendChild(newCard); showNotificationToast("New schedule card added!");
-      hasUnsavedChanges = true;
+      triggerUnsaved();
     }
 
     function filterDay(day, btn) {
@@ -892,62 +832,90 @@
       if (confirm(`Are you sure you want to delete day "${dayName}"?`)) {
         document.querySelectorAll('.filter-chip').forEach(c => { if (c.innerText.includes(dayName)) c.remove(); });
         filterDay('all', document.querySelector('.filter-chip')); showNotificationToast(`Day "${dayName}" deleted.`);
+        triggerUnsaved();
       }
-    }
+            }
 
-    /* ===================================================
+        /* ===================================================
        5. PDF EXPORT MODAL & GENERATOR (8.5x13 Long Bond)
        =================================================== */
     function openPdfModal() { document.getElementById('pdfModalOverlay').classList.add('show'); }
     function closePdfModal() { document.getElementById('pdfModalOverlay').classList.remove('show'); }
 
-    function getPdfOptions() {
+    // Prepares the DOM based on user's selected export options
+    function setupPdfExport() {
+      lockAllEdits();
+      const element = document.getElementById('scheduleCanvas'); 
+      const origTheme = document.documentElement.getAttribute('data-theme');
+      const origBg = element.style.background;
+      
+      const style = document.querySelector('input[name="pdfStyle"]:checked').value;
+      let pdfBg = null;
+
+      element.classList.add('pdf-export-active');
+
+      if (style === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        pdfBg = '#ffffff';
+      } else if (style === 'nordic') {
+        document.documentElement.setAttribute('data-theme', 'nordic');
+        pdfBg = '#0b1329';
+      } else if (style === 'tricolour') {
+        document.documentElement.setAttribute('data-theme', 'tricolour');
+        pdfBg = '#180e08';
+      } else if (style === 'screenshot') {
+        // Keep current theme logic, inject current body background directly to Canvas
+        pdfBg = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();
+      } else if (style === 'scanned') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        pdfBg = '#ffffff';
+        element.classList.add('scanned-print-active');
+      }
+
+      element.style.background = pdfBg;
+
+      // Toggle Footer Checkbox
+      if (!document.getElementById('pdfIncludeFooter').checked) {
+        element.classList.add('hide-footer');
+      } else {
+        element.classList.remove('hide-footer');
+      }
+
+      return { element, origTheme, origBg, pdfBg };
+    }
+
+    function restorePdfExport(element, origTheme, origBg) {
+      element.classList.remove('pdf-export-active');
+      element.classList.remove('scanned-print-active');
+      element.classList.remove('hide-footer');
+      document.documentElement.setAttribute('data-theme', origTheme);
+      element.style.background = origBg;
+    }
+
+    function getPdfOptions(pdfBg) {
       return {
-          margin:       0.2,
+          margin:       0.2, // Padding buffer
           filename:     'Class_Schedule.pdf',
           image:        { type: 'jpeg', quality: 0.98 },
-          html2canvas:  { scale: 2, useCORS: true, background: document.getElementById('pdfIncludeBg').checked ? null : '#ffffff' },
-          jsPDF:        { unit: 'in', format: [8.5, 13], orientation: 'portrait' } 
+          html2canvas:  { scale: 2, useCORS: true, background: pdfBg },
+          jsPDF:        { unit: 'in', format: [8.5, 13], orientation: 'portrait' },
+          pagebreak:    { mode: 'avoid-all' } // Restrict splitting content
       };
     }
 
     function previewPdf() {
-      lockAllEdits();
-      const element = document.getElementById('scheduleCanvas'); 
-      const origBg = element.style.background;
-      const origColor = element.style.color;
-
-      if (!document.getElementById('pdfIncludeBg').checked) {
-        element.style.background = '#ffffff';
-        element.style.color = '#000000';
-      }
-
-      element.classList.add('pdf-export-active');
+      const { element, origTheme, origBg, pdfBg } = setupPdfExport();
       
-      html2pdf().set(getPdfOptions()).from(element).outputPdf('dataurlnewwindow').then(() => {
-          element.classList.remove('pdf-export-active');
-          element.style.background = origBg;
-          element.style.color = origColor;
+      html2pdf().set(getPdfOptions(pdfBg)).from(element).outputPdf('dataurlnewwindow').then(() => {
+          restorePdfExport(element, origTheme, origBg);
       });
     }
 
     function executePdfDownload() {
-      lockAllEdits();
-      const element = document.getElementById('scheduleCanvas'); 
-      const origBg = element.style.background;
-      const origColor = element.style.color;
+      const { element, origTheme, origBg, pdfBg } = setupPdfExport();
 
-      if (!document.getElementById('pdfIncludeBg').checked) {
-        element.style.background = '#ffffff';
-        element.style.color = '#000000';
-      }
-
-      element.classList.add('pdf-export-active');
-
-      html2pdf().set(getPdfOptions()).from(element).save().then(() => {
-          element.classList.remove('pdf-export-active');
-          element.style.background = origBg;
-          element.style.color = origColor;
+      html2pdf().set(getPdfOptions(pdfBg)).from(element).save().then(() => {
+          restorePdfExport(element, origTheme, origBg);
           closePdfModal();
           showNotificationToast("Schedule downloaded successfully!");
       });
@@ -955,3 +923,4 @@
   </script>
 </body>
 </html>
+  
