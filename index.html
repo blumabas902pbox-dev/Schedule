@@ -109,7 +109,6 @@
       padding: 0.6rem 1rem; border-radius: 12px; font-weight: 700; font-size: 0.85rem; cursor: pointer;
       display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
       border: 2px solid var(--border-color); background: var(--card-bg); color: var(--text-main); font-family: inherit;
-      white-space: nowrap; flex-shrink: 1; min-width: 0;
     }
     .btn:hover, select:hover, .btn:focus-visible, select:focus-visible { border-color: var(--primary); box-shadow: 0 0 12px var(--glow-color); outline: none; }
     .btn-save { background-color: var(--btn-save-bg) !important; color: var(--btn-save-text) !important; border-color: var(--btn-save-bg) !important; font-weight: 800; box-shadow: 0 2px 10px var(--glow-color); }
@@ -119,17 +118,10 @@
     .btn-add-sched { background: var(--card-bg); color: var(--text-main); border-color: var(--border-color); }
     .btn-pdf { background: var(--primary); color: #ffffff; border: none; box-shadow: 0 4px 15px var(--glow-color); }
     
-    /* Preview Button Theme Overrides */
+    /* Facebook Blue style preview button */
     .btn-preview { background-color: #1877f2 !important; color: #ffffff !important; border: none !important; box-shadow: 0 4px 15px rgba(24, 119, 242, 0.4) !important; }
-    :root[data-theme="dark"] .btn-preview { background-color: #ffffff !important; color: #000000 !important; border-color: #ffffff !important; }
-    :root[data-theme="party"] .btn-preview { background-color: #4ade80 !important; color: #38bdf8 !important; border-color: #4ade80 !important; }
-    :root[data-theme="earthlings"] .btn-preview { background-color: #CAB266 !important; color: #1c140d !important; border-color: #CAB266 !important; }
-    :root[data-theme="matrix"] .btn-preview { background-color: #051609 !important; color: #86efac !important; border-color: #15803d !important; }
-    :root[data-theme="synthwave"] .btn-preview { background-color: #26102a !important; color: #e879f9 !important; border-color: #7e22ce !important; }
-    :root[data-theme="nordic"] .btn-preview { background-color: #101e3e !important; color: #93c5fd !important; border-color: #1d4ed8 !important; }
-    :root[data-theme="love"] .btn-preview { background-color: #2d070f !important; color: #fca5a5 !important; border-color: #991b1b !important; }
-    :root[data-theme="bubbly"] .btn-preview { background-color: #3d142d !important; color: #f472b6 !important; border-color: #db2777 !important; }
-    :root[data-theme="celebration"] .btn-preview { background-color: #462800 !important; color: #fef3c7 !important; border-color: #b06500 !important; }
+    /* Dark Theme preview text color override */
+    :root[data-theme="dark"] .btn-preview { color: #000000 !important; }
 
     .filter-bar { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; overflow-x: auto; padding-bottom: 0.6rem; -webkit-overflow-scrolling: touch; align-items: center; scrollbar-width: thin; scrollbar-color: var(--primary) var(--border-color); }
     .filter-bar::-webkit-scrollbar { height: 6px; }
@@ -257,24 +249,311 @@
     .pdf-option-item { display: flex; align-items: center; gap: 0.6rem; cursor: pointer; padding: 0.3rem 0; }
     .pdf-option-item input[type="radio"], .pdf-option-item input[type="checkbox"] { accent-color: var(--primary); transform: scale(1.15); cursor: pointer; }
 
-        /* Media Responsiveness for Mobile Site & Buttons Adjustment */
-    @media (max-width: 768px) { 
-      body { padding: 0.5rem; } 
-      header { flex-direction: column; align-items: stretch; gap: 0.75rem; padding: 0.85rem; } 
-      .toolbar { justify-content: stretch; gap: 0.4rem; display: grid; grid-template-columns: 1fr 1fr; } 
-      .toolbar select { grid-column: span 2; width: 100%; }
-      .btn, select { width: 100%; padding: 0.55rem 0.6rem; font-size: 0.78rem; border-radius: 10px; } 
-      .schedule-grid { grid-template-columns: 1fr; } 
-      .pdf-modal-content { padding: 1rem; width: 95%; }
-      .pdf-modal-content div[style*="flex"] { flex-direction: column-reverse; gap: 0.5rem; }
-      .pdf-modal-content .btn { width: 100%; }
-      #saveToast { bottom: 1rem; right: 1rem; left: 1rem; text-align: center; justify-content: center; } 
-    }
-
+    @media (max-width: 768px) { body { padding: 0.75rem; } header { flex-direction: column; align-items: stretch; } .toolbar { justify-content: stretch; } .btn, select { flex: 1 1 auto; } .schedule-grid { grid-template-columns: 1fr; } #saveToast { bottom: 1rem; right: 1rem; left: 1rem; text-align: center; justify-content: center; } }
     @media print { #nodeCanvas, .toolbar, .filter-bar, #saveToast, .icon-btn, .pdf-modal-overlay { display: none !important; } body { background: #fff !important; color: #000 !important; } .card { border: 1px solid #000 !important; box-shadow: none !important; transform: none !important; } }
   </style>
 </head>
-<script>
+<body>
+
+  <canvas id="nodeCanvas"></canvas>
+
+  <div class="container" id="scheduleCanvas">
+    <header>
+      <div class="brand">
+        <h1 class="editable-group">
+          <span class="editable-field" contenteditable="false">Bryan Jay M. Lumabas</span>
+          <button class="icon-btn" onclick="editSpecificCard(this, event)" title="Edit Name"><i class="fa-solid fa-pen"></i></button>
+        </h1>
+        <p class="editable-field" contenteditable="false">PARTIDO STATE UNIVERSITY • FIRST SEMESTER ACADEMIC YEAR = 2026–2027 • BSIT 3D</p>
+        
+        <div class="semester-sync-widget">
+          <span>Sem:</span>
+          <input type="date" id="semStart" value="" onchange="updateSemesterCountdown(); triggerUnsaved();">
+          <span>to</span>
+          <input type="date" id="semEnd" value="" onchange="updateSemesterCountdown(); triggerUnsaved();">
+          <span class="countdown-display" id="countdownNumerics">Awaiting Sync</span>
+          <span id="saveWarningNotice" style="font-size:0.7rem; color:var(--primary); margin-left:auto;"></span>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <select id="themeSelect" onchange="changeTheme(this.value)">
+          <option value="light" selected>Light Theme</option>
+          <option value="dark">Dark Theme</option>
+          <option value="party">Party Theme</option>
+          <option value="earthlings">Earth Theme</option>
+          <option value="matrix">Matrix Theme</option>
+          <option value="synthwave">Synthwave Theme</option>
+          <option value="nordic">Nordic Theme</option>
+          <option value="love">Love Theme</option>
+          <option value="bubbly">Bubbly Theme</option>
+          <option value="celebration">Celebration Theme</option>
+        </select>
+
+        <button class="btn btn-save" id="saveBtn" disabled style="opacity: 0.5; cursor: not-allowed;">
+          <i class="fa-solid fa-lock"></i> Saved
+        </button>
+
+        <button class="btn btn-add-sched" id="addSchedBtn" onclick="addSchedule()">
+          <i class="fa-solid fa-plus" style="color:var(--primary);"></i> SCHED
+        </button>
+
+        <button class="btn btn-pdf" onclick="openPdfModal()">
+          <i class="fa-solid fa-file-pdf"></i> Export
+        </button>
+      </div>
+    </header>
+
+    <div class="filter-bar">
+      <button class="filter-chip active" onclick="filterDay('all', this)">All Days</button>
+      <button class="filter-chip" onclick="filterDay('Monday', this)">Monday</button>
+      <button class="filter-chip" onclick="filterDay('Tuesday', this)">Tuesday</button>
+      <button class="filter-chip" onclick="filterDay('Wednesday', this)">Wednesday</button>
+      <button class="filter-chip" onclick="filterDay('Thursday', this)">Thursday</button>
+      <button class="filter-chip" onclick="filterDay('Friday', this)">Friday</button>
+      <button class="filter-chip add-day-btn" onclick="addDay()"><i class="fa-solid fa-plus" style="color:var(--primary);"></i> DAY</button>
+    </div>
+
+    <div class="schedule-grid" id="gridContainer">
+      <!-- Subject 1: C216 -->
+      <div class="card" data-days="Monday Wednesday Friday" onclick="toggleCardPress(this, event)">
+        <div class="card-header">
+          <span class="badge editable-field" contenteditable="false">C216 • IM1</span>
+          <div class="card-actions">
+            <button class="icon-btn" onclick="editSpecificCard(this, event)" title="Edit Subject"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="icon-btn icon-btn-delete" onclick="deleteScheduleCard(this, event)" title="Delete Card"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+        <h2 class="card-title editable-field" contenteditable="false">Advanced Database Systems</h2>
+        <div class="slots-list">
+          <!-- Adjusted starting state slightly out of order to demonstrate dynamic sorting on load -->
+          <div class="slot-row" data-day="Friday" data-time="13:00-15:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Fri 1:00–3:00 PM (IITRM5)</span></div>
+          <div class="slot-row" data-day="Wednesday" data-time="08:00-10:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Wed 8:00–10:00 AM (IITONLINE3)</span></div>
+          <div class="slot-row" data-day="Monday" data-time="15:00-16:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Mon 3:00–4:00 PM (IITRM5)</span></div>
+          <div class="slot-row"><i class="fa-solid fa-user-tie"></i> <span class="editable-field" contenteditable="false">Instructor: J. Capucao</span></div>
+          <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
+        </div>
+        <div class="card-details">
+          <p><i class="fa-solid fa-circle-info"></i> <strong>Units:</strong> 3.0 (Lab 1.0)</p>
+          <p><i class="fa-solid fa-location-dot"></i> <strong>Status:</strong> Active Enrolled Class</p>
+        </div>
+      </div>
+
+      <!-- Subject 2: C217 -->
+      <div class="card" data-days="Monday Tuesday Thursday" onclick="toggleCardPress(this, event)">
+        <div class="card-header">
+          <span class="badge editable-field" contenteditable="false">C217 • NET2</span>
+          <div class="card-actions">
+            <button class="icon-btn" onclick="editSpecificCard(this, event)" title="Edit Subject"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="icon-btn icon-btn-delete" onclick="deleteScheduleCard(this, event)" title="Delete Card"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+        <h2 class="card-title editable-field" contenteditable="false">Networking 2</h2>
+        <div class="slots-list">
+          <div class="slot-row" data-day="Monday" data-time="11:00-12:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Mon 11:00 AM–12:00 PM (IITRM6)</span></div>
+          <div class="slot-row" data-day="Tuesday" data-time="10:00-12:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Tue 10:00 AM–12:00 PM (IITRM6)</span></div>
+          <div class="slot-row" data-day="Thursday" data-time="10:00-12:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Thu 10:00 AM–12:00 PM (IITRM12)</span></div>
+          <div class="slot-row"><i class="fa-solid fa-user-tie"></i> <span class="editable-field" contenteditable="false">Instructor: M. Indico</span></div>
+          <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
+        </div>
+        <div class="card-details">
+          <p><i class="fa-solid fa-circle-info"></i> <strong>Units:</strong> 3.0 (Lab 1.0)</p>
+          <p><i class="fa-solid fa-location-dot"></i> <strong>Status:</strong> Active Enrolled Class</p>
+        </div>
+      </div>
+
+      <!-- Subject 3: C218 -->
+      <div class="card" data-days="Wednesday Thursday Friday" onclick="toggleCardPress(this, event)">
+        <div class="card-header">
+          <span class="badge editable-field" contenteditable="false">C218 • IAS1</span>
+          <div class="card-actions">
+            <button class="icon-btn" onclick="editSpecificCard(this, event)" title="Edit Subject"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="icon-btn icon-btn-delete" onclick="deleteScheduleCard(this, event)" title="Delete Card"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+        <h2 class="card-title editable-field" contenteditable="false">Information Assurance & Security 1</h2>
+        <div class="slots-list">
+          <div class="slot-row" data-day="Wednesday" data-time="15:00-16:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Wed 3:00–4:00 PM (IITRM6)</span></div>
+          <div class="slot-row" data-day="Thursday" data-time="08:00-10:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Thu 8:00–10:00 AM (IITRM6)</span></div>
+          <div class="slot-row" data-day="Friday" data-time="08:00-10:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Fri 8:00–10:00 AM (IITONLINE1)</span></div>
+          <div class="slot-row"><i class="fa-solid fa-user-tie"></i> <span class="editable-field" contenteditable="false">Instructor: D. Peñas</span></div>
+          <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
+        </div>
+        <div class="card-details">
+          <p><i class="fa-solid fa-circle-info"></i> <strong>Units:</strong> 3.0 (Lab 1.0)</p>
+          <p><i class="fa-solid fa-location-dot"></i> <strong>Status:</strong> Active Enrolled Class</p>
+        </div>
+      </div>
+
+      <!-- Subject 4: C219 -->
+      <div class="card" data-days="Tuesday Thursday Friday" onclick="toggleCardPress(this, event)">
+        <div class="card-header">
+          <span class="badge editable-field" contenteditable="false">C219 • WS1</span>
+          <div class="card-actions">
+            <button class="icon-btn" onclick="editSpecificCard(this, event)" title="Edit Subject"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="icon-btn icon-btn-delete" onclick="deleteScheduleCard(this, event)" title="Delete Card"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+        <h2 class="card-title editable-field" contenteditable="false">Web Systems and Technologies</h2>
+        <div class="slots-list">
+          <div class="slot-row" data-day="Tuesday" data-time="08:00-10:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Tue 8:00–10:00 AM (ITBLENDED3)</span></div>
+          <div class="slot-row" data-day="Thursday" data-time="15:00-16:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Thu 3:00–4:00 PM (IITRM7)</span></div>
+          <div class="slot-row" data-day="Friday" data-time="15:00-17:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Fri 3:00–5:00 PM (IITRM7)</span></div>
+          <div class="slot-row"><i class="fa-solid fa-user-tie"></i> <span class="editable-field" contenteditable="false">Instructor: Sa. Briones</span></div>
+          <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
+        </div>
+        <div class="card-details">
+          <p><i class="fa-solid fa-circle-info"></i> <strong>Units:</strong> 3.0 (Lab 1.0)</p>
+          <p><i class="fa-solid fa-location-dot"></i> <strong>Status:</strong> Active Enrolled Class</p>
+        </div>
+      </div>
+
+      <!-- Subject 5: C220 -->
+      <div class="card" data-days="Monday Tuesday" onclick="toggleCardPress(this, event)">
+        <div class="card-header">
+          <span class="badge editable-field" contenteditable="false">C220 • ITP2</span>
+          <div class="card-actions">
+            <button class="icon-btn" onclick="editSpecificCard(this, event)" title="Edit Subject"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="icon-btn icon-btn-delete" onclick="deleteScheduleCard(this, event)" title="Delete Card"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+        <h2 class="card-title editable-field" contenteditable="false">Digital Illustration</h2>
+        <div class="slots-list">
+          <div class="slot-row" data-day="Monday" data-time="08:00-11:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Mon 8:00–11:00 AM (IITRM5)</span></div>
+          <div class="slot-row" data-day="Tuesday" data-time="13:00-15:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Tue 1:00–3:00 PM (IITRM22)</span></div>
+          <div class="slot-row"><i class="fa-solid fa-user-tie"></i> <span class="editable-field" contenteditable="false">Instructor: NP. Serrano</span></div>
+          <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
+        </div>
+        <div class="card-details">
+          <p><i class="fa-solid fa-circle-info"></i> <strong>Units:</strong> 3.0 (Lab 1.0)</p>
+          <p><i class="fa-solid fa-location-dot"></i> <strong>Status:</strong> Active Enrolled Class</p>
+        </div>
+      </div>
+
+      <!-- Subject 6: C221 -->
+      <div class="card" data-days="Tuesday Wednesday" onclick="toggleCardPress(this, event)">
+        <div class="card-header">
+          <span class="badge editable-field" contenteditable="false">C221 • ITP3</span>
+          <div class="card-actions">
+            <button class="icon-btn" onclick="editSpecificCard(this, event)" title="Edit Subject"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="icon-btn icon-btn-delete" onclick="deleteScheduleCard(this, event)" title="Delete Card"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+        <h2 class="card-title editable-field" contenteditable="false">Service Management</h2>
+        <div class="slots-list">
+          <div class="slot-row" data-day="Tuesday" data-time="15:00-17:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Tue 3:00–5:00 PM (IITRM13)</span></div>
+          <div class="slot-row" data-day="Wednesday" data-time="14:00-15:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Wed 2:00–3:00 PM (IITRM13)</span></div>
+          <div class="slot-row"><i class="fa-solid fa-user-tie"></i> <span class="editable-field" contenteditable="false">Instructor: A. Cayao</span></div>
+          <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
+        </div>
+        <div class="card-details">
+          <p><i class="fa-solid fa-circle-info"></i> <strong>Units:</strong> 3.0 (Lab 0.0)</p>
+          <p><i class="fa-solid fa-location-dot"></i> <strong>Status:</strong> Active Enrolled Class</p>
+        </div>
+      </div>
+
+      <!-- Subject 7: C222 -->
+      <div class="card" data-days="Wednesday Friday" onclick="toggleCardPress(this, event)">
+        <div class="card-header">
+          <span class="badge editable-field" contenteditable="false">C222 • GE9</span>
+          <div class="card-actions">
+            <button class="icon-btn" onclick="editSpecificCard(this, event)" title="Edit Subject"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="icon-btn icon-btn-delete" onclick="deleteScheduleCard(this, event)" title="Delete Card"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+        <h2 class="card-title editable-field" contenteditable="false">Life and Works of Rizal</h2>
+        <div class="slots-list">
+          <div class="slot-row" data-day="Wednesday" data-time="10:00-12:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Wed 10:00 AM–12:00 PM (IITBLENDED3)</span></div>
+          <div class="slot-row" data-day="Friday" data-time="10:00-12:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Fri 10:00 AM–12:00 PM (IITBLENDED3)</span></div>
+          <div class="slot-row"><i class="fa-solid fa-user-tie"></i> <span class="editable-field" contenteditable="false">Instructor: M. Cielos</span></div>
+          <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
+        </div>
+        <div class="card-details">
+          <p><i class="fa-solid fa-circle-info"></i> <strong>Units:</strong> 3.0 (Lab 0.0)</p>
+          <p><i class="fa-solid fa-location-dot"></i> <strong>Status:</strong> Active Enrolled Class</p>
+        </div>
+      </div>
+
+      <!-- Second Semester Card -->
+      <div class="card" data-days="Monday Tuesday Wednesday Thursday Friday" onclick="toggleCardPress(this, event)">
+        <div class="card-header">
+          <span class="badge editable-field" contenteditable="false">[CLASS•CODE]</span>
+          <div class="card-actions">
+            <button class="icon-btn" onclick="editSpecificCard(this, event)" title="Edit Subject"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="icon-btn icon-btn-delete" onclick="deleteScheduleCard(this, event)" title="Delete Card"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+        <h2 class="card-title editable-field" contenteditable="false">Second Semester</h2>
+        <div class="slots-list">
+          <div class="slot-row">
+            <i class="fa-regular fa-clock"></i>
+            <a href="https://m.youtube.com" target="_blank" class="editable-field" contenteditable="false">To Be Scheduled</a>
+          </div>
+          <div class="slot-row">
+            <i class="fa-regular fa-clock"></i>
+            <span class="editable-field" contenteditable="false">"Our punctuality doesn't arrive on time."</span>
+          </div>
+          <div class="slot-row">
+            <i class="fa-solid fa-user-tie"></i> 
+            <span class="editable-field" contenteditable="false">Instructor: Unknown</span>
+          </div>
+          <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
+        </div>
+        <div class="card-details">
+          <p><i class="fa-solid fa-circle-info"></i> <strong>Units:</strong> <span class="editable-field" contenteditable="false">0.0</span></p>
+          <p><i class="fa-solid fa-location-dot"></i> <strong>Status:</strong> <span class="editable-field" contenteditable="false">Upcoming</span></p>
+        </div>
+      </div>
+
+    </div>
+
+    <footer class="app-footer">
+      © BJML 2026.
+    </footer>
+  </div>
+
+  <!-- PDF Download Options Modal -->
+  <div class="pdf-modal-overlay" id="pdfModalOverlay">
+    <div class="pdf-modal-content">
+      <h3><i class="fa-solid fa-file-pdf"></i> Export Schedule</h3>
+      <p style="font-size: 0.82em; color: var(--text-muted); margin-bottom: 1rem;">
+        Format: 8.5" x 13" Long Bond Paper (Filename: <code style="color:var(--primary);" id="dynamicFilenameDisplay"></code>)
+      </p>
+      
+      <div class="pdf-option-group">
+        <label style="font-weight: 800; margin-bottom: 0.2rem; display: block; color: var(--primary);">Select Style:</label>
+        <label class="pdf-option-item">
+          <input type="radio" name="pdfStyle" value="current" checked>
+          <span>Option 1: Current Theme</span>
+        </label>
+        <label class="pdf-option-item">
+          <input type="radio" name="pdfStyle" value="screenshot">
+          <span>Option 2: Screenshot Style</span>
+        </label>
+        <label class="pdf-option-item">
+          <input type="radio" name="pdfStyle" value="scanned">
+          <span>Option 3: Scanned Print</span>
+        </label>
+      </div>
+
+      <div class="pdf-option-group" style="margin-top: 1rem; border-top: 1px dashed var(--border-color); padding-top: 1rem;">
+        <label class="pdf-option-item">
+          <input type="checkbox" id="pdfIncludeFooter" checked>
+          <span>Include footnote and dashline (© BJML 2026)</span>
+        </label>
+      </div>
+      
+      <div style="display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem;">
+        <button class="btn btn-cancel" onclick="closePdfModal()">Cancel</button>
+        <button class="btn btn-preview" onclick="previewPdf()">Preview</button>
+        <button class="btn btn-pdf" onclick="executePdfDownload()">Confirm &amp; Download</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="saveToast"><i class="fa-solid fa-circle-check"></i> <span id="toastMsg">Schedule saved successfully!</span></div>
+
+  <script>
     /* ===================================================
        1. ANIMATION CANVAS ENGINE & GLOBAL VARS
        =================================================== */
@@ -512,7 +791,7 @@
           });
           break;
         case 'celebration':
-          if (Math.random() < 0.08) spawnFirework();
+          if (Math.randomStr < 0.1 || Math.random() < 0.08) spawnFirework();
           for (let i = particles.length - 1; i >= 0; i--) {
             const p = particles[i];
             p.x += p.vx; p.y += p.vy; p.vy += 0.04; p.alpha -= p.decay;
@@ -534,7 +813,7 @@
     resizeCanvas();
     renderCanvasAnimation();
 
-      /* ===================================================
+       /* ===================================================
        2. REAL-TIME SCHEDULE SLOT DETECTION & COUNTDOWN
        =================================================== */
     function updateRealtimeScheduleGlow() {
@@ -644,7 +923,7 @@
         } catch (e) { console.error("Could not parse saved schedule data", e); }
       }
       
-      updateSlotDataAndSort(); 
+      updateSlotDataAndSort(); // Ensure everything is strictly arranged on load.
     }
     window.addEventListener('DOMContentLoaded', loadScheduleState);
 
@@ -665,6 +944,7 @@
         const slots = Array.from(slotsList.querySelectorAll('.slot-row'));
         const addBtn = slotsList.querySelector('.add-slot-btn');
         
+        // Analyze and extract matching day to data-day
         slots.forEach(slot => {
             const textSpan = slot.querySelector('.editable-field');
             if (textSpan) {
@@ -682,6 +962,7 @@
             }
         });
         
+        // Strict arrangement sorting (Mon -> Fri -> Instructor at bottom)
         slots.sort((a, b) => {
             const dayA = a.getAttribute('data-day');
             const dayB = b.getAttribute('data-day');
@@ -690,6 +971,7 @@
             return valA - valB;
         });
         
+        // Push slots back sorted
         slots.forEach(slot => {
             if (slot !== addBtn) slotsList.insertBefore(slot, addBtn);
         });
@@ -708,10 +990,12 @@
                 courseYear = parts[parts.length - 1].trim();
             }
         }
+        
+        // e.g. BSIT 3D_Bryan Jay M. Lumabas
         return `${courseYear}_${name}.pdf`;
-                            }
+      }
 
-      /* ===================================================
+        /* ===================================================
        4. INTERACTIVE CARD GLOW & EDIT MODE
        =================================================== */
     function toggleCardPress(card, event) {
@@ -729,7 +1013,7 @@
         fields.forEach(f => f.setAttribute('contenteditable', 'false'));
         btn.classList.remove('active-edit'); btn.innerHTML = btn.closest('.brand') ? '<i class="fa-solid fa-pen"></i>' : '<i class="fa-solid fa-pen-to-square"></i>';
         card.classList.remove('is-editing');
-        updateSlotDataAndSort(); 
+        updateSlotDataAndSort(); // Trigger hierarchy sorting fix when saving card changes
       } else {
         fields.forEach(f => f.setAttribute('contenteditable', 'true'));
         btn.classList.add('active-edit'); btn.innerHTML = '<i class="fa-solid fa-check"></i>';
@@ -752,7 +1036,7 @@
         btn.classList.remove('active-edit'); btn.innerHTML = btn.closest('.brand') ? '<i class="fa-solid fa-pen"></i>' : '<i class="fa-solid fa-pen-to-square"></i>';
       });
       document.querySelectorAll('.is-editing').forEach(c => c.classList.remove('is-editing'));
-      updateSlotDataAndSort(); 
+      updateSlotDataAndSort(); // Guarantee sorting hierarchy before lock
     }
 
     function addSlot(btn, event) {
@@ -827,7 +1111,7 @@
     function closePdfModal() { document.getElementById('pdfModalOverlay').classList.remove('show'); }
 
     function setupPdfExport() {
-      lockAllEdits(); 
+      lockAllEdits(); // Applies fix layout via updateSlotDataAndSort
       const element = document.getElementById('scheduleCanvas'); 
       const origTheme = document.documentElement.getAttribute('data-theme');
       const origBg = element.style.background;
@@ -838,7 +1122,7 @@
       if (style === 'current') {
         element.classList.add('pdf-export-active');
       } else if (style === 'screenshot') {
-        // Screenshot Style
+        // Screenshot Style bypasses `.pdf-export-active` ensuring what is seen is what gets exported
       } else if (style === 'scanned') {
         element.classList.add('pdf-export-active');
         element.classList.add('scanned-print-active');
