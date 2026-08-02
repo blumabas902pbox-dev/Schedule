@@ -117,7 +117,11 @@
     
     .btn-add-sched { background: var(--card-bg); color: var(--text-main); border-color: var(--border-color); }
     .btn-pdf { background: var(--primary); color: #ffffff; border: none; box-shadow: 0 4px 15px var(--glow-color); }
-    .btn-preview { background: var(--secondary); color: var(--text-main); border: 1px solid var(--border-color); }
+    
+    /* Facebook Blue style preview button */
+    .btn-preview { background-color: #1877f2 !important; color: #ffffff !important; border: none !important; box-shadow: 0 4px 15px rgba(24, 119, 242, 0.4) !important; }
+    /* Dark Theme preview text color override */
+    :root[data-theme="dark"] .btn-preview { color: #000000 !important; }
 
     .filter-bar { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; overflow-x: auto; padding-bottom: 0.6rem; -webkit-overflow-scrolling: touch; align-items: center; scrollbar-width: thin; scrollbar-color: var(--primary) var(--border-color); }
     .filter-bar::-webkit-scrollbar { height: 6px; }
@@ -224,13 +228,14 @@
         font-size: 0.7rem !important;
     }
     
-    /* Scanned Option Styles */
+    /* Scanned Option Styles - Carbon Copy with Theme Colors */
     .scanned-print-active {
-        filter: grayscale(100%) contrast(1.3) !important;
-        color: #000000 !important;
+        filter: contrast(1.3) saturate(1.1) !important;
+        color: var(--text-main) !important;
     }
     .scanned-print-active .card, .scanned-print-active header {
-        border: 2px solid #000 !important;
+        border: 2px solid var(--primary) !important;
+        box-shadow: inset 0 0 10px rgba(0,0,0,0.05) !important;
     }
     
     #saveToast { position: fixed; bottom: 2rem; right: 2rem; background: var(--card-bg); color: var(--text-main); border: 2px solid var(--primary); box-shadow: 0 0 20px var(--glow-color); padding: 0.8rem 1.4rem; border-radius: 12px; font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 0.6rem; z-index: 1000; opacity: 0; transform: translateY(20px); transition: opacity 0.3s ease, transform 0.3s ease; pointer-events: none; }
@@ -321,9 +326,10 @@
         </div>
         <h2 class="card-title editable-field" contenteditable="false">Advanced Database Systems</h2>
         <div class="slots-list">
-          <div class="slot-row" data-day="Monday" data-time="15:00-16:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Mon 3:00–4:00 PM (IITRM5)</span></div>
-          <div class="slot-row" data-day="Wednesday" data-time="08:00-10:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Wed 8:00–10:00 AM (IITONLINE3)</span></div>
+          <!-- Adjusted starting state slightly out of order to demonstrate dynamic sorting on load -->
           <div class="slot-row" data-day="Friday" data-time="13:00-15:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Fri 1:00–3:00 PM (IITRM5)</span></div>
+          <div class="slot-row" data-day="Wednesday" data-time="08:00-10:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Wed 8:00–10:00 AM (IITONLINE3)</span></div>
+          <div class="slot-row" data-day="Monday" data-time="15:00-16:00"><i class="fa-regular fa-clock"></i> <span class="editable-field" contenteditable="false">Mon 3:00–4:00 PM (IITRM5)</span></div>
           <div class="slot-row"><i class="fa-solid fa-user-tie"></i> <span class="editable-field" contenteditable="false">Instructor: J. Capucao</span></div>
           <button class="icon-btn add-slot-btn" onclick="addSlot(this, event)">+</button>
         </div>
@@ -506,35 +512,27 @@
     </footer>
   </div>
 
-    <!-- PDF Download Options Modal -->
+  <!-- PDF Download Options Modal -->
   <div class="pdf-modal-overlay" id="pdfModalOverlay">
     <div class="pdf-modal-content">
       <h3><i class="fa-solid fa-file-pdf"></i> Export Schedule</h3>
       <p style="font-size: 0.82em; color: var(--text-muted); margin-bottom: 1rem;">
-        Format: 8.5" x 13" Long Bond Paper (Filename: <code style="color:var(--primary);">BSIT 3D_Bryan Jay M. Lumabas.pdf</code>)
+        Format: 8.5" x 13" Long Bond Paper (Filename: <code style="color:var(--primary);" id="dynamicFilenameDisplay"></code>)
       </p>
       
       <div class="pdf-option-group">
         <label style="font-weight: 800; margin-bottom: 0.2rem; display: block; color: var(--primary);">Select Style:</label>
         <label class="pdf-option-item">
-          <input type="radio" name="pdfStyle" value="light" checked>
-          <span>Option Style 1: Light Theme</span>
-        </label>
-        <label class="pdf-option-item">
-          <input type="radio" name="pdfStyle" value="nordic">
-          <span>Option Style 2: Nordic Theme</span>
-        </label>
-        <label class="pdf-option-item">
-          <input type="radio" name="pdfStyle" value="celebration">
-          <span>Option Style 3: Celebration Theme</span>
+          <input type="radio" name="pdfStyle" value="current" checked>
+          <span>Option 1: Current Theme</span>
         </label>
         <label class="pdf-option-item">
           <input type="radio" name="pdfStyle" value="screenshot">
-          <span>Option 4: Screenshot Style</span>
+          <span>Option 2: Screenshot Style</span>
         </label>
         <label class="pdf-option-item">
           <input type="radio" name="pdfStyle" value="scanned">
-          <span>Option 5: Scanned Print</span>
+          <span>Option 3: Scanned Print</span>
         </label>
       </div>
 
@@ -546,7 +544,7 @@
       </div>
       
       <div style="display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem;">
-        <button class="btn" onclick="closePdfModal()">Cancel</button>
+        <button class="btn btn-cancel" onclick="closePdfModal()">Cancel</button>
         <button class="btn btn-preview" onclick="previewPdf()">Preview</button>
         <button class="btn btn-pdf" onclick="executePdfDownload()">Confirm &amp; Download</button>
       </div>
@@ -611,7 +609,6 @@
           for (let i = 0; i < density; i++) { particles.push({ x: Math.random() * width, y: Math.random() * height, size: Math.random() * 2.5 + 1, pulseSpeed: 0.02 + Math.random() * 0.03, phase: Math.random() * Math.PI * 2 }); }
           break;
         case 'party':
-          // Confetti that shoots upwards from bottom and falls down in an endless loop
           for (let i = 0; i < density * 1.5; i++) {
             particles.push({
               x: Math.random() * width,
@@ -741,23 +738,17 @@
           });
           break;
         case 'synthwave':
-          // Moving Synthwave Grid / Waves
           synthwaveTime += 0.03;
           ctx.strokeStyle = 'rgba(192, 132, 252, 0.4)';
           ctx.lineWidth = 1.5;
-          
           const horizonY = height * 0.55;
           const centerX = width / 2;
-
-          // Draw perspective vertical lines radiating outward from horizon center
           for (let x = -width; x < width * 2; x += 80) {
             ctx.beginPath();
             ctx.moveTo(centerX, horizonY);
             ctx.lineTo(x + Math.sin(synthwaveTime) * 20, height);
             ctx.stroke();
           }
-
-          // Draw moving horizontal grid lines moving downwards to simulate forward motion
           const gridCount = 14;
           for (let i = 0; i < gridCount; i++) {
             let progress = (i + (synthwaveTime % 1)) / gridCount;
@@ -865,7 +856,7 @@
     window.addEventListener('DOMContentLoaded', updateSemesterCountdown);
 
     /* ===================================================
-       3. PERSISTENCE, LOCAL STORAGE & SAVE LOCKING LOGIC
+       3. PERSISTENCE, DYNAMIC DATA, LOCKING LOGIC & SORT
        =================================================== */
     let hasUnsavedChanges = false;
     
@@ -931,6 +922,8 @@
           updateSemesterCountdown();
         } catch (e) { console.error("Could not parse saved schedule data", e); }
       }
+      
+      updateSlotDataAndSort(); // Ensure everything is strictly arranged on load.
     }
     window.addEventListener('DOMContentLoaded', loadScheduleState);
 
@@ -939,9 +932,70 @@
       document.getElementById('toastMsg').innerText = msg;
       toast.classList.add('show');
       setTimeout(() => toast.classList.remove('show'), 2500);
-                            }
+    }
 
-        /* ===================================================
+    function updateSlotDataAndSort() {
+      const dayMap = { 'mon': 'Monday', 'tue': 'Tuesday', 'wed': 'Wednesday', 'thu': 'Thursday', 'fri': 'Friday', 'sat': 'Saturday', 'sun': 'Sunday' };
+      const dayOrder = { 'Monday': 1, 'Tuesday': 2, 'Wednesday': 3, 'Thursday': 4, 'Friday': 5, 'Saturday': 6, 'Sunday': 7 };
+
+      document.querySelectorAll('.card').forEach(card => {
+        const slotsList = card.querySelector('.slots-list');
+        if (!slotsList) return;
+        const slots = Array.from(slotsList.querySelectorAll('.slot-row'));
+        const addBtn = slotsList.querySelector('.add-slot-btn');
+        
+        // Analyze and extract matching day to data-day
+        slots.forEach(slot => {
+            const textSpan = slot.querySelector('.editable-field');
+            if (textSpan) {
+                const text = textSpan.innerText.toLowerCase().trim();
+                if (text.includes('instructor')) {
+                    slot.removeAttribute('data-day');
+                } else {
+                    for (let key in dayMap) {
+                        if (text.startsWith(key)) {
+                            slot.setAttribute('data-day', dayMap[key]);
+                            break;
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Strict arrangement sorting (Mon -> Fri -> Instructor at bottom)
+        slots.sort((a, b) => {
+            const dayA = a.getAttribute('data-day');
+            const dayB = b.getAttribute('data-day');
+            let valA = dayA ? (dayOrder[dayA] || 99) : 99;
+            let valB = dayB ? (dayOrder[dayB] || 99) : 99;
+            return valA - valB;
+        });
+        
+        // Push slots back sorted
+        slots.forEach(slot => {
+            if (slot !== addBtn) slotsList.insertBefore(slot, addBtn);
+        });
+      });
+    }
+
+    function generateFilename() {
+        const nameNode = document.querySelector('.brand h1 .editable-field');
+        const name = nameNode ? nameNode.innerText.trim() : "Name";
+        
+        const detailsNode = document.querySelector('.brand p.editable-field');
+        let courseYear = "Course";
+        if (detailsNode) {
+            const parts = detailsNode.innerText.split('•');
+            if (parts.length > 0) {
+                courseYear = parts[parts.length - 1].trim();
+            }
+        }
+        
+        // e.g. BSIT 3D_Bryan Jay M. Lumabas
+        return `${courseYear}_${name}.pdf`;
+          }
+
+      /* ===================================================
        4. INTERACTIVE CARD GLOW & EDIT MODE
        =================================================== */
     function toggleCardPress(card, event) {
@@ -959,6 +1013,7 @@
         fields.forEach(f => f.setAttribute('contenteditable', 'false'));
         btn.classList.remove('active-edit'); btn.innerHTML = btn.closest('.brand') ? '<i class="fa-solid fa-pen"></i>' : '<i class="fa-solid fa-pen-to-square"></i>';
         card.classList.remove('is-editing');
+        updateSlotDataAndSort(); // Trigger hierarchy sorting fix when saving card changes
       } else {
         fields.forEach(f => f.setAttribute('contenteditable', 'true'));
         btn.classList.add('active-edit'); btn.innerHTML = '<i class="fa-solid fa-check"></i>';
@@ -981,6 +1036,7 @@
         btn.classList.remove('active-edit'); btn.innerHTML = btn.closest('.brand') ? '<i class="fa-solid fa-pen"></i>' : '<i class="fa-solid fa-pen-to-square"></i>';
       });
       document.querySelectorAll('.is-editing').forEach(c => c.classList.remove('is-editing'));
+      updateSlotDataAndSort(); // Guarantee sorting hierarchy before lock
     }
 
     function addSlot(btn, event) {
@@ -1047,34 +1103,28 @@
     /* ===================================================
        5. PDF EXPORT MODAL & GENERATOR (8.5x13 Long Bond)
        =================================================== */
-    function openPdfModal() { document.getElementById('pdfModalOverlay').classList.add('show'); }
+    function openPdfModal() { 
+      document.getElementById('dynamicFilenameDisplay').innerText = generateFilename();
+      document.getElementById('pdfModalOverlay').classList.add('show'); 
+    }
+    
     function closePdfModal() { document.getElementById('pdfModalOverlay').classList.remove('show'); }
 
     function setupPdfExport() {
-      lockAllEdits();
+      lockAllEdits(); // Applies fix layout via updateSlotDataAndSort
       const element = document.getElementById('scheduleCanvas'); 
       const origTheme = document.documentElement.getAttribute('data-theme');
       const origBg = element.style.background;
       
       const style = document.querySelector('input[name="pdfStyle"]:checked').value;
-      let pdfBg = null;
+      let pdfBg = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();
 
-      element.classList.add('pdf-export-active');
-
-      if (style === 'light') {
-        document.documentElement.setAttribute('data-theme', 'light');
-        pdfBg = '#ffffff';
-      } else if (style === 'nordic') {
-        document.documentElement.setAttribute('data-theme', 'nordic');
-        pdfBg = '#0b1329';
-      } else if (style === 'celebration') {
-        document.documentElement.setAttribute('data-theme', 'celebration');
-        pdfBg = '#180e08';
+      if (style === 'current') {
+        element.classList.add('pdf-export-active');
       } else if (style === 'screenshot') {
-        pdfBg = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();
+        // Screenshot Style bypasses `.pdf-export-active` ensuring what is seen is what gets exported
       } else if (style === 'scanned') {
-        document.documentElement.setAttribute('data-theme', 'light');
-        pdfBg = '#ffffff';
+        element.classList.add('pdf-export-active');
         element.classList.add('scanned-print-active');
       }
 
@@ -1086,11 +1136,11 @@
         element.classList.remove('hide-footer');
       }
 
-      return { element, origTheme, origBg, pdfBg };
+      return { element, origTheme, origBg, pdfBg, style };
     }
 
-    function restorePdfExport(element, origTheme, origBg) {
-      element.classList.remove('pdf-export-active');
+    function restorePdfExport(element, origTheme, origBg, style) {
+      if (style !== 'screenshot') element.classList.remove('pdf-export-active');
       element.classList.remove('scanned-print-active');
       element.classList.remove('hide-footer');
       document.documentElement.setAttribute('data-theme', origTheme);
@@ -1100,7 +1150,7 @@
     function getPdfOptions(pdfBg) {
       return {
           margin:       0.2,
-          filename:     'BSIT 3D_Bryan Jay M. Lumabas.pdf',
+          filename:     generateFilename(),
           image:        { type: 'jpeg', quality: 0.98 },
           html2canvas:  { scale: 2, useCORS: true, background: pdfBg },
           jsPDF:        { unit: 'in', format: [8.5, 13], orientation: 'portrait' },
@@ -1109,20 +1159,20 @@
     }
 
     function previewPdf() {
-      const { element, origTheme, origBg, pdfBg } = setupPdfExport();
+      const { element, origTheme, origBg, pdfBg, style } = setupPdfExport();
       
       html2pdf().set(getPdfOptions(pdfBg)).from(element).outputPdf('dataurlnewwindow').then(() => {
-          restorePdfExport(element, origTheme, origBg);
+          restorePdfExport(element, origTheme, origBg, style);
       });
     }
 
     function executePdfDownload() {
-      const { element, origTheme, origBg, pdfBg } = setupPdfExport();
+      const { element, origTheme, origBg, pdfBg, style } = setupPdfExport();
 
       html2pdf().set(getPdfOptions(pdfBg)).from(element).save().then(() => {
-          restorePdfExport(element, origTheme, origBg);
+          restorePdfExport(element, origTheme, origBg, style);
           closePdfModal();
-          showNotificationToast("Schedule downloaded successfully as BSIT 3D_Bryan Jay M. Lumabas.pdf!");
+          showNotificationToast(`Schedule downloaded successfully as ${generateFilename()}!`);
       });
     }
   </script>
