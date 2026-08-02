@@ -109,6 +109,7 @@
       padding: 0.6rem 1rem; border-radius: 12px; font-weight: 700; font-size: 0.85rem; cursor: pointer;
       display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
       border: 2px solid var(--border-color); background: var(--card-bg); color: var(--text-main); font-family: inherit;
+      white-space: nowrap; flex-shrink: 1; min-width: 0;
     }
     .btn:hover, select:hover, .btn:focus-visible, select:focus-visible { border-color: var(--primary); box-shadow: 0 0 12px var(--glow-color); outline: none; }
     .btn-save { background-color: var(--btn-save-bg) !important; color: var(--btn-save-text) !important; border-color: var(--btn-save-bg) !important; font-weight: 800; box-shadow: 0 2px 10px var(--glow-color); }
@@ -118,19 +119,17 @@
     .btn-add-sched { background: var(--card-bg); color: var(--text-main); border-color: var(--border-color); }
     .btn-pdf { background: var(--primary); color: #ffffff; border: none; box-shadow: 0 4px 15px var(--glow-color); }
     
-    /* Facebook Blue style preview button (Light Theme Default) */
+    /* Preview Button Theme Overrides */
     .btn-preview { background-color: #1877f2 !important; color: #ffffff !important; border: none !important; box-shadow: 0 4px 15px rgba(24, 119, 242, 0.4) !important; }
-    
-    /* Theme-specific preview buttons */
-    :root[data-theme="dark"] .btn-preview { background-color: #ffffff !important; color: #000000 !important; box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3) !important; }
-    :root[data-theme="party"] .btn-preview { background-color: #39ff14 !important; color: #4b0082 !important; box-shadow: 0 4px 15px rgba(57, 255, 20, 0.3) !important; }
-    :root[data-theme="earthlings"] .btn-preview { background-color: #cab266 !important; color: #556b2f !important; box-shadow: 0 4px 15px rgba(202, 178, 102, 0.3) !important; }
-    :root[data-theme="matrix"] .btn-preview { background-color: #006400 !important; color: #90ee90 !important; box-shadow: 0 4px 15px rgba(0, 100, 0, 0.4) !important; }
-    :root[data-theme="synthwave"] .btn-preview { background-color: #301934 !important; color: #d8bfd8 !important; box-shadow: 0 4px 15px rgba(48, 25, 52, 0.4) !important; }
-    :root[data-theme="nordic"] .btn-preview { background-color: #00008b !important; color: #add8e6 !important; box-shadow: 0 4px 15px rgba(0, 0, 139, 0.4) !important; }
-    :root[data-theme="love"] .btn-preview { background-color: #8b0000 !important; color: #ffb6c1 !important; box-shadow: 0 4px 15px rgba(139, 0, 0, 0.4) !important; }
-    :root[data-theme="bubbly"] .btn-preview { background-color: #c71585 !important; color: #ffb6c1 !important; box-shadow: 0 4px 15px rgba(199, 21, 133, 0.3) !important; }
-    :root[data-theme="celebration"] .btn-preview { background-color: #ff8c00 !important; color: #ffdab9 !important; box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3) !important; }
+    :root[data-theme="dark"] .btn-preview { background-color: #ffffff !important; color: #000000 !important; border-color: #ffffff !important; }
+    :root[data-theme="party"] .btn-preview { background-color: #4ade80 !important; color: #38bdf8 !important; border-color: #4ade80 !important; }
+    :root[data-theme="earthlings"] .btn-preview { background-color: #CAB266 !important; color: #1c140d !important; border-color: #CAB266 !important; }
+    :root[data-theme="matrix"] .btn-preview { background-color: #051609 !important; color: #86efac !important; border-color: #15803d !important; }
+    :root[data-theme="synthwave"] .btn-preview { background-color: #26102a !important; color: #e879f9 !important; border-color: #7e22ce !important; }
+    :root[data-theme="nordic"] .btn-preview { background-color: #101e3e !important; color: #93c5fd !important; border-color: #1d4ed8 !important; }
+    :root[data-theme="love"] .btn-preview { background-color: #2d070f !important; color: #fca5a5 !important; border-color: #991b1b !important; }
+    :root[data-theme="bubbly"] .btn-preview { background-color: #3d142d !important; color: #f472b6 !important; border-color: #db2777 !important; }
+    :root[data-theme="celebration"] .btn-preview { background-color: #462800 !important; color: #fef3c7 !important; border-color: #b06500 !important; }
 
     .filter-bar { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; overflow-x: auto; padding-bottom: 0.6rem; -webkit-overflow-scrolling: touch; align-items: center; scrollbar-width: thin; scrollbar-color: var(--primary) var(--border-color); }
     .filter-bar::-webkit-scrollbar { height: 6px; }
@@ -258,27 +257,23 @@
     .pdf-option-item { display: flex; align-items: center; gap: 0.6rem; cursor: pointer; padding: 0.3rem 0; }
     .pdf-option-item input[type="radio"], .pdf-option-item input[type="checkbox"] { accent-color: var(--primary); transform: scale(1.15); cursor: pointer; }
 
-    /* Layout rules for modal action buttons to allow wrapping/stacking */
-    .modal-actions { display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem; flex-wrap: wrap; }
-
-        @media (max-width: 768px) { 
-      body { padding: 0.75rem; } 
-      header { flex-direction: column; align-items: stretch; } 
-      .toolbar { justify-content: stretch; } 
-      .btn, select { flex: 1 1 auto; } 
+        /* Media Responsiveness for Mobile Site & Buttons Adjustment */
+    @media (max-width: 768px) { 
+      body { padding: 0.5rem; } 
+      header { flex-direction: column; align-items: stretch; gap: 0.75rem; padding: 0.85rem; } 
+      .toolbar { justify-content: stretch; gap: 0.4rem; display: grid; grid-template-columns: 1fr 1fr; } 
+      .toolbar select { grid-column: span 2; width: 100%; }
+      .btn, select { width: 100%; padding: 0.55rem 0.6rem; font-size: 0.78rem; border-radius: 10px; } 
       .schedule-grid { grid-template-columns: 1fr; } 
+      .pdf-modal-content { padding: 1rem; width: 95%; }
+      .pdf-modal-content div[style*="flex"] { flex-direction: column-reverse; gap: 0.5rem; }
+      .pdf-modal-content .btn { width: 100%; }
       #saveToast { bottom: 1rem; right: 1rem; left: 1rem; text-align: center; justify-content: center; } 
-      
-      /* New responsive rules for modal buttons on mobile */
-      .modal-actions { flex-direction: column; align-items: stretch; }
-      .modal-actions .btn { width: 100%; justify-content: center; }
-      .pdf-modal-content { padding: 1.25rem; }
     }
-    
+
     @media print { #nodeCanvas, .toolbar, .filter-bar, #saveToast, .icon-btn, .pdf-modal-overlay { display: none !important; } body { background: #fff !important; color: #000 !important; } .card { border: 1px solid #000 !important; box-shadow: none !important; transform: none !important; } }
   </style>
 </head>
-<body>
 <script>
     /* ===================================================
        1. ANIMATION CANVAS ENGINE & GLOBAL VARS
@@ -517,7 +512,7 @@
           });
           break;
         case 'celebration':
-          if (Math.randomStr < 0.1 || Math.random() < 0.08) spawnFirework();
+          if (Math.random() < 0.08) spawnFirework();
           for (let i = particles.length - 1; i >= 0; i--) {
             const p = particles[i];
             p.x += p.vx; p.y += p.vy; p.vy += 0.04; p.alpha -= p.decay;
@@ -649,7 +644,7 @@
         } catch (e) { console.error("Could not parse saved schedule data", e); }
       }
       
-      updateSlotDataAndSort(); // Ensure everything is strictly arranged on load.
+      updateSlotDataAndSort(); 
     }
     window.addEventListener('DOMContentLoaded', loadScheduleState);
 
@@ -670,7 +665,6 @@
         const slots = Array.from(slotsList.querySelectorAll('.slot-row'));
         const addBtn = slotsList.querySelector('.add-slot-btn');
         
-        // Analyze and extract matching day to data-day
         slots.forEach(slot => {
             const textSpan = slot.querySelector('.editable-field');
             if (textSpan) {
@@ -688,7 +682,6 @@
             }
         });
         
-        // Strict arrangement sorting (Mon -> Fri -> Instructor at bottom)
         slots.sort((a, b) => {
             const dayA = a.getAttribute('data-day');
             const dayB = b.getAttribute('data-day');
@@ -697,7 +690,6 @@
             return valA - valB;
         });
         
-        // Push slots back sorted
         slots.forEach(slot => {
             if (slot !== addBtn) slotsList.insertBefore(slot, addBtn);
         });
@@ -716,10 +708,8 @@
                 courseYear = parts[parts.length - 1].trim();
             }
         }
-        
-        // e.g. BSIT 3D_Bryan Jay M. Lumabas
         return `${courseYear}_${name}.pdf`;
-  }
+                            }
 
       /* ===================================================
        4. INTERACTIVE CARD GLOW & EDIT MODE
@@ -739,7 +729,7 @@
         fields.forEach(f => f.setAttribute('contenteditable', 'false'));
         btn.classList.remove('active-edit'); btn.innerHTML = btn.closest('.brand') ? '<i class="fa-solid fa-pen"></i>' : '<i class="fa-solid fa-pen-to-square"></i>';
         card.classList.remove('is-editing');
-        updateSlotDataAndSort(); // Trigger hierarchy sorting fix when saving card changes
+        updateSlotDataAndSort(); 
       } else {
         fields.forEach(f => f.setAttribute('contenteditable', 'true'));
         btn.classList.add('active-edit'); btn.innerHTML = '<i class="fa-solid fa-check"></i>';
@@ -762,7 +752,7 @@
         btn.classList.remove('active-edit'); btn.innerHTML = btn.closest('.brand') ? '<i class="fa-solid fa-pen"></i>' : '<i class="fa-solid fa-pen-to-square"></i>';
       });
       document.querySelectorAll('.is-editing').forEach(c => c.classList.remove('is-editing'));
-      updateSlotDataAndSort(); // Guarantee sorting hierarchy before lock
+      updateSlotDataAndSort(); 
     }
 
     function addSlot(btn, event) {
@@ -837,7 +827,7 @@
     function closePdfModal() { document.getElementById('pdfModalOverlay').classList.remove('show'); }
 
     function setupPdfExport() {
-      lockAllEdits(); // Applies fix layout via updateSlotDataAndSort
+      lockAllEdits(); 
       const element = document.getElementById('scheduleCanvas'); 
       const origTheme = document.documentElement.getAttribute('data-theme');
       const origBg = element.style.background;
@@ -848,7 +838,7 @@
       if (style === 'current') {
         element.classList.add('pdf-export-active');
       } else if (style === 'screenshot') {
-        // Screenshot Style bypasses `.pdf-export-active` ensuring what is seen is what gets exported
+        // Screenshot Style
       } else if (style === 'scanned') {
         element.classList.add('pdf-export-active');
         element.classList.add('scanned-print-active');
