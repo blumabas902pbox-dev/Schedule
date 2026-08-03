@@ -118,10 +118,17 @@
     .btn-add-sched { background: var(--card-bg); color: var(--text-main); border-color: var(--border-color); }
     .btn-pdf { background: var(--primary); color: #ffffff; border: none; box-shadow: 0 4px 15px var(--glow-color); }
     
-    /* Facebook Blue style preview button */
+    /* Theme-specific preview button styles */
     .btn-preview { background-color: #1877f2 !important; color: #ffffff !important; border: none !important; box-shadow: 0 4px 15px rgba(24, 119, 242, 0.4) !important; }
-    /* Dark Theme preview text color override */
-    :root[data-theme="dark"] .btn-preview { color: #000000 !important; }
+    :root[data-theme="dark"] .btn-preview { background-color: #ffffff !important; color: #000000 !important; box-shadow: 0 4px 15px rgba(255, 255, 255, 0.4) !important; }
+    :root[data-theme="party"] .btn-preview { background-color: #39ff14 !important; color: #4b0082 !important; box-shadow: 0 4px 15px rgba(57, 255, 20, 0.4) !important; }
+    :root[data-theme="earthlings"] .btn-preview { background-color: #cab266 !important; color: #556b2f !important; box-shadow: 0 4px 15px rgba(202, 178, 102, 0.4) !important; }
+    :root[data-theme="matrix"] .btn-preview { background-color: #006400 !important; color: #90ee90 !important; box-shadow: 0 4px 15px rgba(0, 100, 0, 0.4) !important; }
+    :root[data-theme="synthwave"] .btn-preview { background-color: #4b0082 !important; color: #d8bfd8 !important; box-shadow: 0 4px 15px rgba(75, 0, 130, 0.4) !important; }
+    :root[data-theme="nordic"] .btn-preview { background-color: #00008b !important; color: #add8e6 !important; box-shadow: 0 4px 15px rgba(0, 0, 139, 0.4) !important; }
+    :root[data-theme="love"] .btn-preview { background-color: #8b0000 !important; color: #ffb6c1 !important; box-shadow: 0 4px 15px rgba(139, 0, 0, 0.4) !important; }
+    :root[data-theme="bubbly"] .btn-preview { background-color: #c71585 !important; color: #ffb6c1 !important; box-shadow: 0 4px 15px rgba(199, 21, 133, 0.4) !important; }
+    :root[data-theme="celebration"] .btn-preview { background-color: #ff8c00 !important; color: #ffebcd !important; box-shadow: 0 4px 15px rgba(255, 140, 0, 0.4) !important; }
 
     .filter-bar { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; overflow-x: auto; padding-bottom: 0.6rem; -webkit-overflow-scrolling: touch; align-items: center; scrollbar-width: thin; scrollbar-color: var(--primary) var(--border-color); }
     .filter-bar::-webkit-scrollbar { height: 6px; }
@@ -249,7 +256,17 @@
     .pdf-option-item { display: flex; align-items: center; gap: 0.6rem; cursor: pointer; padding: 0.3rem 0; }
     .pdf-option-item input[type="radio"], .pdf-option-item input[type="checkbox"] { accent-color: var(--primary); transform: scale(1.15); cursor: pointer; }
 
-    @media (max-width: 768px) { body { padding: 0.75rem; } header { flex-direction: column; align-items: stretch; } .toolbar { justify-content: stretch; } .btn, select { flex: 1 1 auto; } .schedule-grid { grid-template-columns: 1fr; } #saveToast { bottom: 1rem; right: 1rem; left: 1rem; text-align: center; justify-content: center; } }
+    .pdf-modal-actions { display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem; }
+
+      @media (max-width: 768px) { 
+        body { padding: 0.75rem; } 
+        header { flex-direction: column; align-items: stretch; } 
+        .toolbar { justify-content: stretch; } 
+        .btn, select { flex: 1 1 auto; } 
+        .schedule-grid { grid-template-columns: 1fr; } 
+        #saveToast { bottom: 1rem; right: 1rem; left: 1rem; text-align: center; justify-content: center; } 
+        .pdf-modal-actions { flex-direction: column; justify-content: stretch; }
+    }
     @media print { #nodeCanvas, .toolbar, .filter-bar, #saveToast, .icon-btn, .pdf-modal-overlay { display: none !important; } body { background: #fff !important; color: #000 !important; } .card { border: 1px solid #000 !important; box-shadow: none !important; transform: none !important; } }
   </style>
 </head>
@@ -543,7 +560,7 @@
         </label>
       </div>
       
-      <div style="display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem;">
+      <div class="pdf-modal-actions">
         <button class="btn btn-cancel" onclick="closePdfModal()">Cancel</button>
         <button class="btn btn-preview" onclick="previewPdf()">Preview</button>
         <button class="btn btn-pdf" onclick="executePdfDownload()">Confirm &amp; Download</button>
@@ -993,9 +1010,9 @@
         
         // e.g. BSIT 3D_Bryan Jay M. Lumabas
         return `${courseYear}_${name}.pdf`;
-      }
+    }
 
-        /* ===================================================
+                    /* ===================================================
        4. INTERACTIVE CARD GLOW & EDIT MODE
        =================================================== */
     function toggleCardPress(card, event) {
